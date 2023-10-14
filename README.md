@@ -36,4 +36,5 @@ yarn start
 - Agregadas librerias para compatibilidad con svg
 - Agregado svg del logo
 - Agregada libreria de navegacion
-- Agregados iconos de la App (y por ahora manteniendo el Splash original con el icono porque se me complico usando la libreria)
+- Agregados iconos de la App
+- Agregada libreria de Splash e implementada (tuve que desactivar el "Splash automatico" de Android 12 y eso genera un pequeño retraso al inicio :c)
