@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
     "i18n-js": "^4.3.2",
@@ -20,6 +21,7 @@
     "react-native-screens": "^3.25.0",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^13.14.0",
+    "react-native-vector-icons": "^10.0.0",
     "yarn": "^1.22.19"
   },
   "devDependencies": {

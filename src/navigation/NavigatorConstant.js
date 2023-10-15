@@ -1,1 +1,15 @@
-// TO DO, but libraries already installed
+const NAVIGATOR = {
+  START: 'NAVIGATOR_START',
+  LOGIN: 'NAVIGATOR_LOGIN',
+  DRAWER: 'NAVIGATOR_LANDING',
+};
+const LOGIN_STACK = {
+  LOGIN: 'LOGIN',
+  REGISTER: 'REGISTER',
+  PASSWORD_RECOVERY: 'PASSWORD_RECOVERY',
+};
+
+export default {
+  NAVIGATOR,
+  LOGIN_STACK,
+};
