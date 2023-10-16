@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Pressable, StatusBar, StyleSheet} from 'react-native';
 //import i18n from '../../../../assets/strings/I18n';
 
-const PerfilUI = ({}) => {
+const PublicarUI = ({}) => {
   return (
     <View style={styles.container}>
       <StatusBar
@@ -11,7 +11,7 @@ const PerfilUI = ({}) => {
         showHideTransition={'fade'}
         hidden={false}
       />
-      <Text>{'Estoy en PERFIL'}</Text>
+      <Text>{'Estoy en PUBLICAR'}</Text>
     </View>
   );
 };
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PerfilUI;
+export default PublicarUI;

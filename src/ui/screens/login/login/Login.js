@@ -20,10 +20,20 @@ function Login() {
     navigation.push(NavigatorConstant.LOGIN_STACK.REGISTER);
   };
 
+  const showLandingUser = () => {
+    navigation.replace(NavigatorConstant.NAVIGATOR.LANDING_USER);
+  };
+
+  const showLandingInmoviliaria = () => {
+    navigation.replace(NavigatorConstant.NAVIGATOR.LANDING_INMOVILIARIA);
+  };
+
   return (
     <LoginUI
       showRegister={showRegister}
       showRecoveryPassword={showRecoveryPassword}
+      showLandingUser={showLandingUser}
+      showLandingInmoviliaria={showLandingInmoviliaria}
     />
   );
 }

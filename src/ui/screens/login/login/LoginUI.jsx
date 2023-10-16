@@ -5,7 +5,8 @@ import {View, Text, Pressable, StatusBar, StyleSheet} from 'react-native';
 const LoginUI = ({
   showRegister,
   showRecoveryPassword,
-  //showLanding,
+  showLandingUser,
+  showLandingInmoviliaria,
 }) => {
   return (
     <View style={styles.container}>
@@ -20,6 +21,12 @@ const LoginUI = ({
       </Pressable>
       <Pressable onPress={() => showRegister()}>
         <Text>{'Push - Show Register'}</Text>
+      </Pressable>
+      <Pressable onPress={() => showLandingUser()}>
+        <Text>{'Replace - Show User'}</Text>
+      </Pressable>
+      <Pressable onPress={() => showLandingInmoviliaria()}>
+        <Text>{'Replace - Show Inmoviliaria'}</Text>
       </Pressable>
     </View>
   );
