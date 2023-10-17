@@ -1,5 +1,3 @@
-import {StyleSheet} from 'react-native';
-
 const Theme = {
   colors: {
     PRIMARY: '#FF8E6E',

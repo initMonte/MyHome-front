@@ -1,14 +1,13 @@
-//TO DO
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 //import i18n from '../../../../assets/strings/I18n';
 
-import PublicacionesUI from './PublicacionesUI';
+import AlquilerUI from './AlquilerUI';
 
-function Publicaciones() {
+function Alquiler() {
   const navigation = useNavigation();
 
-  return <PublicacionesUI />;
+  return <AlquilerUI />;
 }
 
-export default Publicaciones;
+export default Alquiler;
