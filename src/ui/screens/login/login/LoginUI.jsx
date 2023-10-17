@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Pressable, StatusBar, StyleSheet} from 'react-native';
-//import i18n from '../../../../assets/strings/I18n';
+import i18n from '../../../../assets/strings/I18n';
 
 const LoginUI = ({
   showRegister,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ccc',
+    backgroundColor: '#000',
   },
 });
 
