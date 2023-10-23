@@ -15,11 +15,11 @@ import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 
-const LoginInmoviliariaUI = ({
+const LoginInmobiliariaUI = ({
   goBack,
   showRegister,
   showRecoveryPassword,
-  showLandingInmoviliaria,
+  showLandingInmobiliaria,
 }) => {
   return (
     <ScrollView style={styles.generalContainer}>
@@ -46,7 +46,7 @@ const LoginInmoviliariaUI = ({
           size="M"
           color="secondary"
           onPress={() => {
-            showLandingInmoviliaria();
+            showLandingInmobiliaria();
           }}
         />
         <View style={styles.container3}>
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginInmoviliariaUI;
+export default LoginInmobiliariaUI;

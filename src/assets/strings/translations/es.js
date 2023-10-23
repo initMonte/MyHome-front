@@ -133,7 +133,7 @@ export default {
   reserve_success: '¡Reserva realizada!',
   thanks: '¡Gracias por confiar en nosotros!',
   wantToReview:
-    'Si desea, puede calificar y dejar un comentario sobre la inmoviliaria para ayudar a futuros usuarios',
+    'Si desea, puede calificar y dejar un comentario sobre la inmobiliaria para ayudar a futuros usuarios',
   Comment: 'Comentario',
   send: 'Enviar',
   m2: 'm2',

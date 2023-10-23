@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import NavigatorConstant from './NavigatorConstant';
 import LoginStackNavigator from './LoginStackNavigator';
 import LandingUserNavigator from './LandingUserNavigator';
-import LandingInmoviliariaNavigator from './LandingInmoviliariaNavigator';
+import LandingInmobiliariaNavigator from './LandingInmobiliariaNavigator';
 
 //import Start from '../ui/screens/start/Start';
 
@@ -25,8 +25,8 @@ function RootNavigator() {
           component={LandingUserNavigator}
         />
         <Stack.Screen
-          name={NavigatorConstant.NAVIGATOR.LANDING_INMOVILIARIA}
-          component={LandingInmoviliariaNavigator}
+          name={NavigatorConstant.NAVIGATOR.LANDING_INMOBILIARIA}
+          component={LandingInmobiliariaNavigator}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Login from '../ui/screens/login/login/Login';
-import LoginInmoviliaria from '../ui/screens/login/loginInmoviliaria/LoginInmoviliaria';
+import LoginInmobiliaria from '../ui/screens/login/loginInmobiliaria/LoginInmobiliaria';
 import Register from '../ui/screens/login/register/Register';
 import PasswordRecovery from '../ui/screens/login/passwordRecovery/PasswordRecovery';
 import PasswordRecoveryCode from '../ui/screens/login/passwordRecoveryCode/PasswordRecoveryCode';
@@ -32,8 +32,8 @@ function LoginNavigator() {
         component={Register}
       />
       <Stack.Screen
-        name={NavigatorConstant.LOGIN_STACK.LOGIN_INMOVILIARIA}
-        component={LoginInmoviliaria}
+        name={NavigatorConstant.LOGIN_STACK.LOGIN_INMOBILIARIA}
+        component={LoginInmobiliaria}
       />
     </Stack.Navigator>
   );

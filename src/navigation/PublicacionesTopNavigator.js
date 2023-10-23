@@ -1,8 +1,8 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import Alquiler from '../ui/screens/landingInmoviliaria/publicaciones/alquiler/Alquiler';
-import Venta from '../ui/screens/landingInmoviliaria/publicaciones/venta/Venta';
+import Alquiler from '../ui/screens/landingInmobiliaria/publicaciones/alquiler/Alquiler';
+import Venta from '../ui/screens/landingInmobiliaria/publicaciones/venta/Venta';
 
 import NavigatorConstant from './NavigatorConstant';
 

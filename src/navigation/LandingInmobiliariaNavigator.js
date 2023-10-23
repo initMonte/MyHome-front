@@ -1,9 +1,9 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import Publicaciones from '../ui/screens/landingInmoviliaria/publicaciones/Publicaciones';
-import Publicar from '../ui/screens/landingInmoviliaria/publicar/Publicar';
-import Perfil from '../ui/screens/landingInmoviliaria/perfil/Perfil';
+import Publicaciones from '../ui/screens/landingInmobiliaria/publicaciones/Publicaciones';
+import Publicar from '../ui/screens/landingInmobiliaria/publicar/Publicar';
+import Perfil from '../ui/screens/landingInmobiliaria/perfil/Perfil';
 
 import i18n from '../assets/strings/I18n';
 import Theme from '../styles/Theme';
@@ -11,14 +11,14 @@ import NavigatorConstant from './NavigatorConstant';
 import VectorIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
-function LandingInmoviliariaStackNavigator() {
+function LandingInmobiliariaStackNavigator() {
   return (
     <Tab.Navigator
       initialRouteName={
-        NavigatorConstant.LANDING_INMOVILIARIA_STACK.PUBLICACIONES
+        NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES
       }>
       <Tab.Screen
-        name={NavigatorConstant.LANDING_INMOVILIARIA_STACK.PUBLICACIONES}
+        name={NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES}
         component={Publicaciones}
         options={{
           tabBarLabel: i18n.t('tabs.publicaciones'),
@@ -32,7 +32,7 @@ function LandingInmoviliariaStackNavigator() {
         }}
       />
       <Tab.Screen
-        name={NavigatorConstant.LANDING_INMOVILIARIA_STACK.PUBLICAR}
+        name={NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICAR}
         component={Publicar}
         options={{
           tabBarLabel: i18n.t('tabs.publicar'),
@@ -46,7 +46,7 @@ function LandingInmoviliariaStackNavigator() {
         }}
       />
       <Tab.Screen
-        name={NavigatorConstant.LANDING_INMOVILIARIA_STACK.PERFIL}
+        name={NavigatorConstant.LANDING_INMOBILIARIA_STACK.PERFIL}
         component={Perfil}
         options={{
           tabBarLabel: i18n.t('tabs.perfil'),
@@ -63,4 +63,4 @@ function LandingInmoviliariaStackNavigator() {
   );
 }
 
-export default LandingInmoviliariaStackNavigator;
+export default LandingInmobiliariaStackNavigator;

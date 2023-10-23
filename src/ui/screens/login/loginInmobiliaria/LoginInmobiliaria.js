@@ -2,9 +2,9 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import NavigatorConstant from '../../../../navigation/NavigatorConstant';
 
-import LoginInmoviliariaUI from './LoginInmoviliariaUI';
+import LoginInmobiliariaUI from './LoginInmobiliariaUI';
 
-function LoginInmoviliaria() {
+function LoginInmobiliaria() {
   const navigation = useNavigation();
 
   const goBack = () => {
@@ -19,18 +19,18 @@ function LoginInmoviliaria() {
     navigation.push(NavigatorConstant.LOGIN_STACK.REGISTER);
   };
 
-  const showLandingInmoviliaria = () => {
-    navigation.replace(NavigatorConstant.NAVIGATOR.LANDING_INMOVILIARIA);
+  const showLandingInmobiliaria = () => {
+    navigation.replace(NavigatorConstant.NAVIGATOR.LANDING_INMOBILIARIA);
   };
 
   return (
-    <LoginInmoviliariaUI
+    <LoginInmobiliariaUI
       goBack={goBack}
       showRegister={showRegister}
       showRecoveryPassword={showRecoveryPassword}
-      showLandingInmoviliaria={showLandingInmoviliaria}
+      showLandingInmobiliaria={showLandingInmobiliaria}
     />
   );
 }
 
-export default LoginInmoviliaria;
+export default LoginInmobiliaria;

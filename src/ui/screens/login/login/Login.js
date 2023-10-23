@@ -19,8 +19,8 @@ function Login() {
     navigation.replace(NavigatorConstant.NAVIGATOR.LANDING_USER);
   };
 
-  const showLoginInmoviliaria = () => {
-    navigation.push(NavigatorConstant.LOGIN_STACK.LOGIN_INMOVILIARIA);
+  const showLoginInmobiliaria = () => {
+    navigation.push(NavigatorConstant.LOGIN_STACK.LOGIN_INMOBILIARIA);
   };
 
   return (
@@ -28,7 +28,7 @@ function Login() {
       showRegister={showRegister}
       showRecoveryPassword={showRecoveryPassword}
       showLandingUser={showLandingUser}
-      showLoginInmoviliaria={showLoginInmoviliaria}
+      showLoginInmobiliaria={showLoginInmobiliaria}
     />
   );
 }

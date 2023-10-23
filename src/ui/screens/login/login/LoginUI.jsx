@@ -11,7 +11,7 @@ const LoginUI = ({
   showRegister,
   showRecoveryPassword,
   showLandingUser,
-  showLoginInmoviliaria,
+  showLoginInmobiliaria,
 }) => {
   return (
     <ScrollView style={styles.generalContainer}>
@@ -39,7 +39,7 @@ const LoginUI = ({
           color="secondary"
           image={<IMAGES.SVG.GROUP width={60} height={60} />}
           onPress={() => {
-            showLoginInmoviliaria();
+            showLoginInmobiliaria();
           }}
         />
       </View>
