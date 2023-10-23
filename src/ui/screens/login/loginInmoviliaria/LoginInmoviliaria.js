@@ -2,10 +2,14 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import NavigatorConstant from '../../../../navigation/NavigatorConstant';
 
-import LoginUI from './LoginUI';
+import LoginInmoviliariaUI from './LoginInmoviliariaUI';
 
-function Login() {
+function LoginInmoviliaria() {
   const navigation = useNavigation();
+
+  const goBack = () => {
+    navigation.goBack();
+  };
 
   const showRecoveryPassword = () => {
     navigation.push(NavigatorConstant.LOGIN_STACK.PASSWORD_RECOVERY);
@@ -15,22 +19,18 @@ function Login() {
     navigation.push(NavigatorConstant.LOGIN_STACK.REGISTER);
   };
 
-  const showLandingUser = () => {
-    navigation.replace(NavigatorConstant.NAVIGATOR.LANDING_USER);
-  };
-
-  const showLoginInmoviliaria = () => {
-    navigation.push(NavigatorConstant.LOGIN_STACK.LOGIN_INMOVILIARIA);
+  const showLandingInmoviliaria = () => {
+    navigation.replace(NavigatorConstant.NAVIGATOR.LANDING_INMOVILIARIA);
   };
 
   return (
-    <LoginUI
+    <LoginInmoviliariaUI
+      goBack={goBack}
       showRegister={showRegister}
       showRecoveryPassword={showRecoveryPassword}
-      showLandingUser={showLandingUser}
-      showLoginInmoviliaria={showLoginInmoviliaria}
+      showLandingInmoviliaria={showLandingInmoviliaria}
     />
   );
 }
 
-export default Login;
+export default LoginInmoviliaria;

@@ -3,9 +3,9 @@ import {useNavigation} from '@react-navigation/native';
 import NavigatorConstant from '../../../../navigation/NavigatorConstant';
 //import i18n from '../../../../assets/strings/I18n';
 
-import PasswordRecoveryUI from './PasswordRecoveryUI';
+import PasswordRecoveryCodeUI from './PasswordRecoveryCodeUI';
 
-function PasswordRecovery() {
+function PasswordRecoveryCode() {
   const navigation = useNavigation();
 
   const goBack = () => {
@@ -17,11 +17,11 @@ function PasswordRecovery() {
   };
 
   return (
-    <PasswordRecoveryUI
+    <PasswordRecoveryCodeUI
       goBack={goBack}
       showPasswordRecoveryCode={showPasswordRecoveryCode}
     />
   );
 }
 
-export default PasswordRecovery;
+export default PasswordRecoveryCode;

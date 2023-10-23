@@ -15,7 +15,12 @@ import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 
-const PasswordRecoveryUI = ({goBack, showPasswordRecoveryCode}) => {
+const LoginInmoviliariaUI = ({
+  goBack,
+  showRegister,
+  showRecoveryPassword,
+  showLandingInmoviliaria,
+}) => {
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
@@ -25,21 +30,31 @@ const PasswordRecoveryUI = ({goBack, showPasswordRecoveryCode}) => {
           showHideTransition={'fade'}
           hidden={false}
         />
-        <Text style={styles.textH1}>{i18n.t('passRecovery')}</Text>
+        <Text style={styles.textH1}>{i18n.t('hello')}</Text>
         <IMAGES.SVG.LOGO width={380} height={230} />
-        <Text style={styles.text2}>{i18n.t('inputEmail')}</Text>
         <View style={styles.container2}>
           <Text style={styles.text}>{i18n.t('email')}</Text>
           <InputText placeholder={i18n.t('placeholder_email')} />
+          <Text style={styles.text}>{i18n.t('pass')}</Text>
+          <InputText placeholder={i18n.t('placeholder_password')} />
+          <Pressable onPress={showRecoveryPassword}>
+            <Text style={styles.presable1}>{i18n.t('forgotPass')}</Text>
+          </Pressable>
         </View>
         <Button
-          text={i18n.t('continue')}
+          text={i18n.t('login')}
           size="M"
           color="secondary"
           onPress={() => {
-            showPasswordRecoveryCode();
+            showLandingInmoviliaria();
           }}
         />
+        <View style={styles.container3}>
+          <Text style={styles.text}>{i18n.t('noAccount')}</Text>
+          <Pressable onPress={showRegister}>
+            <Text style={styles.pressable2}>{i18n.t('register')}</Text>
+          </Pressable>
+        </View>
         <Button
           text={i18n.t('goBack')}
           size="M"
@@ -64,7 +79,6 @@ const styles = StyleSheet.create({
   },
   container2: {
     margin: 20,
-    marginBottom: 40,
   },
   container3: {
     margin: 10,
@@ -78,15 +92,8 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.M,
     fontWeight: Theme.fonts.BOLD,
   },
-  text2: {
-    color: Theme.colors.SECONDARY,
-    fontSize: Theme.fonts.L,
-    fontWeight: Theme.fonts.BOLD,
-  },
   textH1: {
-    marginTop: 20,
-    marginBottom: 20,
-    textAlign: 'center',
+    margin: 20,
     color: Theme.colors.PRIMARY,
     fontSize: Theme.fonts.XL,
     fontWeight: Theme.fonts.BOLD,
@@ -105,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PasswordRecoveryUI;
+export default LoginInmoviliariaUI;

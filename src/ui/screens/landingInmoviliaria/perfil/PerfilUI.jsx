@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Pressable, StatusBar, StyleSheet} from 'react-native';
 //import i18n from '../../../../assets/strings/I18n';
 
-const PerfilUI = ({}) => {
+const RegisterUI = ({showLogin}) => {
   return (
     <View style={styles.container}>
       <StatusBar
@@ -11,7 +11,9 @@ const PerfilUI = ({}) => {
         showHideTransition={'fade'}
         hidden={false}
       />
-      <Text>{'Estoy en PERFIL'}</Text>
+      <Pressable onPress={() => showLogin()}>
+        <Text>{'Estoy en PERFIL, volver a Login'}</Text>
+      </Pressable>
     </View>
   );
 };
@@ -24,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PerfilUI;
+export default RegisterUI;

@@ -4,7 +4,7 @@ import Theme from '../../styles/Theme';
 
 const InputText = ({
   placeholder,
-  size = 'XXL',
+  size = 'XL',
   keyboard = 'default',
   hideText = false,
 }) => {
@@ -21,31 +21,23 @@ const InputText = ({
     fontWeight: Theme.fonts.BOLD,
   });
 
-  function sizes(x) {
-    let y;
-    if (x === 'XL') {
-      y = StyleSheet.create({
-        width: 320,
-      });
-    } else if (x === 'L') {
-      y = StyleSheet.create({
-        width: 240,
-      });
-    } else if (x === 'S') {
-      y = StyleSheet.create({
-        width: 100,
-      });
-    } else if (x === 'XS') {
-      y = StyleSheet.create({
-        width: 72,
-      });
-    } else {
-      y = StyleSheet.create({
-        width: 340,
-      });
-    }
-    return y;
-  }
+  const inputSizes = StyleSheet.create({
+    XL: {
+      width: 340,
+    },
+    L: {
+      width: 320,
+    },
+    M: {
+      width: 240,
+    },
+    S: {
+      width: 100,
+    },
+    XS: {
+      width: 72,
+    },
+  });
 
   function inputFocused() {
     let y;
@@ -60,7 +52,7 @@ const InputText = ({
 
   return (
     <TextInput
-      style={[generalStyle, sizes(size), inputFocused()]}
+      style={[generalStyle, inputSizes[size], inputFocused()]}
       onChangeText={onChangeInput}
       value={input}
       onFocus={() => onChangeFocus(true)}

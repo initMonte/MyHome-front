@@ -1,13 +1,17 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-//import i18n from '../../../../assets/strings/I18n';
+import NavigatorConstant from '../../../../navigation/NavigatorConstant';
 
 import PerfilUI from './PerfilUI';
 
 function Perfil() {
   const navigation = useNavigation();
 
-  return <PerfilUI />;
+  const showLogin = () => {
+    navigation.replace(NavigatorConstant.NAVIGATOR.LOGIN);
+  };
+
+  return <PerfilUI showLogin={showLogin} />;
 }
 
 export default Perfil;

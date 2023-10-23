@@ -1,29 +1,39 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import Register from '../ui/screens/login/register/Register';
 import Login from '../ui/screens/login/login/Login';
+import LoginInmoviliaria from '../ui/screens/login/loginInmoviliaria/LoginInmoviliaria';
+import Register from '../ui/screens/login/register/Register';
 import PasswordRecovery from '../ui/screens/login/passwordRecovery/PasswordRecovery';
+import PasswordRecoveryCode from '../ui/screens/login/passwordRecoveryCode/PasswordRecoveryCode';
 
-import i18n from '../assets/strings/I18n';
 import NavigatorConstant from './NavigatorConstant';
 
 const Stack = createNativeStackNavigator();
 function LoginNavigator() {
   return (
-    <Stack.Navigator initialRouteName={NavigatorConstant.LOGIN_STACK.LOGIN}>
+    <Stack.Navigator
+      initialRouteName={NavigatorConstant.LOGIN_STACK.LOGIN}
+      screenOptions={{headerShown: false}}>
       <Stack.Screen
         name={NavigatorConstant.LOGIN_STACK.LOGIN}
         component={Login}
-        options={{title: i18n.t('appName')}}
       />
       <Stack.Screen
         name={NavigatorConstant.LOGIN_STACK.PASSWORD_RECOVERY}
         component={PasswordRecovery}
       />
       <Stack.Screen
+        name={NavigatorConstant.LOGIN_STACK.PASSWORD_RECOVERY_CODE}
+        component={PasswordRecoveryCode}
+      />
+      <Stack.Screen
         name={NavigatorConstant.LOGIN_STACK.REGISTER}
         component={Register}
+      />
+      <Stack.Screen
+        name={NavigatorConstant.LOGIN_STACK.LOGIN_INMOVILIARIA}
+        component={LoginInmoviliaria}
       />
     </Stack.Navigator>
   );

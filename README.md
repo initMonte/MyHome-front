@@ -41,3 +41,5 @@ yarn start
 - Implementando Navigation basica
 - Creados componentes Button y InputText, personalizables para lo necesario segun el Figma
 - Solucionado error del styles.xml que causaba crasheo con el TextInput de React Native
+- Rework del Button y InputText
+- Creadas pantallas de Login, LoginInmoviliaria, PasswordRecovery

@@ -14,7 +14,7 @@ export default {
   login: 'Ingresar',
   continue: 'Continuar',
   inputEmail: 'Ingrese su email:',
-  passRecovery: 'Recuperá tu contraseña',
+  passRecovery: 'Recuperación de contraseña',
   emailSentTo: 'Te enviamos un email a:',
   inputCode: 'Ingresar el código recibido:',
   confirm: 'Confirmar',
@@ -109,6 +109,7 @@ export default {
   placeholder_phone: '1122334455',
   placeholder_realStateName: 'Propiedades 123',
   placeholder_email: 'inmobiliariaGenial123@gmail.com',
+  placeholder_password: 'Contraseña...',
   placeholder_comment: 'Comentario...',
   placeholder_contact:
     'Estoy interesado en esta propiedad y me gustaría ser contactado...',

@@ -11,171 +11,125 @@ const Button = ({text, onPress, size = 'M', color = 'primary', image}) => {
     justifyContent: 'space-evenly',
   });
 
-  function sizes(x) {
-    let y;
-    if (x === 'XL') {
-      y = StyleSheet.create({
-        width: 380,
-        height: 112,
-      });
-    } else if (x === 'L') {
-      y = StyleSheet.create({
-        width: 380,
-        height: 48,
-      });
-    } else if (x === 'S') {
-      y = StyleSheet.create({
-        width: 88,
-        height: 20,
-      });
-    } else {
-      // el "M" o si ingresan un valor "invalido" cae aca, que es el por defecto
-      y = StyleSheet.create({
-        width: 136,
-        height: 48,
-      });
-    }
-    return y;
-  }
+  const buttonSizes = StyleSheet.create({
+    XL: {
+      width: 380,
+      height: 112,
+    },
+    L: {
+      width: 380,
+      height: 48,
+    },
+    M: {
+      width: 136,
+      height: 48,
+    },
+    S: {
+      width: 88,
+      height: 20,
+    },
+  });
 
-  function fontsSize(x) {
-    let y;
-    if (x === 'XL') {
-      y = StyleSheet.create({
-        fontSize: Theme.fonts.L,
-        fontWeight: Theme.fonts.BOLD,
-        textAlign: 'center',
-      });
-    } else if (x === 'L') {
-      y = StyleSheet.create({
-        fontSize: Theme.fonts.L,
-        fontWeight: Theme.fonts.SEMIBOLD,
-        textAlign: 'center',
-      });
-    } else if (x === 'S') {
-      y = StyleSheet.create({
-        fontSize: Theme.fonts.S,
-        fontWeight: Theme.fonts.SEMIBOLD,
-        textAlign: 'center',
-      });
-    } else {
-      // el "M" o si ingresan un valor "invalido" cae aca, que es el por defecto
-      y = StyleSheet.create({
-        fontSize: Theme.fonts.M,
-        fontWeight: Theme.fonts.SEMIBOLD,
-        textAlign: 'center',
-      });
-    }
-    return y;
-  }
+  const fontsSizes = StyleSheet.create({
+    XL: {
+      fontSize: Theme.fonts.L,
+      fontWeight: Theme.fonts.BOLD,
+      textAlign: 'center',
+    },
+    L: {
+      fontSize: Theme.fonts.L,
+      fontWeight: Theme.fonts.BOLD,
+      textAlign: 'center',
+    },
+    M: {
+      fontSize: Theme.fonts.M,
+      fontWeight: Theme.fonts.BOLD,
+      textAlign: 'center',
+    },
+    S: {
+      fontSize: Theme.fonts.S,
+      fontWeight: Theme.fonts.SEMIBOLD,
+      textAlign: 'center',
+    },
+  });
 
-  function colorsNotPressed(x) {
-    let y;
-    if (x === 'secondary') {
-      y = StyleSheet.create({
-        backgroundColor: Theme.colors.SECONDARY,
-      });
-    } else if (x === 'secondary-transparent') {
-      y = StyleSheet.create({
-        borderColor: Theme.colors.PRIMARY,
-      });
-    } else if (x === 'secondary-inverted') {
-      y = StyleSheet.create({
-        borderWidth: 4,
-        borderColor: Theme.colors.SECONDARY,
-      });
-    } else if (x === 'primary-transparent') {
-      y = StyleSheet.create({
-        backgroundColor: Theme.colors.WHITE,
-      });
-    } else if (x === 'primary-inverted') {
-      y = StyleSheet.create({
-        borderWidth: 4,
-        borderColor: Theme.colors.PRIMARY,
-      });
-    } else {
-      // el "primary" o si ingresan un valor "invalido" cae aca, que es el por defecto
-      y = StyleSheet.create({
-        backgroundColor: Theme.colors.PRIMARY,
-      });
-    }
-    return y;
-  }
+  const colorsNotPressed = StyleSheet.create({
+    primary: {
+      backgroundColor: Theme.colors.PRIMARY,
+    },
+    primaryInverted: {
+      borderWidth: 4,
+      borderColor: Theme.colors.PRIMARY,
+    },
+    primaryTransparent: {
+      backgroundColor: Theme.colors.WHITE,
+    },
+    secondary: {
+      backgroundColor: Theme.colors.SECONDARY,
+    },
+    secondaryInverted: {
+      borderWidth: 4,
+      borderColor: Theme.colors.SECONDARY,
+    },
+    secondaryTransparent: {
+      backgroundColor: Theme.colors.WHITE,
+    },
+  });
 
-  function colorsPressed(x) {
-    let y;
-    if (x === 'secondary') {
-      y = StyleSheet.create({
-        backgroundColor: Theme.colors.SECONDARY_PRESSED,
-      });
-    } else if (x === 'secondary-transparent') {
-      y = StyleSheet.create({
-        borderColor: Theme.colors.SECONDARY,
-      });
-    } else if (x === 'secondary-inverted') {
-      y = StyleSheet.create({
-        borderWidth: 4,
-        borderColor: Theme.colors.SECONDARY_PRESSED,
-      });
-    } else if (x === 'primary-transparent') {
-      y = StyleSheet.create({
-        backgroundColor: Theme.colors.WHITE,
-      });
-    } else if (x === 'primary-inverted') {
-      y = StyleSheet.create({
-        borderWidth: 4,
-        borderColor: Theme.colors.PRIMARY_PRESSED,
-      });
-    } else {
-      // el "primary" o si ingresan un valor "invalido" cae aca, que es el por defecto
-      y = StyleSheet.create({
-        backgroundColor: Theme.colors.PRIMARY_PRESSED,
-      });
-    }
-    return y;
-  }
+  const colorsPressed = StyleSheet.create({
+    primary: {
+      backgroundColor: Theme.colors.PRIMARY_PRESSED,
+    },
+    primaryInverted: {
+      borderWidth: 4,
+      borderColor: Theme.colors.PRIMARY_PRESSED,
+    },
+    primaryTransparent: {
+      backgroundColor: Theme.colors.WHITE,
+    },
+    secondary: {
+      backgroundColor: Theme.colors.SECONDARY_PRESSED,
+    },
+    secondaryInverted: {
+      borderWidth: 4,
+      borderColor: Theme.colors.SECONDARY_PRESSED,
+    },
+    secondaryTransparent: {
+      backgroundColor: Theme.colors.WHITE,
+    },
+  });
 
-  function fontsColor(x) {
-    let y;
-    if (x === 'secondary') {
-      y = StyleSheet.create({
-        color: Theme.colors.WHITE,
-      });
-    } else if (x === 'secondary-transparent') {
-      y = StyleSheet.create({
-        color: Theme.colors.SECONDARY,
-      });
-    } else if (x === 'secondary-inverted') {
-      y = StyleSheet.create({
-        color: Theme.colors.SECONDARY,
-      });
-    } else if (x === 'primary-transparent') {
-      y = StyleSheet.create({
-        color: Theme.colors.PRIMARY,
-      });
-    } else if (x === 'primary-inverted') {
-      y = StyleSheet.create({
-        color: Theme.colors.PRIMARY,
-      });
-    } else {
-      // el "primary" o si ingresan un valor "invalido" cae aca, que es el por defecto
-      y = StyleSheet.create({
-        color: Theme.colors.WHITE,
-      });
-    }
-    return y;
-  }
+  const fontsColor = StyleSheet.create({
+    primary: {
+      color: Theme.colors.WHITE,
+    },
+    primaryInverted: {
+      color: Theme.colors.PRIMARY,
+    },
+    primaryTransparent: {
+      color: Theme.colors.PRIMARY,
+    },
+    secondary: {
+      color: Theme.colors.WHITE,
+    },
+    secondaryInverted: {
+      color: Theme.colors.SECONDARY,
+    },
+    secondaryTransparent: {
+      color: Theme.colors.SECONDARY,
+    },
+  });
 
   return (
     <Pressable
       onPress={onPress}
       style={({pressed}) => [
         button,
-        sizes(size),
-        pressed ? colorsPressed(color) : colorsNotPressed(color),
+        buttonSizes[size],
+        pressed ? colorsPressed[color] : colorsNotPressed[color],
       ]}>
       {image}
-      <Text style={[fontsSize(size), fontsColor(color)]}>{text}</Text>
+      <Text style={[fontsSizes[size], fontsColor[color]]}>{text}</Text>
     </Pressable>
   );
 };

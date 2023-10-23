@@ -1,28 +1,20 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  StatusBar,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
 import {Image} from 'react-native-svg';
 
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
-import InputText from '../../../components/inputText';
 
 const LoginUI = ({
   showRegister,
   showRecoveryPassword,
   showLandingUser,
-  showLandingInmoviliaria,
+  showLoginInmoviliaria,
 }) => {
   return (
-    <ScrollView>
+    <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
         <StatusBar
           animated={true}
@@ -32,14 +24,7 @@ const LoginUI = ({
         />
         <Text style={styles.textH1}>{i18n.t('welcome')}</Text>
         <IMAGES.SVG.LOGO width={380} height={230} />
-        <InputText placeholder="asd" size="L" hideText={true} />
         <Text style={styles.text}>{i18n.t('loginMode')}</Text>
-        <Pressable onPress={() => showRecoveryPassword()}>
-          <Text style={styles.text}>{'Push - Show Recovery Password'}</Text>
-        </Pressable>
-        <Pressable onPress={() => showRegister()}>
-          <Text style={styles.text}>{'Push - Show Register'}</Text>
-        </Pressable>
         <Button
           text={i18n.t('continueWithGoogle')}
           size="XL"
@@ -54,7 +39,7 @@ const LoginUI = ({
           color="secondary"
           image={<IMAGES.SVG.GROUP width={60} height={60} />}
           onPress={() => {
-            showLandingInmoviliaria();
+            showLoginInmoviliaria();
           }}
         />
       </View>
@@ -63,17 +48,23 @@ const LoginUI = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  generalContainer: {
     backgroundColor: Theme.colors.WHITE,
   },
+  container: {
+    paddingTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   text: {
+    marginTop: 40,
+    marginBottom: 20,
     color: Theme.colors.SECONDARY,
     fontSize: Theme.fonts.L,
     fontWeight: Theme.fonts.BOLD,
   },
   textH1: {
+    margin: 20,
     color: Theme.colors.SECONDARY,
     fontSize: Theme.fonts.XL,
     fontWeight: Theme.fonts.BOLD,

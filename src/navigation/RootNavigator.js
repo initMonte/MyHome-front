@@ -14,7 +14,8 @@ function RootNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={NavigatorConstant.NAVIGATOR.LoginStackNavigator}>
+        initialRouteName={NavigatorConstant.NAVIGATOR.LoginStackNavigator}
+        screenOptions={{headerShown: false}}>
         <Stack.Screen
           name={NavigatorConstant.NAVIGATOR.LOGIN}
           component={LoginStackNavigator}
