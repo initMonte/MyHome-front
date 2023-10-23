@@ -7,6 +7,7 @@ const Theme = {
     WHITE: '#FFFFFF',
     BLACK: '#000000',
     DISABLED: '#9CABC2',
+    PLACEHOLDER: '#6C6C6C',
   },
   fonts: {
     S: 14,

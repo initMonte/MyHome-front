@@ -39,3 +39,5 @@ yarn start
 - Agregados iconos de la App
 - Agregada libreria de Splash e implementada **(tuve que desactivar el "Splash automatico" de Android 12 y eso genera un pequeño retraso al inicio :c)**
 - Implementando Navigation basica
+- Creados componentes Button y InputText, personalizables para lo necesario segun el Figma
+- Solucionado error del styles.xml que causaba crasheo con el TextInput de React Native

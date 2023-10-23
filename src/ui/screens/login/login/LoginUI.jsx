@@ -1,11 +1,19 @@
 import React from 'react';
-import {View, Text, Pressable, StatusBar, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  StatusBar,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import {Image} from 'react-native-svg';
 
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
+import InputText from '../../../components/inputText';
 
 const LoginUI = ({
   showRegister,
@@ -14,23 +22,24 @@ const LoginUI = ({
   showLandingInmoviliaria,
 }) => {
   return (
-    <View style={styles.container}>
-      <StatusBar
-        animated={true}
-        barStyle={'light-content'}
-        showHideTransition={'fade'}
-        hidden={false}
-      />
-      <Text style={styles.textH1}>{i18n.t('welcome')}</Text>
-      <IMAGES.SVG.LOGO width={380} height={230} />
-      <Text style={styles.text}>{i18n.t('loginMode')}</Text>
-      <Pressable onPress={() => showRecoveryPassword()}>
-        <Text style={styles.text}>{'Push - Show Recovery Password'}</Text>
-      </Pressable>
-      <Pressable onPress={() => showRegister()}>
-        <Text style={styles.text}>{'Push - Show Register'}</Text>
-      </Pressable>
-      <View alignItems="center">
+    <ScrollView>
+      <View style={styles.container}>
+        <StatusBar
+          animated={true}
+          barStyle={'light-content'}
+          showHideTransition={'fade'}
+          hidden={false}
+        />
+        <Text style={styles.textH1}>{i18n.t('welcome')}</Text>
+        <IMAGES.SVG.LOGO width={380} height={230} />
+        <InputText placeholder="asd" size="L" hideText={true} />
+        <Text style={styles.text}>{i18n.t('loginMode')}</Text>
+        <Pressable onPress={() => showRecoveryPassword()}>
+          <Text style={styles.text}>{'Push - Show Recovery Password'}</Text>
+        </Pressable>
+        <Pressable onPress={() => showRegister()}>
+          <Text style={styles.text}>{'Push - Show Register'}</Text>
+        </Pressable>
         <Button
           text={i18n.t('continueWithGoogle')}
           size="XL"
@@ -49,7 +58,7 @@ const LoginUI = ({
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
