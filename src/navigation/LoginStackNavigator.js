@@ -7,6 +7,8 @@ import Register from '../ui/screens/login/register/Register';
 import PasswordRecovery from '../ui/screens/login/passwordRecovery/PasswordRecovery';
 import PasswordRecoveryCode from '../ui/screens/login/passwordRecoveryCode/PasswordRecoveryCode';
 import PasswordRecoveryNewPass from '../ui/screens/login/passwordRecoveryNewPass/passwordRecoveryNewPass';
+import RegisterCode from '../ui/screens/login/registerCode/RegisterCode';
+import RegisterSuccessful from '../ui/screens/login/registerSuccessful/RegisterSuccessful';
 
 import NavigatorConstant from './NavigatorConstant';
 
@@ -39,6 +41,14 @@ function LoginNavigator() {
       <Stack.Screen
         name={NavigatorConstant.LOGIN_STACK.LOGIN_INMOBILIARIA}
         component={LoginInmobiliaria}
+      />
+      <Stack.Screen
+        name={NavigatorConstant.LOGIN_STACK.REGISTER_CODE}
+        component={RegisterCode}
+      />
+      <Stack.Screen
+        name={NavigatorConstant.LOGIN_STACK.REGISTER_SUCCESSFUL}
+        component={RegisterSuccessful}
       />
     </Stack.Navigator>
   );

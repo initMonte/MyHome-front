@@ -44,3 +44,5 @@ yarn start
 - Rework del Button y InputText
 - Creadas pantallas de Login, LoginInmobiliaria, PasswordRecovery
 - Creadas pantallas de PasswordRecoveryCode, PasswordRecoveryNewPass
+- Creadas pantallas de Register, RegisterCode, RegisterSuccessful
+- Agregado svg del icono de success
