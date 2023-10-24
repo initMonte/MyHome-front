@@ -1,7 +1,6 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import NavigatorConstant from '../../../../navigation/NavigatorConstant';
-//import i18n from '../../../../assets/strings/I18n';
 
 import PasswordRecoveryCodeUI from './PasswordRecoveryCodeUI';
 
@@ -12,14 +11,14 @@ function PasswordRecoveryCode() {
     navigation.pop();
   };
 
-  const showPasswordRecoveryCode = () => {
-    navigation.push(NavigatorConstant.LOGIN_STACK.PASSWORD_RECOVERY_CODE);
+  const showPasswordRecoveryNewPass = () => {
+    navigation.push(NavigatorConstant.LOGIN_STACK.PASSWORD_RECOVERY_NEW_PASS);
   };
 
   return (
     <PasswordRecoveryCodeUI
       goBack={goBack}
-      showPasswordRecoveryCode={showPasswordRecoveryCode}
+      showPasswordRecoveryNewPass={showPasswordRecoveryNewPass}
     />
   );
 }

@@ -8,7 +8,7 @@ import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 
-const PasswordRecoveryUI = ({goBack, showPasswordRecoveryCode}) => {
+const PasswordRecoveryNewPassUI = ({goBack, showLandingInmobiliaria}) => {
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
@@ -22,15 +22,17 @@ const PasswordRecoveryUI = ({goBack, showPasswordRecoveryCode}) => {
         <IMAGES.SVG.LOGO width={380} height={230} />
         <Text style={styles.text2}>{i18n.t('inputEmail')}</Text>
         <View style={styles.container2}>
-          <Text style={styles.text}>{i18n.t('email')}</Text>
-          <InputText placeholder={i18n.t('placeholder_email')} />
+          <Text style={styles.text}>{i18n.t('newPass')}</Text>
+          <InputText placeholder={i18n.t('placeholder_password')} />
+          <Text style={styles.text}>{i18n.t('newPass2')}</Text>
+          <InputText placeholder={i18n.t('placeholder_password')} />
         </View>
         <Button
-          text={i18n.t('continue')}
+          text={i18n.t('confirm')}
           size="M"
           color="secondary"
           onPress={() => {
-            showPasswordRecoveryCode();
+            showLandingInmobiliaria();
           }}
         />
         <Button
@@ -56,8 +58,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container2: {
-    margin: 20,
-    marginBottom: 40,
+    margin: 16,
+    marginBottom: 20,
   },
   container3: {
     margin: 10,
@@ -67,6 +69,7 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 20,
+    marginTop: 10,
     color: Theme.colors.SECONDARY,
     fontSize: Theme.fonts.M,
     fontWeight: Theme.fonts.BOLD,
@@ -83,18 +86,6 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.XL,
     fontWeight: Theme.fonts.BOLD,
   },
-  presable1: {
-    marginLeft: 20,
-    color: Theme.colors.SECONDARY,
-    fontSize: Theme.fonts.S,
-    fontWeight: Theme.fonts.SEMIBOLD,
-  },
-  pressable2: {
-    color: Theme.colors.PRIMARY,
-    fontSize: Theme.fonts.M,
-    fontWeight: Theme.fonts.BOLD,
-    textDecorationLine: 'underline',
-  },
 });
 
-export default PasswordRecoveryUI;
+export default PasswordRecoveryNewPassUI;
