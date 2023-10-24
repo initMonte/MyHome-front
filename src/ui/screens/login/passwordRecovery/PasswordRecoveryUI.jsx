@@ -23,7 +23,10 @@ const PasswordRecoveryUI = ({goBack, showPasswordRecoveryCode}) => {
         <Text style={styles.text2}>{i18n.t('inputEmail')}</Text>
         <View style={styles.container2}>
           <Text style={styles.text}>{i18n.t('email')}</Text>
-          <InputText placeholder={i18n.t('placeholder_email')} />
+          <InputText
+            placeholder={i18n.t('placeholder_email')}
+            keyboard="email-address"
+          />
         </View>
         <Button
           text={i18n.t('continue')}

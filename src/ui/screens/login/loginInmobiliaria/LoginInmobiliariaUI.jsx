@@ -34,9 +34,15 @@ const LoginInmobiliariaUI = ({
         <IMAGES.SVG.LOGO width={380} height={230} />
         <View style={styles.container2}>
           <Text style={styles.text}>{i18n.t('email')}</Text>
-          <InputText placeholder={i18n.t('placeholder_email')} />
+          <InputText
+            placeholder={i18n.t('placeholder_email')}
+            keyboard="email-address"
+          />
           <Text style={styles.text}>{i18n.t('pass')}</Text>
-          <InputText placeholder={i18n.t('placeholder_password')} />
+          <InputText
+            placeholder={i18n.t('placeholder_password')}
+            hideText={true}
+          />
           <Pressable onPress={showRecoveryPassword}>
             <Text style={styles.presable1}>{i18n.t('forgotPass')}</Text>
           </Pressable>

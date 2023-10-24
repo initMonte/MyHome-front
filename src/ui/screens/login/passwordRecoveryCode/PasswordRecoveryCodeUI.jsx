@@ -23,7 +23,11 @@ const PasswordRecoveryCodeUI = ({goBack, showPasswordRecoveryNewPass}) => {
         <Text style={styles.text}>{i18n.t('emailSentTo')}</Text>
         <Text style={styles.text2}>integrarConBack@gmail.com</Text>
         <Text style={styles.text}>{i18n.t('inputCode')}</Text>
-        <InputText placeholder={i18n.t('placeholder_code')} size="M" />
+        <InputText
+          placeholder={i18n.t('placeholder_code')}
+          size="M"
+          keyboard="numeric"
+        />
         <Button
           text={i18n.t('continue')}
           size="M"

@@ -23,9 +23,15 @@ const PasswordRecoveryNewPassUI = ({goBack, showLandingInmobiliaria}) => {
         <Text style={styles.text2}>{i18n.t('inputEmail')}</Text>
         <View style={styles.container2}>
           <Text style={styles.text}>{i18n.t('newPass')}</Text>
-          <InputText placeholder={i18n.t('placeholder_password')} />
+          <InputText
+            placeholder={i18n.t('placeholder_password')}
+            hideText={true}
+          />
           <Text style={styles.text}>{i18n.t('newPass2')}</Text>
-          <InputText placeholder={i18n.t('placeholder_password')} />
+          <InputText
+            placeholder={i18n.t('placeholder_password')}
+            hideText={true}
+          />
         </View>
         <Button
           text={i18n.t('confirm')}

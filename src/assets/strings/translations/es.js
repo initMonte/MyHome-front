@@ -107,8 +107,8 @@ export default {
   placeholder_description: 'Descripción...',
   placeholder_code: 'Codigo...',
   placeholder_phone: 'Telefono...',
-  placeholder_realStateName: 'Propiedades 123',
-  placeholder_email: 'inmobiliariaGenial123@gmail.com',
+  placeholder_realStateName: 'Nombre...',
+  placeholder_email: 'Email...',
   placeholder_password: 'Contraseña...',
   placeholder_comment: 'Comentario...',
   placeholder_contact:

@@ -6,10 +6,8 @@ import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
-import InputText from '../../../components/inputText';
-import Register from '../register/Register';
 
-const RegisterCodeUI = ({goBack, showRegisterSuccessful}) => {
+const RegisterSuccessfulUI = ({goBack, showLandingInmobiliaria}) => {
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
@@ -21,24 +19,15 @@ const RegisterCodeUI = ({goBack, showRegisterSuccessful}) => {
         />
         <Text style={styles.textH1}>{i18n.t('realStateRegister')}</Text>
         <IMAGES.SVG.LOGO width={380} height={230} />
-        <Text style={styles.text}>{i18n.t('emailSentTo')}</Text>
+        <Text style={styles.text}>{i18n.t('succesRegister')}</Text>
         <Text style={styles.text2}>integrarConBack@gmail.com</Text>
-        <Text style={styles.text}>{i18n.t('inputCode')}</Text>
-        <InputText placeholder={i18n.t('placeholder_code')} size="M" />
+        <IMAGES.SVG.SUCCESS width={100} height={100} />
         <Button
-          text={i18n.t('continue')}
+          text={i18n.t('login')}
           size="M"
           color="secondary"
           onPress={() => {
-            showRegisterSuccessful();
-          }}
-        />
-        <Button
-          text={i18n.t('goBack')}
-          size="M"
-          color="secondaryTransparent"
-          onPress={() => {
-            goBack();
+            showLandingInmobiliaria();
           }}
         />
       </View>
@@ -93,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterCodeUI;
+export default RegisterSuccessfulUI;
