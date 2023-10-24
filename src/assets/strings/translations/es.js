@@ -142,7 +142,7 @@ export default {
     png: 'PNG File',
     jpeg: 'JPEG File',
     webp: 'WEBP File',
-    imageFromInternet: 'Image donwloaded from internet',
+    imageFromInternet: 'Image downloaded from internet',
   },
   tabs: {
     home: 'Inicio',
