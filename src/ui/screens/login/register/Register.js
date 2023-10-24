@@ -7,16 +7,21 @@ import RegisterUI from './RegisterUI';
 
 function Register() {
   const navigation = useNavigation();
-  /*
-  const showLanding = () => {
-    navigation.replace(NavigatorConstant.NAVIGATOR.DRAWER);
-  };
-  */
-  const showLogin = () => {
-    navigation.pop();
+
+  const showLoginInmobiliaria = () => {
+    navigation.push(NavigatorConstant.LOGIN_STACK.LOGIN_INMOBILIARIA);
   };
 
-  return <RegisterUI showLogin={showLogin} />;
+  const showLandingInmobiliaria = () => {
+    navigation.push(NavigatorConstant.NAVIGATOR.LANDING_INMOBILIARIA);
+  };
+
+  return (
+    <RegisterUI 
+      showLoginInmobiliaria={showLoginInmobiliaria}
+      showLandingInmobiliaria={showLandingInmobiliaria}
+    /> 
+  );
 }
 
 export default Register;
