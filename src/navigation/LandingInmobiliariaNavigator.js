@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Publicaciones from '../ui/screens/landingInmobiliaria/publicaciones/Publicaciones';
@@ -11,26 +11,28 @@ import NavigatorConstant from './NavigatorConstant';
 import VectorIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
+
 function LandingInmobiliariaStackNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName={
-        NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES
-      }
       screenOptions={{
         headerTitleAlign: 'center',
-      }}>
+        tabBarLabelStyle: {
+          fontSize: Theme.fonts.S,
+        },
+        tabBarActiveTintColor: Theme.colors.PRIMARY,
+        tabBarInactiveTintColor: Theme.colors.SECONDARY,
+      }}
+      initialRouteName={
+        NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES
+      }>
       <Tab.Screen
         name={NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES}
         component={Publicaciones}
         options={{
           tabBarLabel: i18n.t('tabs.publicaciones'),
-          tabBarIcon: () => (
-            <VectorIcon
-              name="home-outline"
-              color={Theme.colors.SECONDARY}
-              size={30}
-            />
+          tabBarIcon: ({color}) => (
+            <VectorIcon name="home-outline" color={color} size={30} />
           ),
         }}
       />
@@ -39,12 +41,8 @@ function LandingInmobiliariaStackNavigator() {
         component={Publicar}
         options={{
           tabBarLabel: i18n.t('tabs.publicar'),
-          tabBarIcon: () => (
-            <VectorIcon
-              name="plus-circle"
-              color={Theme.colors.SECONDARY}
-              size={30}
-            />
+          tabBarIcon: ({color}) => (
+            <VectorIcon name="plus-circle" color={color} size={30} />
           ),
         }}
       />
@@ -54,12 +52,8 @@ function LandingInmobiliariaStackNavigator() {
         options={{
           headerShown: false,
           tabBarLabel: i18n.t('tabs.perfil'),
-          tabBarIcon: () => (
-            <VectorIcon
-              name="account-outline"
-              color={Theme.colors.SECONDARY}
-              size={30}
-            />
+          tabBarIcon: ({color}) => (
+            <VectorIcon name="account-outline" color={color} size={30} />
           ),
         }}
       />

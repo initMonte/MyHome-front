@@ -46,3 +46,8 @@ yarn start
 - Creadas pantallas de PasswordRecoveryCode, PasswordRecoveryNewPass
 - Creadas pantallas de Register, RegisterCode, RegisterSuccessful
 - Agregado svg del icono de success
+- Creado componente 'cardState'
+- Creadas pantallas de Venta y Alquiler en Inmobiliaria
+- Agregados iconos SVG varios
+- Pequeñas modificaciones en Navigators y Constants
+- Modificaciones al styling de los bottomNav y topNav

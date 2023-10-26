@@ -21,7 +21,7 @@ function PublicacionesTopNavigator() {
           borderColor: Theme.colors.PRIMARY,
         },
         tabBarActiveTintColor: Theme.colors.PRIMARY,
-        tabBarInactiveTintColor: Theme.colors.PLACEHOLDER,
+        tabBarInactiveTintColor: Theme.colors.SECONDARY,
       }}>
       <Tab.Screen
         name={NavigatorConstant.PUBLICACIONES_STACK.ALQUILER}
