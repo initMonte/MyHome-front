@@ -1,13 +1,17 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-//import i18n from '../../../../assets/strings/I18n';
+import NavigatorConstant from '../../../../../navigation/NavigatorConstant';
 
 import AlquilerUI from './AlquilerUI';
 
 function Alquiler() {
   const navigation = useNavigation();
 
-  return <AlquilerUI />;
+  const showLogin = () => {
+    navigation.replace(NavigatorConstant.NAVIGATOR.LOGIN);
+  };
+
+  return <AlquilerUI showLogin={showLogin} />;
 }
 
 export default Alquiler;

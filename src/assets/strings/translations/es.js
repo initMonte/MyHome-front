@@ -128,6 +128,8 @@ export default {
   turn: 'Turno',
   usd: 'USD',
   ars: 'ARS',
+  amb: 'amb.',
+  dorm: 'dorm.',
   seeAll: 'Mostrar todos',
   reserve: 'Reservar',
   reserve_success: '¡Reserva realizada!',

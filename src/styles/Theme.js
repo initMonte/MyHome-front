@@ -11,6 +11,7 @@ const Theme = {
   },
   fonts: {
     S: 14,
+    SM: 16,
     M: 18,
     L: 24,
     XL: 36,

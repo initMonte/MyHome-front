@@ -16,7 +16,10 @@ function LandingInmobiliariaStackNavigator() {
     <Tab.Navigator
       initialRouteName={
         NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES
-      }>
+      }
+      screenOptions={{
+        headerTitleAlign: 'center',
+      }}>
       <Tab.Screen
         name={NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES}
         component={Publicaciones}
@@ -49,6 +52,7 @@ function LandingInmobiliariaStackNavigator() {
         name={NavigatorConstant.LANDING_INMOBILIARIA_STACK.PERFIL}
         component={Perfil}
         options={{
+          headerShown: false,
           tabBarLabel: i18n.t('tabs.perfil'),
           tabBarIcon: () => (
             <VectorIcon

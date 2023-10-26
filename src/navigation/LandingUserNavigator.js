@@ -14,11 +14,16 @@ import VectorIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 const Tab = createBottomTabNavigator();
 function LandingUserStackNavigator() {
   return (
-    <Tab.Navigator initialRouteName={NavigatorConstant.LANDING_USER_STACK.HOME}>
+    <Tab.Navigator
+      initialRouteName={NavigatorConstant.LANDING_USER_STACK.HOME}
+      screenOptions={{
+        headerTitleAlign: 'center',
+      }}>
       <Tab.Screen
         name={NavigatorConstant.LANDING_USER_STACK.HOME}
         component={Home}
         options={{
+          headerShown: false,
           tabBarLabel: i18n.t('tabs.home'),
           tabBarIcon: () => (
             <VectorIcon
@@ -61,6 +66,7 @@ function LandingUserStackNavigator() {
         name={NavigatorConstant.LANDING_USER_STACK.PERFIL}
         component={Perfil}
         options={{
+          headerShown: false,
           tabBarLabel: i18n.t('tabs.perfil'),
           tabBarIcon: () => (
             <VectorIcon
