@@ -8,6 +8,11 @@ import DOOR from './icons/door.svg';
 import SHOWER from './icons/shower.svg';
 import BED from './icons/bed.svg';
 import RULER from './icons/ruler.svg';
+import DEPARTMENT from './icons/department.svg';
+import HOME from './icons/home.svg';
+import OFFICE from './icons/office.svg';
+import TERRAIN from './icons/terrain.svg';
+import PARKING from './icons/parking.svg';
 
 const IMAGES = {
   SVG: {
@@ -21,6 +26,11 @@ const IMAGES = {
     SHOWER,
     BED,
     RULER,
+    DEPARTMENT,
+    HOME,
+    OFFICE,
+    TERRAIN,
+    PARKING,
   },
   OTHERS: {
     //IMAGEN_CUALQUIERA_EXCEPTO_SVG : require ('./backgrounds/imagen.webp') <-- asi se importa cualquier tipo de imagen que no sea SVG
