@@ -39,7 +39,7 @@ const PublicarUI = ({goHome}) => {
             placeholder={i18n.t('placeholder_description')}
             keyboard="email-address"
           />
-          <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', marginVertical: 20 }}>
             <ButtonSelect
               text={i18n.t('tabs.venta')}
             />
@@ -48,7 +48,7 @@ const PublicarUI = ({goHome}) => {
             />
           </View>
           <Text style={styles.text3}>{i18n.t('stateType')}</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', marginTop: 10, marginHorizontal: 5, marginBottom: -35}}>
             <ButtonSelect
               text={i18n.t('department')}
               size='L'
@@ -85,34 +85,34 @@ const PublicarUI = ({goHome}) => {
           </View>
           <Text style={styles.text3}>{i18n.t('address')}</Text>
           <InputText placeholder={i18n.t('placeholder_street')} />
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-            <InputText size='S' placeholder={i18n.t('placeholder_strNumber')} />
-            <InputText size='S' placeholder={i18n.t('placeholder_floor')} />
-            <InputText size='XS' placeholder={i18n.t('placeholder_department')} />
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: -65, marginRight: 25}}>
+            <InputText size='XS' keyboard="phone-pad" placeholder={i18n.t('placeholder_strNumber')} />
+            <InputText size='S'  keyboard="phone-pad" placeholder={i18n.t('placeholder_floor') + ' (opc)'} />
+            <InputText size='S' placeholder={i18n.t('placeholder_department') + ' (opc)'} />
           </View>
           <InputText placeholder={i18n.t('placeholder_barrio')} />
           <InputText placeholder={i18n.t('placeholder_localidad')} />
           <InputText placeholder={i18n.t('placeholder_province')} />
           <InputText placeholder={i18n.t('placeholder_country')} />
 
-          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap', marginBottom: -5, marginTop: 10 }}>
             <Text style={styles.text3}>{i18n.t('surfaceCover') + ' '}</Text>
             <InputText keyboard="phone-pad" size='XS' placeholder={i18n.t('placeholder_number')} />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap', marginBottom: -50 }}>
             <Text style={styles.text3}>{i18n.t('surfaceSemicover') + ' '}</Text>
             <InputText keyboard="phone-pad" size='XS' placeholder={i18n.t('placeholder_number')} />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap', marginBottom: -45 }}>
             <Text style={styles.text3}>{i18n.t('surfaceUncover') + ' '}</Text>
             <InputText keyboard="phone-pad" size='XS' placeholder={i18n.t('placeholder_number')} />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
 
           <Text style={styles.text3}>{i18n.t('price')}</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap', marginTop: 10 }}>
             <ButtonSelect
               text={'$'}
               size='XS'
@@ -129,7 +129,7 @@ const PublicarUI = ({goHome}) => {
           <Text style={styles.text3}>{i18n.t('expenses') + ' '}
             <Text style={styles.textOptional}>{i18n.t('optional')}</Text>
           </Text>
-          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap', marginTop: 10  }}>
             <ButtonSelect
               text={'$'}
               size='XS'
@@ -144,7 +144,7 @@ const PublicarUI = ({goHome}) => {
           </View>
 
           <Text style={styles.text3}>{i18n.t('rooms')}</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap', marginTop: 10, marginBottom: -50 }}>
             <ButtonSelect
               text={'1'}
               size='XS'
@@ -178,7 +178,7 @@ const PublicarUI = ({goHome}) => {
           </View>
 
           <Text style={styles.text3}>{i18n.t('bedrooms')}</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap', marginBottom: -50 }}>
             <ButtonSelect
               text={'1'}
               size='XS'
@@ -212,7 +212,7 @@ const PublicarUI = ({goHome}) => {
           </View>
 
           <Text style={styles.text3}>{i18n.t('bathrooms')}</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap', marginBottom: -40 }}>
             <ButtonSelect
               text={'1'}
               size='XS'
@@ -246,7 +246,7 @@ const PublicarUI = ({goHome}) => {
           </View>
 
           <Text style={styles.text3}>{i18n.t('extras')}</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', marginTop: 10, marginHorizontal: 5, marginBottom: -40 }}>
             <ButtonSelect
               text={i18n.t('terraza')}
             />
@@ -257,16 +257,16 @@ const PublicarUI = ({goHome}) => {
               text={i18n.t('baulera')}
             />
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap', marginHorizontal: 5 }}>
             <ButtonSelect
               text={i18n.t('parking')}
               image={<IMAGES.SVG.PARKING width={25} height={25} />}
             />
-            <InputText keyboard="phone-pad" size='XS' placeholder={i18n.t('placeholder_amount')} />
+            <InputText keyboard="phone-pad" size='S' placeholder={i18n.t('placeholder_amount')} />
           </View>
 
           <Text style={styles.text3}>{i18n.t('disposicion')}</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', marginTop: 10 }}>
             <ButtonSelect
               text={i18n.t('frente')}
             />
@@ -282,10 +282,43 @@ const PublicarUI = ({goHome}) => {
           <InputText placeholder={i18n.t('placeholder_orientacion')} />
 
           <Text style={styles.text3}>{i18n.t('amenities')}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', marginTop: 10, marginHorizontal: 5 }}>
+            <ButtonSelect
+              text={i18n.t('quincho')}
+              size='L'
+              image={<IMAGES.SVG.QUINCHO width={25} height={25} />}
+            />
+            <ButtonSelect
+              text={i18n.t('pool')}
+              image={<IMAGES.SVG.PILETA width={25} height={25} />}
+            />
+            <ButtonSelect
+              text={i18n.t('sauna')}
+              image={<IMAGES.SVG.SAUNA width={25} height={25} />}
+            />
+            <ButtonSelect
+              text={i18n.t('sum')}
+              image={<IMAGES.SVG.HOME width={25} height={25} />}
+            />
+            <ButtonSelect
+              text={i18n.t('jacuzzi')}
+              image={<IMAGES.SVG.JACUZZI width={25} height={25} />}
+            />
+            <ButtonSelect
+              text={i18n.t('gameRoom')}
+              image={<IMAGES.SVG.JUEGO width={25} height={25} />}
+              size='L'
+            />
+          </View>
 
           <Text style={styles.text3}>{i18n.t('addPhotos') + ' '}
             <Text style={styles.textOptional}>{i18n.t('minimun2')}</Text>
           </Text>
+          <View style={styles.imageContainer}>
+            <Pressable style={styles.imageContainerChild}>
+              <IMAGES.SVG.ADD_IMAGE width={25} height={25} margin={43}/>
+            </Pressable>
+          </View>
 
           <Text style={styles.text3}>{i18n.t('addVideo') + ' '}
             <Text style={styles.textOptional}>{i18n.t('optional')}</Text>
@@ -293,15 +326,18 @@ const PublicarUI = ({goHome}) => {
           <InputText placeholder={i18n.t('placeholder_URL')} />
 
           <Text style={styles.text3}>{i18n.t('state')}</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', marginTop: 10, marginBottom: -10 }}>
             <ButtonSelect
               text={i18n.t('sellingInRent')}
+              size='XXS'
             />
             <ButtonSelect
               text={i18n.t('reserved')}
+              size='XXS'
             />
             <ButtonSelect
               text={i18n.t('soldRented')}
+              size='XXS'
             />
           </View>
 
@@ -324,12 +360,13 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.WHITE,
   },
   container1: {
-    padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
   container2: {
-    margin: 20,
+    marginLeft: 25,
+    marginRight: 25,
   },
   text: {
     marginLeft: 20,
@@ -348,7 +385,6 @@ const styles = StyleSheet.create({
   text3: {
     marginTop: 20,
     marginLeft: 10,
-    marginBottom: 15,
     color: Theme.colors.BLACK,
     fontSize: Theme.fonts.M,
     fontWeight: Theme.fonts.BOLD,
@@ -370,6 +406,25 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.M,
     fontWeight: Theme.fonts.BOLD,
     textDecorationLine: 'underline',
+  },
+  imageContainer: {
+    width: 360,
+    height: 150,
+    backgroundColor: Theme.colors.BACKGROUND,
+    margin: 16,
+    padding: 16,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap'
+  },
+  imageContainerChild: {
+    width: 115,
+    height: 115,
+    backgroundColor: Theme.colors.WHITE,
+    borderColor: Theme.colors.PLACEHOLDER,
+    borderWidth: 1,
+    borderRadius: 10,
   },
 });
 

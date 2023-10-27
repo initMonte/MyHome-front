@@ -6,7 +6,7 @@ const ButtonSelect = ({ text, borderRadius = 10, onPress, size = 'M', color = 'p
   const [isSelected, setIsSelected] = useState(false);
 
   const button = StyleSheet.create({
-    margin: 5,
+    margin: 4,
     borderRadius: borderRadius,
     flexDirection: 'row',
     alignItems: 'center',
@@ -31,9 +31,13 @@ const ButtonSelect = ({ text, borderRadius = 10, onPress, size = 'M', color = 'p
       height: 20,
     },
     XS: {
-        width: 40,
-        height: 40,
-      },
+       width: 50,
+      height: 50,
+    },
+    XXS: {
+      width: 110,
+      height: 40,
+   },
   });
 
   const fontsSizes = StyleSheet.create({
@@ -62,6 +66,11 @@ const ButtonSelect = ({ text, borderRadius = 10, onPress, size = 'M', color = 'p
         fontWeight: Theme.fonts.SEMIBOLD,
         textAlign: 'center',
       },
+    XXS: {
+      fontSize: Theme.fonts.XXS,
+      fontWeight: Theme.fonts.SEMIBOLD,
+      textAlign: 'center',
+    },
   });
 
   const selectedColors = StyleSheet.create({

@@ -14,8 +14,8 @@ const InputText = ({
   const generalStyle = StyleSheet.create({
     height: 40,
     margin: 12,
-    borderBottomWidth: 1,
     padding: 10,
+    borderBottomWidth: 1,
     color: Theme.colors.BLACK,
     fontSize: Theme.fonts.S,
     fontWeight: Theme.fonts.BOLD,

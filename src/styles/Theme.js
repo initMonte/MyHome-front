@@ -8,6 +8,7 @@ const Theme = {
     BLACK: '#000000',
     DISABLED: '#9CABC2',
     PLACEHOLDER: '#6C6C6C',
+    BACKGROUND: '#F6F6F6'
   },
   fonts: {
     S: 14,
@@ -15,6 +16,8 @@ const Theme = {
     M: 18,
     L: 24,
     XL: 36,
+    XS: 18,
+    XXS: 15,
     THIN: '300',
     LIGHT: 'normal',
     SEMIBOLD: 'semibold',

@@ -19,6 +19,12 @@ import TRASH from './icons/trash.svg';
 import USER from './icons/user.svg';
 import HOME_HEART from './icons/home-heart.svg';
 import STAR_FILL from './icons/star-fill.svg';
+import QUINCHO from './icons/quincho.svg';
+import SAUNA from './icons/sauna.svg';
+import PILETA from './icons/pileta.svg';
+import JACUZZI from './icons/jacuzzi.svg';
+import JUEGO from './icons/juego.svg';
+import ADD_IMAGE from './icons/add_image.svg';
 
 const IMAGES = {
   SVG: {
@@ -43,6 +49,12 @@ const IMAGES = {
     MAIL,
     HOME_HEART,
     STAR_FILL,
+    QUINCHO,
+    SAUNA,
+    JACUZZI,
+    JUEGO,
+    PILETA,
+    ADD_IMAGE,
   },
   OTHERS: {
     //IMAGEN_CUALQUIERA_EXCEPTO_SVG : require ('./backgrounds/imagen.webp') <-- asi se importa cualquier tipo de imagen que no sea SVG
