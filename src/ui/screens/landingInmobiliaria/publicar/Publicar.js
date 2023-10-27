@@ -1,14 +1,17 @@
-//TO DO
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-//import i18n from '../../../../assets/strings/I18n';
+import NavigatorConstant from '../../../../navigation/NavigatorConstant';
 
 import PublicarUI from './PublicarUI';
 
 function Publicar() {
   const navigation = useNavigation();
 
-  return <PublicarUI />;
+  const goHome = () => {
+    navigation.push(NavigatorConstant.NAVIGATOR.LANDING_INMOBILIARIA);
+  };
+
+  return <PublicarUI goHome={goHome} />;
 }
 
 export default Publicar;

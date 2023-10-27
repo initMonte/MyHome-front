@@ -8,6 +8,11 @@ import DOOR from './icons/door.svg';
 import SHOWER from './icons/shower.svg';
 import BED from './icons/bed.svg';
 import RULER from './icons/ruler.svg';
+import DEPARTMENT from './icons/department.svg';
+import HOME from './icons/home.svg';
+import OFFICE from './icons/office.svg';
+import TERRAIN from './icons/terrain.svg';
+import PARKING from './icons/parking.svg';
 import LOGOUT from './icons/logout.svg';
 import MAIL from './icons/mail.svg';
 import TRASH from './icons/trash.svg';
@@ -27,6 +32,11 @@ const IMAGES = {
     SHOWER,
     BED,
     RULER,
+    DEPARTMENT,
+    HOME,
+    OFFICE,
+    TERRAIN,
+    PARKING,
     LOGOUT,
     TRASH,
     USER,
