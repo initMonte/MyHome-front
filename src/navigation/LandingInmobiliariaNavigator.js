@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Publicaciones from '../ui/screens/landingInmobiliaria/publicaciones/Publicaciones';
 import Publicar from '../ui/screens/landingInmobiliaria/publicar/Publicar';
-import Perfil from '../ui/screens/landingInmobiliaria/perfil/Perfil';
+import InmobiliariaPerfilNavigator from './InmobiliariaPerfilNavigator';
 
 import i18n from '../assets/strings/I18n';
 import Theme from '../styles/Theme';
@@ -47,8 +47,8 @@ function LandingInmobiliariaStackNavigator() {
         }}
       />
       <Tab.Screen
-        name={NavigatorConstant.LANDING_INMOBILIARIA_STACK.PERFIL}
-        component={Perfil}
+        name={NavigatorConstant.LANDING_INMOBILIARIA_STACK.PERFIL_NAVIGATOR}
+        component={InmobiliariaPerfilNavigator}
         options={{
           headerShown: false,
           tabBarLabel: i18n.t('tabs.perfil'),
