@@ -18,6 +18,11 @@ function LandingUserStackNavigator() {
       initialRouteName={NavigatorConstant.LANDING_USER_STACK.HOME}
       screenOptions={{
         headerTitleAlign: 'center',
+        tabBarLabelStyle: {
+          fontSize: Theme.fonts.S,
+        },
+        tabBarActiveTintColor: Theme.colors.PRIMARY,
+        tabBarInactiveTintColor: Theme.colors.SECONDARY,
       }}>
       <Tab.Screen
         name={NavigatorConstant.LANDING_USER_STACK.HOME}
@@ -25,12 +30,8 @@ function LandingUserStackNavigator() {
         options={{
           headerShown: false,
           tabBarLabel: i18n.t('tabs.home'),
-          tabBarIcon: () => (
-            <VectorIcon
-              name="home-outline"
-              color={Theme.colors.SECONDARY}
-              size={30}
-            />
+          tabBarIcon: ({color}) => (
+            <VectorIcon name="home-outline" color={color} size={30} />
           ),
         }}
       />
@@ -39,12 +40,8 @@ function LandingUserStackNavigator() {
         component={Reservas}
         options={{
           tabBarLabel: i18n.t('tabs.reservas'),
-          tabBarIcon: () => (
-            <VectorIcon
-              name="key-outline"
-              color={Theme.colors.SECONDARY}
-              size={30}
-            />
+          tabBarIcon: ({color}) => (
+            <VectorIcon name="key-outline" color={color} size={30} />
           ),
         }}
       />
@@ -53,12 +50,8 @@ function LandingUserStackNavigator() {
         component={Favoritos}
         options={{
           tabBarLabel: i18n.t('tabs.favoritos'),
-          tabBarIcon: () => (
-            <VectorIcon
-              name="heart-outline"
-              color={Theme.colors.SECONDARY}
-              size={30}
-            />
+          tabBarIcon: ({color}) => (
+            <VectorIcon name="heart-outline" color={color} size={30} />
           ),
         }}
       />
@@ -68,12 +61,8 @@ function LandingUserStackNavigator() {
         options={{
           headerShown: false,
           tabBarLabel: i18n.t('tabs.perfil'),
-          tabBarIcon: () => (
-            <VectorIcon
-              name="account-outline"
-              color={Theme.colors.SECONDARY}
-              size={30}
-            />
+          tabBarIcon: ({color}) => (
+            <VectorIcon name="account-outline" color={color} size={30} />
           ),
         }}
       />
