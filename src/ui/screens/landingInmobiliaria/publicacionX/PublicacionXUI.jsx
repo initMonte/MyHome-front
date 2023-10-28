@@ -8,12 +8,21 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
+import Share from 'react-native-share';
 
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
 
-const RegisterUI = ({goBack, showEditarPublicacionX}) => {
+const url = 'IntegrarConBack.com.ar';
+const message = i18n.t('share_text');
+
+const options = {
+  url,
+  message,
+};
+
+const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
   return (
     <ScrollView style={styles.generalContainer} nestedScrollEnabled={true}>
       <View style={styles.container}>
@@ -37,7 +46,16 @@ const RegisterUI = ({goBack, showEditarPublicacionX}) => {
             </Pressable>
           </View>
           <View style={styles.flexEnd}>
-            <Pressable>
+            <Pressable
+              onPress={() =>
+                Share.open(options)
+                  .then(res => {
+                    console.log(res);
+                  })
+                  .catch(err => {
+                    err && console.log(err);
+                  })
+              }>
               <IMAGES.SVG.BUTTON_SHARE width={45} height={45} />
             </Pressable>
           </View>
@@ -310,4 +328,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterUI;
+export default PublicacionXUI;

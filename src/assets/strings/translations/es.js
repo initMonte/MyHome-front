@@ -145,6 +145,7 @@ export default {
   Comment: 'Comentario',
   send: 'Enviar',
   m2: 'm2',
+  share_text: 'Mirá la propiedad que encontré en MyHome! ',
   imageType: {
     svg: 'SVG File',
     png: 'PNG File',
