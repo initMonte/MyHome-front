@@ -3,10 +3,14 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Publicaciones from '../ui/screens/landingInmobiliaria/publicaciones/Publicaciones';
 import PublicacionX from '../ui/screens/landingInmobiliaria/publicacionX/PublicacionX';
+import EditarPublicacionX from '../ui/screens/landingInmobiliaria/editarPublicacionX/EditarPublicacionX';
 
 import NavigatorConstant from './NavigatorConstant';
 
+import i18n from '../assets/strings/I18n';
+
 const Stack = createNativeStackNavigator();
+const tabName = i18n.t('tabs.publicaciones');
 function InmobiliariaPublicacionesNavigator() {
   return (
     <Stack.Navigator
@@ -20,10 +24,18 @@ function InmobiliariaPublicacionesNavigator() {
             .PUBLICACIONES_TOP_TAB
         }
         component={Publicaciones}
+        options={{headerShown: true}}
       />
       <Stack.Screen
         name={NavigatorConstant.INMOBILIARIA_PUBLICACIONES_STACK.PUBLICACION_X}
         component={PublicacionX}
+      />
+      <Stack.Screen
+        name={
+          NavigatorConstant.INMOBILIARIA_PUBLICACIONES_STACK
+            .EDITAR_PUBLICACION_X
+        }
+        component={EditarPublicacionX}
       />
     </Stack.Navigator>
   );

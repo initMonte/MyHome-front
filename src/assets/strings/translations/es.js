@@ -131,6 +131,7 @@ export default {
   question_type: 'Tipo de consulta',
   date: 'Fecha:',
   turn: 'Turno:',
+  views: 'vistas',
   usd: 'USD',
   ars: 'ARS',
   amb: 'amb.',

@@ -21,7 +21,7 @@ const LANDING_USER_STACK = {
   PERFIL: 'Perfil',
 };
 const LANDING_INMOBILIARIA_STACK = {
-  PUBLICACIONES_NAVIGATOR: 'Publicaciones',
+  PUBLICACIONES_NAVIGATOR: 'Publicaciones Navigator',
   PUBLICAR: 'Publicar',
   PERFIL_NAVIGATOR: 'Perfil',
   PUBLICACION_X: 'Publicacion X',
@@ -44,8 +44,9 @@ const INMOBILIARIA_PERFIL_STACK = {
   OPINIONES: 'Opiniones',
 };
 const INMOBILIARIA_PUBLICACIONES_STACK = {
-  PUBLICACIONES_TOP_TAB: 'Publicaciones Top Tab',
+  PUBLICACIONES_TOP_TAB: 'Publicaciones',
   PUBLICACION_X: 'Publicacion X',
+  EDITAR_PUBLICACION_X: 'Editar publicacion X',
 };
 
 export default {

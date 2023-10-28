@@ -25,6 +25,16 @@ import PILETA from './icons/pileta.svg';
 import JACUZZI from './icons/jacuzzi.svg';
 import JUEGO from './icons/juego.svg';
 import ADD_IMAGE from './icons/add_image.svg';
+import BUTTON_BACK from './icons/button-back.svg';
+import BUTTON_EDIT from './icons/button-edit.svg';
+import BUTTON_SHARE from './icons/button-share.svg';
+import HOME_PRIMARY from './icons/home-primary.svg';
+import LENS_PRIMARY from './icons/lens-primary.svg';
+import BED_PRIMARY from './icons/bed-primary.svg';
+import SHOWER_PRIMARY from './icons/shower-primary.svg';
+import RULER_PRIMARY from './icons/ruler-primary.svg';
+import PARKING_PRIMARY from './icons/parking-primary.svg';
+import CHECKBOX_PRIMARY from './icons/checkbox-primary.svg';
 
 const IMAGES = {
   SVG: {
@@ -55,6 +65,16 @@ const IMAGES = {
     JUEGO,
     PILETA,
     ADD_IMAGE,
+    BUTTON_BACK,
+    BUTTON_EDIT,
+    BUTTON_SHARE,
+    LENS_PRIMARY,
+    HOME_PRIMARY,
+    BED_PRIMARY,
+    RULER_PRIMARY,
+    PARKING_PRIMARY,
+    SHOWER_PRIMARY,
+    CHECKBOX_PRIMARY,
   },
   OTHERS: {
     //IMAGEN_CUALQUIERA_EXCEPTO_SVG : require ('./backgrounds/imagen.webp') <-- asi se importa cualquier tipo de imagen que no sea SVG

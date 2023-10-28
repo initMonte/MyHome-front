@@ -176,7 +176,6 @@ const CardState = ({
       position: 'absolute',
       right: 16,
       top: -180,
-      //backgroundColor: Theme.colors.PRIMARY,
     },
     S: {
       position: 'absolute',

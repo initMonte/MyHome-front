@@ -11,7 +11,18 @@ function PublicacionX() {
     navigation.goBack();
   };
 
-  return <PublicacionXUI goBack={goBack} />;
+  const showEditarPublicacionX = () => {
+    navigation.push(
+      NavigatorConstant.INMOBILIARIA_PUBLICACIONES_STACK.EDITAR_PUBLICACION_X,
+    );
+  };
+
+  return (
+    <PublicacionXUI
+      goBack={goBack}
+      showEditarPublicacionX={showEditarPublicacionX}
+    />
+  );
 }
 
 export default PublicacionX;

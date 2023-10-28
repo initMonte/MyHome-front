@@ -32,6 +32,7 @@ function LandingInmobiliariaStackNavigator() {
         }
         component={InmobiliariaPublicacionesNavigator}
         options={{
+          headerShown: false,
           tabBarLabel: i18n.t('tabs.publicaciones'),
           tabBarIcon: ({color}) => (
             <VectorIcon name="home-outline" color={color} size={30} />
