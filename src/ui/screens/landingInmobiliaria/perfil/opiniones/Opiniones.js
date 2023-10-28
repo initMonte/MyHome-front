@@ -8,7 +8,7 @@ function Opiniones() {
   const navigation = useNavigation();
 
   const goBack = () => {
-    navigation.pop();
+    navigation.goBack();
   };
 
   return <OpinionesUI goBack={goBack} />;

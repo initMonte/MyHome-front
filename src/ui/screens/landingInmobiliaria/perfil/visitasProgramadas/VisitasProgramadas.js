@@ -8,7 +8,7 @@ function VisitasProgramadas() {
   const navigation = useNavigation();
 
   const goBack = () => {
-    navigation.pop();
+    navigation.goBack();
   };
 
   const showVisitaProgramadaX = () => {
