@@ -8,7 +8,7 @@ function Consultas() {
   const navigation = useNavigation();
 
   const goBack = () => {
-    navigation.pop();
+    navigation.goBack();
   };
 
   const showConsultaX = () => {

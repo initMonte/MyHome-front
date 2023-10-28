@@ -53,3 +53,4 @@ yarn start
 - Modificaciones al styling de los bottomNav y topNav **(Como hacer que cuando se entra a Perfil a alguna otra ventana del Stack deje de verse seleccionado el bottom nav?)**
 - Creando PerfilNavigator para inmobiliaria
 - Creaada ventana de Perfil
+- Creadas ventanas de Consultas, Visitas Programadas y Opiniones para Inmobiliaria
