@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import Publicaciones from '../ui/screens/landingInmobiliaria/publicaciones/Publicaciones';
+import InmobiliariaPublicacionesNavigator from './InmobiliariaPublicacionesNavigator';
 import Publicar from '../ui/screens/landingInmobiliaria/publicar/Publicar';
 import InmobiliariaPerfilNavigator from './InmobiliariaPerfilNavigator';
 
@@ -24,11 +24,13 @@ function LandingInmobiliariaStackNavigator() {
         tabBarInactiveTintColor: Theme.colors.SECONDARY,
       }}
       initialRouteName={
-        NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES
+        NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES_NAVIGATOR
       }>
       <Tab.Screen
-        name={NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES}
-        component={Publicaciones}
+        name={
+          NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACIONES_NAVIGATOR
+        }
+        component={InmobiliariaPublicacionesNavigator}
         options={{
           tabBarLabel: i18n.t('tabs.publicaciones'),
           tabBarIcon: ({color}) => (

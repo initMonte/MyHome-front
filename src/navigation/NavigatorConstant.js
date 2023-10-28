@@ -21,9 +21,10 @@ const LANDING_USER_STACK = {
   PERFIL: 'Perfil',
 };
 const LANDING_INMOBILIARIA_STACK = {
-  PUBLICACIONES: 'Publicaciones',
+  PUBLICACIONES_NAVIGATOR: 'Publicaciones',
   PUBLICAR: 'Publicar',
   PERFIL_NAVIGATOR: 'Perfil',
+  PUBLICACION_X: 'Publicacion X',
 };
 const FAVORITOS_STACK = {
   ALQUILER: 'ALQUILER',
@@ -33,7 +34,6 @@ const PUBLICACIONES_STACK = {
   ALQUILER: 'ALQUILER',
   VENTA: 'VENTA',
 };
-
 const INMOBILIARIA_PERFIL_STACK = {
   PERFIL: 'Perfil Inmobiliaria',
   MIS_DATOS: 'Mis Datos',
@@ -42,6 +42,10 @@ const INMOBILIARIA_PERFIL_STACK = {
   VISITAS_PROGRAMADAS: 'Visitas Programadas',
   VISITA_PROGRAMADA_X: 'Visita Programada X',
   OPINIONES: 'Opiniones',
+};
+const INMOBILIARIA_PUBLICACIONES_STACK = {
+  PUBLICACIONES_TOP_TAB: 'Publicaciones Top Tab',
+  PUBLICACION_X: 'Publicacion X',
 };
 
 export default {
@@ -52,4 +56,5 @@ export default {
   FAVORITOS_STACK,
   PUBLICACIONES_STACK,
   INMOBILIARIA_PERFIL_STACK,
+  INMOBILIARIA_PUBLICACIONES_STACK,
 };

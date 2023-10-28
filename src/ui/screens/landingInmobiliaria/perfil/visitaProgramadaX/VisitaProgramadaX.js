@@ -8,10 +8,16 @@ function VisitaProgramadaX() {
   const navigation = useNavigation();
 
   const goBack = () => {
-    navigation.pop();
+    navigation.goBack();
   };
 
-  return <VisitaProgramadaXUI goBack={goBack} />;
+  const showPublicacionX = () => {
+    navigation.push(NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACION_X);
+  };
+
+  return (
+    <VisitaProgramadaXUI goBack={goBack} showPublicacionX={showPublicacionX} />
+  );
 }
 
 export default VisitaProgramadaX;

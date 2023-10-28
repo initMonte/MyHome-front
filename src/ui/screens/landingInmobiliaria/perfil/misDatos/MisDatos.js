@@ -8,7 +8,7 @@ function MisDatos() {
   const navigation = useNavigation();
 
   const goBack = () => {
-    navigation.pop();
+    navigation.goBack();
   };
 
   return <MisDatosUI goBack={goBack} />;

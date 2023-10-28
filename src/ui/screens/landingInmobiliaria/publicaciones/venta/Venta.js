@@ -1,13 +1,19 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-//import i18n from '../../../../assets/strings/I18n';
+import NavigatorConstant from '../../../../../navigation/NavigatorConstant';
 
 import VentaUI from './VentaUI';
 
 function Venta() {
   const navigation = useNavigation();
 
-  return <VentaUI />;
+  const showPublicacionX = () => {
+    navigation.push(
+      NavigatorConstant.INMOBILIARIA_PUBLICACIONES_STACK.PUBLICACION_X,
+    );
+  };
+
+  return <VentaUI showPublicacionX={showPublicacionX} />;
 }
 
 export default Venta;

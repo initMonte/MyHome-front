@@ -7,11 +7,13 @@ import AlquilerUI from './AlquilerUI';
 function Alquiler() {
   const navigation = useNavigation();
 
-  const showLogin = () => {
-    navigation.replace(NavigatorConstant.NAVIGATOR.LOGIN);
+  const showPublicacionX = () => {
+    navigation.push(
+      NavigatorConstant.INMOBILIARIA_PUBLICACIONES_STACK.PUBLICACION_X,
+    );
   };
 
-  return <AlquilerUI showLogin={showLogin} />;
+  return <AlquilerUI showPublicacionX={showPublicacionX} />;
 }
 
 export default Alquiler;

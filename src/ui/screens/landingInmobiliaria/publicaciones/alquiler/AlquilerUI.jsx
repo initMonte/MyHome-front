@@ -6,7 +6,7 @@ import i18n from '../../../../../assets/strings/I18n';
 import CardState from '../../../../components/cardState';
 import IMAGES from '../../../../../assets/images/images';
 
-const AlquilerUI = ({showLogin}) => {
+const AlquilerUI = ({showPublicacionX}) => {
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -17,7 +17,7 @@ const AlquilerUI = ({showLogin}) => {
           hidden={false}
         />
         <CardState
-          onPress={() => showLogin()}
+          onPress={() => showPublicacionX()}
           size="S"
           favButton={true}
           image={IMAGES.OTHERS.TEMPORAL_IMAGE}
@@ -34,7 +34,7 @@ const AlquilerUI = ({showLogin}) => {
           currency={'USD'}
         />
         <CardState
-          onPress={() => showLogin()}
+          onPress={() => showPublicacionX()}
           size="S"
           favButton={true}
           image={IMAGES.OTHERS.TEMPORAL_IMAGE}
@@ -51,7 +51,7 @@ const AlquilerUI = ({showLogin}) => {
           currency={'USD'}
         />
         <CardState
-          onPress={() => showLogin()}
+          onPress={() => showPublicacionX()}
           size="S"
           favButton={true}
           image={IMAGES.OTHERS.TEMPORAL_IMAGE}

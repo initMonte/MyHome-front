@@ -54,3 +54,5 @@ yarn start
 - Creando PerfilNavigator para inmobiliaria
 - Creaada ventana de Perfil
 - Creadas ventanas de Consultas, Visitas Programadas y Opiniones para Inmobiliaria
+- Creadas ventanas de Mis Datos, ConsultaX y VisitaProgramadaX para Inmobiliaria
+- Creada navegacion para Publicacion X y agregada a las distintas ventanas de Inmobiliaria

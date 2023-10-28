@@ -20,6 +20,10 @@ const Button = ({text, onPress, size = 'M', color = 'primary', image}) => {
       width: 380,
       height: 48,
     },
+    ML: {
+      width: 230,
+      height: 48,
+    },
     M: {
       width: 136,
       height: 48,
@@ -38,6 +42,11 @@ const Button = ({text, onPress, size = 'M', color = 'primary', image}) => {
     },
     L: {
       fontSize: Theme.fonts.L,
+      fontWeight: Theme.fonts.BOLD,
+      textAlign: 'center',
+    },
+    ML: {
+      fontSize: Theme.fonts.M,
       fontWeight: Theme.fonts.BOLD,
       textAlign: 'center',
     },
