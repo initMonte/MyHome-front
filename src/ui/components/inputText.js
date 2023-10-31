@@ -7,6 +7,7 @@ const InputText = ({
   size = 'XL',
   keyboard = 'default',
   hideText = false,
+  changeValue,
 }) => {
   const [input, onChangeInput] = React.useState('');
   const [focus, onChangeFocus] = React.useState(false);
@@ -53,7 +54,10 @@ const InputText = ({
   return (
     <TextInput
       style={[generalStyle, inputSizes[size], inputFocused()]}
-      onChangeText={onChangeInput}
+      onChangeText={text => {
+        onChangeInput(text);
+        changeValue(text);
+      }}
       value={input}
       onFocus={() => onChangeFocus(true)}
       onBlur={() => onChangeFocus(false)}
