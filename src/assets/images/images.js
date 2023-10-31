@@ -35,6 +35,16 @@ import SHOWER_PRIMARY from './icons/shower-primary.svg';
 import RULER_PRIMARY from './icons/ruler-primary.svg';
 import PARKING_PRIMARY from './icons/parking-primary.svg';
 import CHECKBOX_PRIMARY from './icons/checkbox-primary.svg';
+import DEPARTMENT_WHITE from './icons/department-white.svg';
+import HOME_WHITE from './icons/home-white.svg';
+import OFFICE_WHITE from './icons/office-white.svg';
+import TERRAIN_WHITE from './icons/terrain-white.svg';
+import PARKING_WHITE from './icons/parking-white.svg';
+import QUINCHO_WHITE from './icons/quincho-white.svg';
+import PILETA_WHITE from './icons/pileta-white.svg';
+import SAUNA_WHITE from './icons/sauna-white.svg';
+import JACUZZI_WHITE from './icons/jacuzzi-white.svg';
+import JUEGO_WHITE from './icons/juego-white.svg';
 
 const IMAGES = {
   SVG: {
@@ -75,6 +85,16 @@ const IMAGES = {
     PARKING_PRIMARY,
     SHOWER_PRIMARY,
     CHECKBOX_PRIMARY,
+    DEPARTMENT_WHITE,
+    HOME_WHITE,
+    OFFICE_WHITE,
+    TERRAIN_WHITE,
+    PARKING_WHITE,
+    QUINCHO_WHITE,
+    PILETA_WHITE,
+    SAUNA_WHITE,
+    JACUZZI_WHITE,
+    JUEGO_WHITE,
   },
   OTHERS: {
     //IMAGEN_CUALQUIERA_EXCEPTO_SVG : require ('./backgrounds/imagen.webp') <-- asi se importa cualquier tipo de imagen que no sea SVG
