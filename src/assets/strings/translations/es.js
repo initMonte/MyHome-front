@@ -21,7 +21,7 @@ export default {
   newPass: 'Nueva contraseña:',
   newPass2: 'Repita la nueva contraseña:',
   realStateRegister: 'Registro de inmobiliaria',
-  emailConfirmationNote: '(Aquí recibirí el código de confirmación)',
+  emailConfirmationNote: '(Aquí recibirá el código de confirmación)',
   realStateName: 'Nombre de inmobiliaria:',
   phone: 'Teléfono:',
   phone1: 'Teléfono 1:',

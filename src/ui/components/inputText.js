@@ -23,7 +23,7 @@ const InputText = ({
     color: Theme.colors.BLACK,
     fontSize: Theme.fonts.S,
     fontWeight: Theme.fonts.BOLD,
-    borderRadius: borderRadius
+    borderRadius: borderRadius,
   });
 
   const inputSizes = StyleSheet.create({
@@ -48,7 +48,7 @@ const InputText = ({
     let y;
     if (focus) {
       y = StyleSheet.create({
-        borderBottomColor: Theme.colors.PRIMARY,
+        borderColor: Theme.colors.PRIMARY,
         borderBottomWidth: 2,
       });
     }
