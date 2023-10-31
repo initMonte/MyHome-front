@@ -7,18 +7,23 @@ const InputText = ({
   size = 'XL',
   keyboard = 'default',
   hideText = false,
+  borderWidth = 0,
+  borderRadius = 0,
+  height = 40,
 }) => {
   const [input, onChangeInput] = React.useState('');
   const [focus, onChangeFocus] = React.useState(false);
 
   const generalStyle = StyleSheet.create({
-    height: 40,
+    height: height,
     margin: 12,
     padding: 10,
     borderBottomWidth: 1,
+    borderWidth: borderWidth,
     color: Theme.colors.BLACK,
     fontSize: Theme.fonts.S,
     fontWeight: Theme.fonts.BOLD,
+    borderRadius: borderRadius
   });
 
   const inputSizes = StyleSheet.create({
@@ -61,6 +66,7 @@ const InputText = ({
       placeholderTextColor={Theme.colors.PLACEHOLDER}
       keyboardType={keyboard}
       secureTextEntry={hideText}
+      textAlignVertical={'top'}
     />
   );
 };

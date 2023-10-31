@@ -103,6 +103,9 @@ const PublicarUI = ({goHome}) => {
           <InputText
             placeholder={i18n.t('placeholder_description')}
             keyboard="email-address"
+            borderWidth={1}
+            borderRadius={8}
+            height={120}
           />
           <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', marginVertical: 20 }}>
             <ButtonSelect
@@ -117,7 +120,7 @@ const PublicarUI = ({goHome}) => {
             />
           </View>
           <Text style={styles.text3}>{i18n.t('stateType')}</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', marginTop: 10, marginHorizontal: 5, marginBottom: -35}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', marginTop: 10, marginHorizontal: 5, marginBottom: -35}}>
             <ButtonSelect
               text={i18n.t('house')}
               image={selectedTipoPropiedad !== "house" ? <IMAGES.SVG.HOME width={25} height={25} /> : <IMAGES.SVG.HOME_WHITE width={25} height={25} />}
@@ -170,7 +173,7 @@ const PublicarUI = ({goHome}) => {
           </View>
           <Text style={styles.text3}>{i18n.t('address')}</Text>
           <InputText placeholder={i18n.t('placeholder_street')} />
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: -65, marginRight: 25}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: -65}}>
             <InputText size='XS' keyboard="phone-pad" placeholder={i18n.t('placeholder_strNumber')} />
             <InputText size='S'  keyboard="phone-pad" placeholder={i18n.t('placeholder_floor') + ' (opc)'} />
             <InputText size='S' placeholder={i18n.t('placeholder_department') + ' (opc)'} />
@@ -423,14 +426,7 @@ const PublicarUI = ({goHome}) => {
           <InputText placeholder={i18n.t('placeholder_orientacion')} />
 
           <Text style={styles.text3}>{i18n.t('amenities')}</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', marginTop: 10, marginHorizontal: 5 }}>
-            <ButtonSelect
-              text={i18n.t('quincho')}
-              size='L'
-              image={!selectedAmenities.includes("quincho") ? <IMAGES.SVG.QUINCHO width={25} height={25} /> : <IMAGES.SVG.QUINCHO_WHITE width={25} height={25} /> }
-              onPress={() => handleButtonClick11("quincho")}
-              selected={!selectedAmenities.includes("quincho")}
-            />
+          <View style={{flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', marginTop: 10, marginHorizontal: 5 }}>
             <ButtonSelect
               text={i18n.t('pool')}
               image={!selectedAmenities.includes("pool") ? <IMAGES.SVG.PILETA width={25} height={25} /> : <IMAGES.SVG.PILETA_WHITE width={25} height={25} />}
@@ -450,10 +446,11 @@ const PublicarUI = ({goHome}) => {
               selected={!selectedAmenities.includes("sum")}
             />
             <ButtonSelect
-              text={i18n.t('jacuzzi')}
-              image={!selectedAmenities.includes("jacuzzi") ? <IMAGES.SVG.JACUZZI width={25} height={25} /> : <IMAGES.SVG.JACUZZI_WHITE width={25} height={25} />}
-              onPress={() => handleButtonClick11("jacuzzi")}
-              selected={!selectedAmenities.includes("jacuzzi")}
+              text={i18n.t('quincho')}
+              size='L'
+              image={!selectedAmenities.includes("quincho") ? <IMAGES.SVG.QUINCHO width={25} height={25} /> : <IMAGES.SVG.QUINCHO_WHITE width={25} height={25} /> }
+              onPress={() => handleButtonClick11("quincho")}
+              selected={!selectedAmenities.includes("quincho")}
             />
             <ButtonSelect
               text={i18n.t('gameRoom')}
@@ -461,6 +458,12 @@ const PublicarUI = ({goHome}) => {
               onPress={() => handleButtonClick11("gameRoom")}
               selected={!selectedAmenities.includes("gameRoom")}
               size='L'
+            />
+            <ButtonSelect
+              text={i18n.t('jacuzzi')}
+              image={!selectedAmenities.includes("jacuzzi") ? <IMAGES.SVG.JACUZZI width={25} height={25} /> : <IMAGES.SVG.JACUZZI_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick11("jacuzzi")}
+              selected={!selectedAmenities.includes("jacuzzi")}
             />
           </View>
 
@@ -472,7 +475,7 @@ const PublicarUI = ({goHome}) => {
           <InputText placeholder={i18n.t('placeholder_URL')} />
 
           <Text style={styles.text3}>{i18n.t('state')}</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', marginTop: 10, marginBottom: -10 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', marginTop: 10, marginBottom: -40 }}>
             <ButtonSelect
               text={i18n.t('sellingInRent')}
               size='XXS'
@@ -494,14 +497,18 @@ const PublicarUI = ({goHome}) => {
           </View>
 
         </View>
-        <Button
-          text={i18n.t('publish')}
-          size="M"
-          color="primary"
-          onPress={() => {
-            goHome();
-          }}
-        />
+
+        <View style={{marginBottom: 30}}>
+          <Button
+            text={i18n.t('publish')}
+            size="M"
+            color="primary"
+            onPress={() => {
+              goHome();
+            }}
+          />
+        </View>
+        
       </View>
     </ScrollView>
   );
