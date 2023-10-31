@@ -36,6 +36,7 @@ function InmobiliariaPublicacionesNavigator() {
             .EDITAR_PUBLICACION_X
         }
         component={EditarPublicacionX}
+        options={{headerShown: true}}
       />
     </Stack.Navigator>
   );

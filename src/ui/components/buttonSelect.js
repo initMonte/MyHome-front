@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
 import Theme from '../../styles/Theme';
 
-const ButtonSelect = ({ text, borderRadius = 10, onPress, size = 'M', color = 'primaryInverted', image }) => {
-  const [isSelected, setIsSelected] = useState(false);
-
+const ButtonSelect = ({ text, borderRadius = 10, onPress, size = 'M', color = 'primaryInverted', image, selected }) => {
   const button = StyleSheet.create({
     margin: 4,
     borderRadius: borderRadius,
@@ -117,20 +115,13 @@ const ButtonSelect = ({ text, borderRadius = 10, onPress, size = 'M', color = 'p
     },
   });
 
-  const handleButtonClick = () => {
-    setIsSelected(!isSelected);
-  };
-
-  const colorStyle = isSelected ? selectedColors[color] : unselectedColors[color];
-  const fontColorStyle = isSelected ? selectedFontsColor[color] : fontsColor[color];
-
   return (
     <Pressable
-      onPress={handleButtonClick}
-      style={[button, buttonSizes[size], colorStyle]}
+      onPress={onPress}
+      style={[button, buttonSizes[size], selected ? selectedColors[color] : unselectedColors[color]]}
     >
       {image}
-      <Text style={[fontsSizes[size], fontColorStyle]}>{text}</Text>
+      <Text style={[fontsSizes[size], selected ? selectedFontsColor[color] : fontsColor[color]]}>{text}</Text>
     </Pressable>
   );
 };
