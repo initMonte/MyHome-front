@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -15,8 +15,73 @@ import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 import ButtonSelect from '../../../components/buttonSelect';
+import PhotoUploader from '../../../components/photoUploader';
 
 const PublicarUI = ({goHome}) => {
+
+  const [selectedButton, setSelectedButton] = useState('venta');
+  const handleButtonClick = (buttonName) => {
+    setSelectedButton(buttonName);
+  };
+
+  const [selectedTipoPropiedad, setSelectedTipoPropiedad] = useState('house');
+  const handleButtonClick2 = (buttonName) => {
+    setSelectedTipoPropiedad(buttonName);
+  };
+
+  const [selectedPrecio, setSelectedPrecio] = useState('pesos');
+  const handleButtonClick3 = (buttonName) => {
+    setSelectedPrecio(buttonName);
+  };
+
+  const [selectedExpensa, setSelectedExpensa] = useState('pesos');
+  const handleButtonClick4 = (buttonName) => {
+    setSelectedExpensa(buttonName);
+  };
+
+  const [selectedAmbiente, setSelectedAmbiente] = useState('1');
+  const handleButtonClick5 = (buttonName) => {
+    setSelectedAmbiente(buttonName);
+  };
+
+  const [selectedDormitorio, setSelectedDormitorio] = useState('1');
+  const handleButtonClick6 = (buttonName) => {
+    setSelectedDormitorio(buttonName);
+  };
+
+  const [selectedBaño, setSelectedBaño] = useState('1');
+  const handleButtonClick7 = (buttonName) => {
+    setSelectedBaño(buttonName);
+  };
+
+  const [selectedDisposicion, setSelectedDisposicion] = useState('frente');
+  const handleButtonClick8 = (buttonName) => {
+    setSelectedDisposicion(buttonName);
+  };
+
+  const [selectedEstado, setSelectedEstado] = useState('alquiler/venta');
+  const handleButtonClick9 = (buttonName) => {
+    setSelectedEstado(buttonName);
+  };
+
+  const [selectedButtons, setSelectedButtons] = useState([]);
+  const handleButtonClick10 = (buttonName) => {
+    if (selectedButtons.includes(buttonName)) {
+      setSelectedButtons(selectedButtons.filter((btn) => btn !== buttonName));
+    } else {
+      setSelectedButtons([...selectedButtons, buttonName]);
+    }
+  };
+
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const handleButtonClick11 = (buttonName) => {
+    if (selectedAmenities.includes(buttonName)) {
+      setSelectedAmenities(selectedAmenities.filter((btn) => btn !== buttonName));
+    } else {
+      setSelectedAmenities([...selectedAmenities, buttonName]);
+    }
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
@@ -42,45 +107,65 @@ const PublicarUI = ({goHome}) => {
           <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', marginVertical: 20 }}>
             <ButtonSelect
               text={i18n.t('tabs.venta')}
+              onPress={() => handleButtonClick("venta")}
+              selected={selectedButton !== "venta"}
             />
             <ButtonSelect
               text={i18n.t('tabs.alquiler')}
+              onPress={() => handleButtonClick("alquiler")}
+              selected={selectedButton !== "alquiler"}
             />
           </View>
           <Text style={styles.text3}>{i18n.t('stateType')}</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', marginTop: 10, marginHorizontal: 5, marginBottom: -35}}>
             <ButtonSelect
-              text={i18n.t('department')}
-              size='L'
-              image={<IMAGES.SVG.DEPARTMENT width={25} height={25} />}
+              text={i18n.t('house')}
+              image={selectedTipoPropiedad !== "house" ? <IMAGES.SVG.HOME width={25} height={25} /> : <IMAGES.SVG.HOME_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick2("house")}
+              selected={selectedTipoPropiedad !== "house"}
             />
             <ButtonSelect
-              text={i18n.t('house')}
-              image={<IMAGES.SVG.HOME width={25} height={25} />}
+              text={i18n.t('department')}
+              size='L'
+              image={selectedTipoPropiedad !== "department" ? <IMAGES.SVG.DEPARTMENT width={25} height={25} /> : <IMAGES.SVG.DEPARTMENT_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick2("department")}
+              selected={selectedTipoPropiedad !== "department"}
             />
             <ButtonSelect
               text={i18n.t('local')}
-              image={<IMAGES.SVG.HOME width={25} height={25} />}
+              image={selectedTipoPropiedad !== "local" ? <IMAGES.SVG.HOME width={25} height={25} /> : <IMAGES.SVG.HOME_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick2("local")}
+              selected={selectedTipoPropiedad !== "local"}
             />
             <ButtonSelect
               text={i18n.t('ph')}
-              image={<IMAGES.SVG.HOME width={25} height={25} />}
+              image={selectedTipoPropiedad !== "ph" ? <IMAGES.SVG.HOME width={25} height={25} /> : <IMAGES.SVG.HOME_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick2("ph")}
+              selected={selectedTipoPropiedad !== "ph"}
             />
             <ButtonSelect
               text={i18n.t('office')}
-              image={<IMAGES.SVG.OFFICE width={25} height={25} />}
+              image={selectedTipoPropiedad !== "office" ? <IMAGES.SVG.OFFICE width={25} height={25} /> : <IMAGES.SVG.OFFICE_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick2("office")}
+              selected={selectedTipoPropiedad !== "office"}
             />
             <ButtonSelect
               text={i18n.t('quinta')}
-              image={<IMAGES.SVG.HOME width={25} height={25} />}
+              image={selectedTipoPropiedad !== "quinta" ? <IMAGES.SVG.HOME width={25} height={25} /> : <IMAGES.SVG.HOME_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick2("quinta")}
+              selected={selectedTipoPropiedad !== "quinta"}
             />
             <ButtonSelect
               text={i18n.t('galpon')}
-              image={<IMAGES.SVG.HOME width={25} height={25} />}
+              image={selectedTipoPropiedad !== "galpon" ? <IMAGES.SVG.HOME width={25} height={25} /> : <IMAGES.SVG.HOME_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick2("galpon")}
+              selected={selectedTipoPropiedad !== "galpon"}
             />
             <ButtonSelect
               text={i18n.t('terreno')}
-              image={<IMAGES.SVG.TERRAIN width={25} height={25} />}
+              image={selectedTipoPropiedad !== "terreno" ? <IMAGES.SVG.TERRAIN width={25} height={25} /> : <IMAGES.SVG.TERRAIN_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick2("terreno")}
+              selected={selectedTipoPropiedad !== "terreno"}
             />
           </View>
           <Text style={styles.text3}>{i18n.t('address')}</Text>
@@ -117,11 +202,15 @@ const PublicarUI = ({goHome}) => {
               text={'$'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick3("pesos")}
+              selected={selectedPrecio !== "pesos"}
             />
             <ButtonSelect
               text={'U$S'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick3("dolares")}
+              selected={selectedPrecio !== "dolares"}
             />
             <InputText keyboard="phone-pad" size='XS' placeholder={i18n.t('placeholder_number')} />
           </View>
@@ -134,11 +223,15 @@ const PublicarUI = ({goHome}) => {
               text={'$'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick4("pesos")}
+              selected={selectedExpensa !== "pesos"}
             />
             <ButtonSelect
               text={'U$S'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick4("dolares")}
+              selected={selectedExpensa !== "dolares"}
             />
             <InputText keyboard="phone-pad" size='XS' placeholder={i18n.t('placeholder_number')} />
           </View>
@@ -149,31 +242,43 @@ const PublicarUI = ({goHome}) => {
               text={'1'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick5("1")}
+              selected={selectedAmbiente !== "1"}
             />
             <ButtonSelect
               text={'2'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick5("2")}
+              selected={selectedAmbiente !== "2"}
             />
             <ButtonSelect
               text={'3'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick5("3")}
+              selected={selectedAmbiente !== "3"}
             />
             <ButtonSelect
               text={'4'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick5("4")}
+              selected={selectedAmbiente !== "4"}
             />
             <ButtonSelect
               text={'5'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick5("5")}
+              selected={selectedAmbiente !== "5"}
             />
             <ButtonSelect
               text={'6+'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick5("6+")}
+              selected={selectedAmbiente !== "6+"}
             />
           </View>
 
@@ -183,31 +288,43 @@ const PublicarUI = ({goHome}) => {
               text={'1'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick6("1")}
+              selected={selectedDormitorio !== "1"}
             />
             <ButtonSelect
               text={'2'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick6("2")}
+              selected={selectedDormitorio !== "2"}
             />
             <ButtonSelect
               text={'3'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick6("3")}
+              selected={selectedDormitorio !== "3"}
             />
             <ButtonSelect
               text={'4'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick6("4")}
+              selected={selectedDormitorio !== "4"}
             />
             <ButtonSelect
               text={'5'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick6("5")}
+              selected={selectedDormitorio !== "5"}
             />
             <ButtonSelect
               text={'6+'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick6("6+")}
+              selected={selectedDormitorio !== "6+"}
             />
           </View>
 
@@ -217,31 +334,43 @@ const PublicarUI = ({goHome}) => {
               text={'1'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick7("1")}
+              selected={selectedBaño !== "1"}
             />
             <ButtonSelect
               text={'2'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick7("2")}
+              selected={selectedBaño !== "2"}
             />
             <ButtonSelect
               text={'3'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick7("3")}
+              selected={selectedBaño !== "3"}
             />
             <ButtonSelect
               text={'4'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick7("4")}
+              selected={selectedBaño !== "4"}
             />
             <ButtonSelect
               text={'5'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick7("5")}
+              selected={selectedBaño !== "5"}
             />
             <ButtonSelect
               text={'6+'}
               size='XS'
               borderRadius={50}
+              onPress={() => handleButtonClick7("6")}
+              selected={selectedBaño !== "6"}
             />
           </View>
 
@@ -249,18 +378,26 @@ const PublicarUI = ({goHome}) => {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', marginTop: 10, marginHorizontal: 5, marginBottom: -40 }}>
             <ButtonSelect
               text={i18n.t('terraza')}
+              onPress={() => handleButtonClick10("terraza")}
+              selected={!selectedButtons.includes("terraza")}
             />
             <ButtonSelect
               text={i18n.t('balcony')}
+              onPress={() => handleButtonClick10("balcony")}
+              selected={!selectedButtons.includes("balcony")}
             />
             <ButtonSelect
               text={i18n.t('baulera')}
+              onPress={() => handleButtonClick10("baulera")}
+              selected={!selectedButtons.includes("baulera")}
             />
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'start', flexWrap: 'wrap', marginHorizontal: 5 }}>
             <ButtonSelect
               text={i18n.t('parking')}
-              image={<IMAGES.SVG.PARKING width={25} height={25} />}
+              image={!selectedButtons.includes("cochera") ? <IMAGES.SVG.PARKING width={25} height={25} /> : <IMAGES.SVG.PARKING_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick10("cochera")}
+              selected={!selectedButtons.includes("cochera")}
             />
             <InputText keyboard="phone-pad" size='S' placeholder={i18n.t('placeholder_amount')} />
           </View>
@@ -269,9 +406,13 @@ const PublicarUI = ({goHome}) => {
           <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', marginTop: 10 }}>
             <ButtonSelect
               text={i18n.t('frente')}
+              onPress={() => handleButtonClick8("frente")}
+              selected={selectedDisposicion !== "frente"}
             />
             <ButtonSelect
               text={i18n.t('contrafrente')}
+              onPress={() => handleButtonClick8("contrafrente")}
+              selected={selectedDisposicion !== "contrafrente"}
             />
           </View>
 
@@ -286,39 +427,44 @@ const PublicarUI = ({goHome}) => {
             <ButtonSelect
               text={i18n.t('quincho')}
               size='L'
-              image={<IMAGES.SVG.QUINCHO width={25} height={25} />}
+              image={!selectedAmenities.includes("quincho") ? <IMAGES.SVG.QUINCHO width={25} height={25} /> : <IMAGES.SVG.QUINCHO_WHITE width={25} height={25} /> }
+              onPress={() => handleButtonClick11("quincho")}
+              selected={!selectedAmenities.includes("quincho")}
             />
             <ButtonSelect
               text={i18n.t('pool')}
-              image={<IMAGES.SVG.PILETA width={25} height={25} />}
+              image={!selectedAmenities.includes("pool") ? <IMAGES.SVG.PILETA width={25} height={25} /> : <IMAGES.SVG.PILETA_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick11("pool")}
+              selected={!selectedAmenities.includes("pool")}
             />
             <ButtonSelect
               text={i18n.t('sauna')}
-              image={<IMAGES.SVG.SAUNA width={25} height={25} />}
+              image={!selectedAmenities.includes("sauna") ? <IMAGES.SVG.SAUNA width={25} height={25} /> : <IMAGES.SVG.SAUNA_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick11("sauna")}
+              selected={!selectedAmenities.includes("sauna")}
             />
             <ButtonSelect
               text={i18n.t('sum')}
-              image={<IMAGES.SVG.HOME width={25} height={25} />}
+              image={!selectedAmenities.includes("sum") ? <IMAGES.SVG.HOME width={25} height={25} /> : <IMAGES.SVG.HOME_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick11("sum")}
+              selected={!selectedAmenities.includes("sum")}
             />
             <ButtonSelect
               text={i18n.t('jacuzzi')}
-              image={<IMAGES.SVG.JACUZZI width={25} height={25} />}
+              image={!selectedAmenities.includes("jacuzzi") ? <IMAGES.SVG.JACUZZI width={25} height={25} /> : <IMAGES.SVG.JACUZZI_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick11("jacuzzi")}
+              selected={!selectedAmenities.includes("jacuzzi")}
             />
             <ButtonSelect
               text={i18n.t('gameRoom')}
-              image={<IMAGES.SVG.JUEGO width={25} height={25} />}
+              image={!selectedAmenities.includes("gameRoom") ? <IMAGES.SVG.JUEGO width={25} height={25} /> : <IMAGES.SVG.JUEGO_WHITE width={25} height={25} />}
+              onPress={() => handleButtonClick11("gameRoom")}
+              selected={!selectedAmenities.includes("gameRoom")}
               size='L'
             />
           </View>
 
-          <Text style={styles.text3}>{i18n.t('addPhotos') + ' '}
-            <Text style={styles.textOptional}>{i18n.t('minimun2')}</Text>
-          </Text>
-          <View style={styles.imageContainer}>
-            <Pressable style={styles.imageContainerChild}>
-              <IMAGES.SVG.ADD_IMAGE width={25} height={25} margin={43}/>
-            </Pressable>
-          </View>
+          <PhotoUploader/>
 
           <Text style={styles.text3}>{i18n.t('addVideo') + ' '}
             <Text style={styles.textOptional}>{i18n.t('optional')}</Text>
@@ -330,14 +476,20 @@ const PublicarUI = ({goHome}) => {
             <ButtonSelect
               text={i18n.t('sellingInRent')}
               size='XXS'
+              onPress={() => handleButtonClick9("alquiler/venta")}
+              selected={selectedEstado !== "alquiler/venta"}
             />
             <ButtonSelect
               text={i18n.t('reserved')}
               size='XXS'
+              onPress={() => handleButtonClick9("reservada")}
+              selected={selectedEstado !== "reservada"}
             />
             <ButtonSelect
               text={i18n.t('soldRented')}
               size='XXS'
+              onPress={() => handleButtonClick9("alquilada/vendida")}
+              selected={selectedEstado !== "alquilada/vendida"}
             />
           </View>
 
