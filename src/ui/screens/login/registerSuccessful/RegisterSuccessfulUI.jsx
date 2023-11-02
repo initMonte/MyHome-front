@@ -11,7 +11,7 @@ import Button from '../../../components/button';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 import {loginAction} from '../../../../redux/slices/AuthReducer';
 
-const RegisterSuccessfulUI = ({goBack, showLandingInmobiliaria}) => {
+const RegisterSuccessfulUI = ({showLandingInmobiliaria}) => {
   const {email, pass} = useSelector(state => state.user);
   const password = pass;
   const dispatch = useDispatch();

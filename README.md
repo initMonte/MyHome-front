@@ -65,3 +65,4 @@ yarn start
 - Implementando que usuario quede loggeado
 - Implementando endpoint a flujo de PassRecovery
 - Terminado flujo PassRecovery y mejorado flujo Register
+- Empezando integracion de Publicaciones con el back

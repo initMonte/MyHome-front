@@ -101,6 +101,8 @@ export default {
   reserved: 'Reservada',
   soldRented: 'Alquilada/Vendida',
   sellingInRent: 'En alquiler/venta',
+  sell: 'Venta',
+  rent: 'Alquiler',
   publish: 'Publicar',
   minimun2: '(Mínimo 2)',
   placeholder_amount: 'Cantidad...',

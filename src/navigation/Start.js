@@ -23,7 +23,6 @@ function Start() {
         try {
           setClientToken(jwt);
           console.log(jwt);
-          console.log('?????????????????????¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¿¿¿¿¿¿¿¿¿¿¿¿¿');
           const response = await userWS.me();
           dispatch(meAction(response));
           console.log(response.data);

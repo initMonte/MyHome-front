@@ -1,21 +1,22 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, StatusBar, StyleSheet, Text} from 'react-native';
-import {useSelector} from 'react-redux';
+import {ScrollView, View, StatusBar, StyleSheet} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
+import {saveEstateAction} from '../../../../../redux/slices/EstateReducer';
 import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
 import Theme from '../../../../../styles/Theme';
 import i18n from '../../../../../assets/strings/I18n';
 import CardState from '../../../../components/cardState';
 import IMAGES from '../../../../../assets/images/images';
 
-const Test = ({x, show}) => (
+const MapEstates = ({x, show}) => (
   <>
     {x
       .filter(estateItem => estateItem.status === 'alquiler')
       .map(estateItem => (
         <CardState
           key={estateItem._id}
-          onPress={() => show()}
+          onPress={() => show(estateItem)}
           size="S"
           image={IMAGES.OTHERS.TEMPORAL_IMAGE}
           tittle={estateItem.steet}
@@ -39,6 +40,7 @@ const Test = ({x, show}) => (
 const AlquilerUI = ({showPublicacionX}) => {
   const [estates, setEstates] = useState();
   const id = useSelector(state => state.user.id);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     estatesWS
@@ -66,6 +68,15 @@ const AlquilerUI = ({showPublicacionX}) => {
       });
   }, [id]);
 
+  const handleCardStateClick = estateItem => {
+    console.log('--------____________------------');
+    console.log(estateItem);
+    console.log('--------____________------------');
+    dispatch(saveEstateAction(estateItem));
+    console.log('--------____________------------');
+    showPublicacionX();
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -75,7 +86,9 @@ const AlquilerUI = ({showPublicacionX}) => {
           showHideTransition={'fade'}
           hidden={false}
         />
-        {estates ? <Test x={estates} show={showPublicacionX} /> : null}
+        {estates ? (
+          <MapEstates x={estates} show={handleCardStateClick} />
+        ) : null}
       </View>
     </ScrollView>
   );

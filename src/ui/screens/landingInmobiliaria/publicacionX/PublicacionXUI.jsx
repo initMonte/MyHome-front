@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import Share from 'react-native-share';
 
 import Theme from '../../../../styles/Theme';
@@ -23,6 +24,37 @@ const options = {
 };
 
 const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
+  const {
+    id,
+    street,
+    addressNumber,
+    neighborhood,
+    state,
+    country,
+    estateType,
+    coveredSquareMeters,
+    semiUncoveredSquaremeters,
+    uncoveredSquareMeters,
+    roomsAmount,
+    bathroomsAmount,
+    bedroomsAmount,
+    terrace,
+    balcony,
+    storage,
+    garage,
+    frontOrBack,
+    antiquity,
+    orientation,
+    amenites,
+    status,
+    price,
+    currency,
+    expenses,
+    latitude,
+    longitude,
+    images,
+    realEstate,
+  } = useSelector(state => state.estate);
   return (
     <ScrollView style={styles.generalContainer} nestedScrollEnabled={true}>
       <View style={styles.container}>
@@ -61,18 +93,14 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
           </View>
           <View style={styles.containerTitle}>
             <Text style={styles.title}>{'Dpto Recoleta 5amb 3dorm'}</Text>
-            <Text style={styles.price}>{'USD 70400'}</Text>
-            <View style={styles.itemsRow}>
-              <View style={styles.item}>
-                <IMAGES.SVG.HOME_PRIMARY width={14} height={14} />
-                <Text style={styles.imageIconsFont}>{'Departamento'}</Text>
-              </View>
-              <View style={styles.item}>
-                <IMAGES.SVG.LENS_PRIMARY width={14} height={14} />
-                <Text style={styles.imageIconsFont}>
-                  {'46' + ' ' + i18n.t('views')}
-                </Text>
-              </View>
+            <Text style={styles.price}>
+              {currency === 'peso'
+                ? i18n.t('ars') + ' ' + price
+                : i18n.t('usd') + ' ' + price}
+            </Text>
+            <View style={styles.item}>
+              <IMAGES.SVG.HOME_PRIMARY width={14} height={14} />
+              <Text style={styles.imageIconsFont}>{'Departamento'}</Text>
             </View>
           </View>
           <Image
@@ -81,34 +109,40 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
           />
         </View>
         <View style={styles.bodyContainer}>
-          <Text style={styles.street}>{'Av Gral Las Heras 2100'}</Text>
+          <Text style={styles.street}>{street + ' ' + addressNumber}</Text>
           <View style={styles.itemsRow}>
-            <Text style={styles.ubication}>{'Recoleta, CABA'}</Text>
-            <Text style={styles.ventaAlquiler}>{'Venta'}</Text>
+            <Text style={styles.ubication}>{neighborhood + ', ' + state}</Text>
+            <Text style={styles.ventaAlquiler}>
+              {status === 'alquiler' ? i18n.t('rent') : i18n.t('sell')}
+            </Text>
           </View>
           <View style={styles.itemsRow}>
             <View style={styles.item}>
               <IMAGES.SVG.DOOR width={18} height={18} />
               <Text style={styles.bodyIconsFont}>
-                {'5' + ' ' + i18n.t('amb')}
+                {roomsAmount + ' ' + i18n.t('amb')}
               </Text>
             </View>
             <View style={styles.item}>
               <IMAGES.SVG.BED width={18} height={18} />
               <Text style={styles.bodyIconsFont}>
-                {'2' + ' ' + i18n.t('dorm')}
+                {bedroomsAmount + ' ' + i18n.t('dorm')}
               </Text>
             </View>
             <View style={styles.item}>
               <IMAGES.SVG.SHOWER width={18} height={18} />
               <Text style={styles.bodyIconsFont}>
-                {'2' + ' ' + i18n.t('bathrooms')}
+                {bathroomsAmount + ' ' + i18n.t('bathrooms')}
               </Text>
             </View>
             <View style={styles.item}>
               <IMAGES.SVG.RULER width={18} height={18} />
               <Text style={styles.bodyIconsFont}>
-                {'82' + ' ' + i18n.t('m2')}
+                {coveredSquareMeters +
+                  semiUncoveredSquaremeters +
+                  uncoveredSquareMeters +
+                  ' ' +
+                  i18n.t('m2')}
               </Text>
             </View>
           </View>
@@ -121,25 +155,33 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
             <View style={styles.item}>
               <IMAGES.SVG.BED_PRIMARY width={20} height={20} />
               <Text style={styles.bodyIconsFont}>
-                {'2' + ' ' + i18n.t('dorm')}
+                {bedroomsAmount + ' ' + i18n.t('dorm')}
               </Text>
             </View>
             <View style={styles.item}>
               <IMAGES.SVG.SHOWER_PRIMARY width={20} height={20} />
               <Text style={styles.bodyIconsFont}>
-                {'2' + ' ' + i18n.t('bathrooms')}
+                {bathroomsAmount + ' ' + i18n.t('bathrooms')}
               </Text>
             </View>
             <View style={styles.item}>
               <IMAGES.SVG.RULER_PRIMARY width={20} height={20} />
               <Text style={styles.bodyIconsFont}>
-                {'75' + ' ' + i18n.t('m2') + ' ' + i18n.t('surfaceCover')}
+                {coveredSquareMeters +
+                  ' ' +
+                  i18n.t('m2') +
+                  ' ' +
+                  i18n.t('surfaceCover')}
               </Text>
             </View>
             <View style={styles.item}>
               <IMAGES.SVG.RULER_PRIMARY width={20} height={20} />
               <Text style={styles.bodyIconsFont}>
-                {'7' + ' ' + i18n.t('m2') + ' ' + i18n.t('surfaceUncover')}
+                {uncoveredSquareMeters +
+                  ' ' +
+                  i18n.t('m2') +
+                  ' ' +
+                  i18n.t('surfaceUncover')}
               </Text>
             </View>
             <View style={styles.item}>
@@ -148,7 +190,9 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
             </View>
             <View style={styles.item}>
               <IMAGES.SVG.PARKING_PRIMARY width={20} height={20} />
-              <Text style={styles.bodyIconsFont}>{i18n.t('parking')}</Text>
+              <Text style={styles.bodyIconsFont}>
+                {garage + ' ' + i18n.t('parking')}
+              </Text>
             </View>
           </View>
           <Text style={styles.photosFont}>{i18n.t('photos')}</Text>

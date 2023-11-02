@@ -7,19 +7,12 @@ import RegisterSuccessfulUI from './RegisterSuccessfulUI';
 function RegisterSuccessful() {
   const navigation = useNavigation();
 
-  const goBack = () => {
-    navigation.pop();
-  };
-
   const showLandingInmobiliaria = () => {
     navigation.push(NavigatorConstant.NAVIGATOR.LANDING_INMOBILIARIA);
   };
 
   return (
-    <RegisterSuccessfulUI
-      goBack={goBack}
-      showLandingInmobiliaria={showLandingInmobiliaria}
-    />
+    <RegisterSuccessfulUI showLandingInmobiliaria={showLandingInmobiliaria} />
   );
 }
 
