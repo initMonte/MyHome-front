@@ -45,6 +45,7 @@ export const authReducer = createSlice({
       state.user.email = token.payload.data.user.email;
     },
     logoutAction: state => {
+      setClientToken('');
       state.session.appId = '';
       state.session.jwt = '';
       state.user.id = '';

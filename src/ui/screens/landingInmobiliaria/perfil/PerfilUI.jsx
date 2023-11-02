@@ -8,11 +8,13 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
+import {logoutAction} from '../../../../redux/slices/AuthReducer';
+import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 const RegisterUI = ({
   showLogin,
@@ -21,6 +23,7 @@ const RegisterUI = ({
   showConsultas,
   showVisitasProgramadas,
 }) => {
+  const dispatch = useDispatch();
   const {id, email, email2, name, surname, telephone, telephone2, avatar} =
     useSelector(state => state.user);
   console.log(' ');
@@ -35,6 +38,37 @@ const RegisterUI = ({
   console.log('avatar: ' + avatar);
   console.log('---------');
   console.log(' ');
+
+  const handleLogout = () => {
+    dispatch(logoutAction());
+    showLogin();
+  };
+
+  const handleDeleteUser = () => {
+    userWS
+      .deleteUser()
+      .then(response => {
+        // Delete exitoso
+        dispatch(logoutAction());
+        showLogin();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -63,13 +97,13 @@ const RegisterUI = ({
               </Text>
             </Pressable>
             <View style={styles.containerLogout}>
-              <Pressable onPress={() => showLogin()}>
+              <Pressable onPress={() => handleLogout()}>
                 <Text style={styles.textLogout}>
                   {i18n.t('logout') + ' '}
                   <IMAGES.SVG.LOGOUT width={13} height={13} />
                 </Text>
               </Pressable>
-              <Pressable onPress={() => showLogin()}>
+              <Pressable onPress={() => handleDeleteUser()}>
                 <Text style={styles.textLogout}>
                   {i18n.t('deleteAccount') + ' '}
                   <IMAGES.SVG.TRASH width={13} height={13} />
