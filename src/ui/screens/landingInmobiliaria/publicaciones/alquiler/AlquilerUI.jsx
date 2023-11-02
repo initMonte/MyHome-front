@@ -10,26 +10,29 @@ import IMAGES from '../../../../../assets/images/images';
 
 const Test = ({x, show}) => (
   <>
-    {x.map(estateItem => (
-      <CardState
-        onPress={() => show()}
-        size="S"
-        image={IMAGES.OTHERS.TEMPORAL_IMAGE}
-        tittle={estateItem.steet}
-        ubication={estateItem.neighborhood}
-        logoRealState={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-        amb={estateItem.roomsAmount}
-        dorm={estateItem.bedroomsAmount}
-        bath={estateItem.bathroomsAmount}
-        m2={
-          estateItem.coveredSquareMeters +
-          estateItem.semiUncoveredSquaremeters +
-          estateItem.uncoveredSquareMeters
-        }
-        price={estateItem.price}
-        currency={estateItem.currency}
-      />
-    ))}
+    {x
+      .filter(estateItem => estateItem.status === 'alquiler')
+      .map(estateItem => (
+        <CardState
+          key={estateItem._id}
+          onPress={() => show()}
+          size="S"
+          image={IMAGES.OTHERS.TEMPORAL_IMAGE}
+          tittle={estateItem.steet}
+          ubication={estateItem.neighborhood}
+          logoRealState={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
+          amb={estateItem.roomsAmount}
+          dorm={estateItem.bedroomsAmount}
+          bath={estateItem.bathroomsAmount}
+          m2={
+            estateItem.coveredSquareMeters +
+            estateItem.semiUncoveredSquaremeters +
+            estateItem.uncoveredSquareMeters
+          }
+          price={estateItem.price}
+          currency={estateItem.currency}
+        />
+      ))}
   </>
 );
 

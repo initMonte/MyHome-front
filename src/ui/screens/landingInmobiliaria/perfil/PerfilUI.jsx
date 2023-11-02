@@ -14,6 +14,7 @@ import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
 import {logoutAction} from '../../../../redux/slices/AuthReducer';
+import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 const RegisterUI = ({
   showLogin,
@@ -41,6 +42,32 @@ const RegisterUI = ({
   const handleLogout = () => {
     dispatch(logoutAction());
     showLogin();
+  };
+
+  const handleDeleteUser = () => {
+    userWS
+      .deleteUser()
+      .then(response => {
+        // Delete exitoso
+        dispatch(logoutAction());
+        showLogin();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
   };
   return (
     <ScrollView style={styles.generalContainer}>
@@ -76,7 +103,7 @@ const RegisterUI = ({
                   <IMAGES.SVG.LOGOUT width={13} height={13} />
                 </Text>
               </Pressable>
-              <Pressable onPress={() => showLogin()}>
+              <Pressable onPress={() => handleDeleteUser()}>
                 <Text style={styles.textLogout}>
                   {i18n.t('deleteAccount') + ' '}
                   <IMAGES.SVG.TRASH width={13} height={13} />

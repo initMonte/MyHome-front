@@ -61,3 +61,5 @@ yarn start
 - Implemenado Redux para manejo global de estados y persistencia de datos
 - Implementadas llamadas al servidor para Registrar usuario, acitvar Codigo de registro, Login, y algunos get
 - Implementado logout de la aplicacion para borrar los datos persistentes
+- Implementado Delete user **NO TERMINADO, DA ERROR**
+- Implementando que usuario quede loggeado

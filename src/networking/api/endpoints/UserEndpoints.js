@@ -29,11 +29,11 @@ export let userWS = {
     return await Api.post(urlApi.user.login, {email, password});
   },
   me: async function () {
-    console.log('haciengo GET ME');
+    console.log('haciendo GET ME');
     return await Api.get(urlApi.user.me);
   },
   getAvatar: async function () {
-    console.log('haciengo GET AVATAR');
+    console.log('haciendo GET AVATAR');
     return await Api.get(urlApi.user.getAvatar);
   },
   update: async function (email, email2, name, surname, telephone, telephone2) {
@@ -45,5 +45,8 @@ export let userWS = {
       telephone,
       telephone2,
     });
+  },
+  deleteUser: async function () {
+    return await Api.delete(urlApi.user.deleteUser);
   },
 };
