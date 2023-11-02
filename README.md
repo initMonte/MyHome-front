@@ -63,3 +63,4 @@ yarn start
 - Implementado logout de la aplicacion para borrar los datos persistentes
 - Implementado Delete user **NO TERMINADO, DA ERROR**
 - Implementando que usuario quede loggeado
+- Implementando endpoint a flujo de PassRecovery

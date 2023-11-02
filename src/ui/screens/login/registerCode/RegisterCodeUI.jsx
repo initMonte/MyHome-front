@@ -59,7 +59,6 @@ const RegisterCodeUI = ({email, goBack, showRegisterSuccessful}) => {
         <InputText
           placeholder={i18n.t('placeholder_code')}
           size="M"
-          keyboard="numeric"
           changeValue={handleCodeChange}
         />
         <Button

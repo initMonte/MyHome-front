@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
 import {Image} from 'react-native-svg';
+import {useDispatch} from 'react-redux';
 
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
@@ -8,7 +9,44 @@ import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 
+import {saveEmailAction} from '../../../../redux/slices/UserReducer';
+import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
+
 const PasswordRecoveryUI = ({goBack, showPasswordRecoveryCode}) => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+
+  const handleEmailChange = value => {
+    setEmail(value);
+  };
+
+  const handlePassRecovery = () => {
+    userWS
+      .confirmationCodeForgotPassword(email)
+      .then(response => {
+        // Recovery exitoso
+        console.log(response);
+        dispatch(saveEmailAction(response));
+        showPasswordRecoveryCode();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
@@ -26,6 +64,7 @@ const PasswordRecoveryUI = ({goBack, showPasswordRecoveryCode}) => {
           <InputText
             placeholder={i18n.t('placeholder_email')}
             keyboard="email-address"
+            changeValue={handleEmailChange}
           />
         </View>
         <Button
@@ -33,7 +72,7 @@ const PasswordRecoveryUI = ({goBack, showPasswordRecoveryCode}) => {
           size="M"
           color="secondary"
           onPress={() => {
-            showPasswordRecoveryCode();
+            handlePassRecovery();
           }}
         />
         <Button

@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 import {Image} from 'react-native-svg';
+
+import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
+import {loginAction} from '../../../../redux/slices/AuthReducer';
 
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
@@ -9,6 +13,74 @@ import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 
 const PasswordRecoveryNewPassUI = ({goBack, showLandingInmobiliaria}) => {
+  const {email} = useSelector(state => state.user);
+  const [password, setPassword] = useState('');
+  const [passwordRepeat, setPasswordRepeat] = useState('');
+  const [passwordValid, setpasswordValid] = useState('');
+  const dispatch = useDispatch();
+
+  const checkPassword = () => {
+    if (password !== '' && password === passwordRepeat) {
+      setpasswordValid(true);
+      return handleNewPass();
+    } else {
+      setpasswordValid(false);
+      return;
+    }
+  };
+
+  const handleNewPass = () => {
+    userWS
+      .passwordChange(email, password)
+      .then(response => {
+        // New pass exitoso
+        handleLogin();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
+  const handleLogin = () => {
+    userWS
+      .login(email, password)
+      .then(response => {
+        // Login exitoso
+        console.log(response);
+        dispatch(loginAction(response));
+        showLandingInmobiliaria();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
@@ -26,11 +98,13 @@ const PasswordRecoveryNewPassUI = ({goBack, showLandingInmobiliaria}) => {
           <InputText
             placeholder={i18n.t('placeholder_password')}
             hideText={true}
+            changeValue={setPassword}
           />
           <Text style={styles.text}>{i18n.t('newPass2')}</Text>
           <InputText
             placeholder={i18n.t('placeholder_password')}
             hideText={true}
+            changeValue={setPasswordRepeat}
           />
         </View>
         <Button
@@ -38,7 +112,7 @@ const PasswordRecoveryNewPassUI = ({goBack, showLandingInmobiliaria}) => {
           size="M"
           color="secondary"
           onPress={() => {
-            showLandingInmobiliaria();
+            checkPassword();
           }}
         />
         <Button

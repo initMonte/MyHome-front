@@ -1,4 +1,5 @@
 import Api from '../Api';
+import axios from 'axios';
 import {urlApi} from '../../../config/ApiConfig';
 
 export let userWS = {
@@ -35,6 +36,15 @@ export let userWS = {
   getAvatar: async function () {
     console.log('haciendo GET AVATAR');
     return await Api.get(urlApi.user.getAvatar);
+  },
+  confirmationCodeForgotPassword: async function (email) {
+    console.log('Mandando codigo de recuperacion de PASS');
+    console.log(email);
+    return await Api.post(urlApi.user.confirmationCodeForgotPassword, {email});
+  },
+  passwordChange: async function (email, password) {
+    console.log('CAMBIANDO LA PASS');
+    return await Api.post(urlApi.user.passwordChange, {email, password});
   },
   update: async function (email, email2, name, surname, telephone, telephone2) {
     return await Api.put(urlApi.user.update, {

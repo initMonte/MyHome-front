@@ -26,8 +26,11 @@ export const userReducer = createSlice({
     getAvatarAction: (state, response) => {
       state.avatar = response.payload.data;
     },
+    saveEmailAction: (state, responde) => {
+      state.email = responde.payload.data.user.email;
+    },
   },
 });
 
-export const {meAction} = userReducer.actions;
+export const {meAction, getAvatarAction, saveEmailAction} = userReducer.actions;
 export default userReducer.reducer;
