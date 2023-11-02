@@ -1,5 +1,6 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
+
 import NavigatorConstant from '../../../../../navigation/NavigatorConstant';
 
 import AlquilerUI from './AlquilerUI';

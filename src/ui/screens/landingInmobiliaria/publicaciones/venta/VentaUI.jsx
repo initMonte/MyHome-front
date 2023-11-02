@@ -19,7 +19,6 @@ const VentaUI = ({showPublicacionX}) => {
         <CardState
           onPress={() => showPublicacionX()}
           size="S"
-          favButton={true}
           image={IMAGES.OTHERS.TEMPORAL_IMAGE}
           tittle={'Av. Gral. Las Heras 2200'}
           ubication={'Recoleta'}
@@ -36,7 +35,6 @@ const VentaUI = ({showPublicacionX}) => {
         <CardState
           onPress={() => showPublicacionX()}
           size="S"
-          favButton={true}
           image={IMAGES.OTHERS.TEMPORAL_IMAGE}
           tittle={'Av. Gral. Las Heras 2200'}
           ubication={'Recoleta'}
@@ -53,7 +51,6 @@ const VentaUI = ({showPublicacionX}) => {
         <CardState
           onPress={() => showPublicacionX()}
           size="S"
-          favButton={true}
           image={IMAGES.OTHERS.TEMPORAL_IMAGE}
           tittle={'Av. Gral. Las Heras 2200'}
           ubication={'Recoleta'}

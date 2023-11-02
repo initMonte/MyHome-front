@@ -1,21 +1,97 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   ScrollView,
   View,
   Text,
-  Pressable,
   StatusBar,
   StyleSheet,
   Image,
 } from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Theme from '../../../../../styles/Theme';
 import i18n from '../../../../../assets/strings/I18n';
 import IMAGES from '../../../../../assets/images/images';
 import Button from '../../../../components/button';
 import InputText from '../../../../components/inputText';
+import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
+import {meAction} from '../../../../../redux/slices/UserReducer';
 
 const MisDatosUI = ({goBack}) => {
+  const dispatch = useDispatch();
+  const {id, email, email2, name, surname, telephone, telephone2, avatar} =
+    useSelector(state => state.user);
+
+  const [emailValue, setEmailValue] = useState('');
+  const [nameValue, setNameValue] = useState('');
+  const [telephoneValue, setTelephoneValue] = useState('');
+  const [telephone2Value, setTelephone2Value] = useState('');
+  const [email2Value, setEmail2Value] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+  const [newPasswordValue, setNewPasswordValue] = useState('');
+
+  const handleEmailChange = value => {
+    setEmailValue(value);
+  };
+
+  const handleNameChange = value => {
+    setNameValue(value);
+  };
+
+  const handleTelephoneChange = value => {
+    setTelephoneValue(value);
+  };
+
+  const handleTelephone2Change = value => {
+    setTelephone2Value(value);
+  };
+
+  const handleEmail2Change = value => {
+    setEmail2Value(value);
+  };
+
+  const handlePasswordChange = value => {
+    setPasswordValue(value);
+  };
+
+  const handleNewPasswordChange = value => {
+    setNewPasswordValue(value);
+  };
+
+  const handleSubmit = () => {
+    userWS
+      .update(
+        emailValue,
+        email2Value,
+        nameValue,
+        '',
+        telephoneValue,
+        telephone2Value,
+      )
+      .then(response => {
+        // Login exitoso
+        console.log(response);
+        dispatch(meAction(response));
+        goBack();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -30,7 +106,9 @@ const MisDatosUI = ({goBack}) => {
             source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
             style={styles.profilePhoto}
           />
-          <Text style={styles.textH1}>{'Integrar con Back'}</Text>
+          <Text style={styles.textH1}>
+            {surname ? name + ' ' + surname : name}
+          </Text>
         </View>
         <View style={styles.box}>
           <Text style={styles.tittleBox}>{i18n.t('myData')}</Text>
@@ -40,6 +118,8 @@ const MisDatosUI = ({goBack}) => {
               placeholder={i18n.t('placeholder_email')}
               keyboard="email-address"
               size="L"
+              changeValue={handleEmailChange}
+              ogValue={email}
             />
           </View>
           <View style={styles.littleBox}>
@@ -47,6 +127,8 @@ const MisDatosUI = ({goBack}) => {
             <InputText
               placeholder={i18n.t('placeholder_realStateName')}
               size="L"
+              changeValue={handleNameChange}
+              ogValue={name}
             />
           </View>
           <View style={styles.littleBox}>
@@ -55,6 +137,8 @@ const MisDatosUI = ({goBack}) => {
               placeholder={i18n.t('placeholder_phone')}
               keyboard="phone-pad"
               size="L"
+              changeValue={handleTelephoneChange}
+              ogValue={telephone}
             />
           </View>
           <View style={styles.littleBox}>
@@ -66,6 +150,8 @@ const MisDatosUI = ({goBack}) => {
               placeholder={i18n.t('placeholder_phone')}
               keyboard="phone-pad"
               size="L"
+              changeValue={handleTelephone2Change}
+              ogValue={telephone2}
             />
           </View>
           <View style={styles.littleBox}>
@@ -74,6 +160,8 @@ const MisDatosUI = ({goBack}) => {
               placeholder={i18n.t('placeholder_email')}
               keyboard="email-address"
               size="L"
+              changeValue={handleEmail2Change}
+              ogValue={email2}
             />
           </View>
           <View style={styles.littleBox}>
@@ -83,6 +171,7 @@ const MisDatosUI = ({goBack}) => {
               keyboard="default"
               size="L"
               hideText={true}
+              changeValue={handlePasswordChange}
             />
           </View>
           <View style={styles.littleBox}>
@@ -92,10 +181,11 @@ const MisDatosUI = ({goBack}) => {
               keyboard="default"
               size="L"
               hideText={true}
+              changeValue={handleNewPasswordChange}
             />
           </View>
           <Button
-            onPress={() => goBack()}
+            onPress={() => handleSubmit()}
             text={i18n.t('saveChanges')}
             color={'primary'}
             size="ML"

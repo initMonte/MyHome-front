@@ -11,8 +11,9 @@ const InputText = ({
   borderRadius = 0,
   height = 40,
   changeValue,
+  ogValue = '',
 }) => {
-  const [input, onChangeInput] = React.useState('');
+  const [input, onChangeInput] = React.useState(ogValue);
   const [focus, onChangeFocus] = React.useState(false);
 
   const generalStyle = StyleSheet.create({

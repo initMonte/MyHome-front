@@ -18,35 +18,60 @@ import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 
 const RegisterUI = ({goBack, showRegisterCode}) => {
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
-  const [telephone, setTelephone] = useState('');
   const [password, setPassword] = useState('');
-  const [nickName, setNickName] = useState('');
-
-  const handleNameChange = value => {
-    setName(value);
-  };
-
-  const handleSurnameChange = value => {
-    setSurname(value);
-  };
+  const [name, setName] = useState('');
+  const [telephone, setTelephone] = useState('');
+  const [telephone2, setTelephone2] = useState('');
+  const [email2, setEmail2] = useState('');
 
   const handleEmailChange = value => {
     setEmail(value);
-  };
-
-  const handleTelephoneChange = value => {
-    setTelephone(value);
   };
 
   const handlePasswordChange = value => {
     setPassword(value);
   };
 
-  const handleNickNameChange = value => {
-    setNickName(value);
+  const handleNameChange = value => {
+    setName(value);
+  };
+
+  const handleTelephoneChange = value => {
+    setTelephone(value);
+  };
+
+  const handleTelephone2Change = value => {
+    setTelephone2(value);
+  };
+
+  const handleEmail2Change = value => {
+    setEmail2(value);
+  };
+
+  const handleRegistration = () => {
+    userWS
+      .register(email, password, name, telephone, telephone2, email2)
+      .then(response => {
+        // Registro exitoso
+        showRegisterCode(email);
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
   };
 
   return (
@@ -96,7 +121,7 @@ const RegisterUI = ({goBack, showRegisterCode}) => {
           <InputText
             placeholder={i18n.t('placeholder_phone')}
             keyboard="phone-pad"
-            changeValue={handleSurnameChange}
+            changeValue={handleTelephone2Change}
           />
           <Text style={styles.text}>
             {i18n.t('contactEmail') + ' '}
@@ -105,36 +130,14 @@ const RegisterUI = ({goBack, showRegisterCode}) => {
           <InputText
             placeholder={i18n.t('placeholder_email')}
             keyboard="email-address"
-            changeValue={handleNickNameChange}
+            changeValue={handleEmail2Change}
           />
         </View>
         <Button
           text={i18n.t('register')}
           size="M"
           color="secondary"
-          onPress={() => {
-            userWS
-              .register(name, surname, email, telephone, password, nickName)
-              .catch(error => {
-                if (error.response) {
-                  // The request was made, and the server responded with a status code that falls out of the range of 2xx
-                  console.error(
-                    'Server responded with an error status:',
-                    error.response.status,
-                  );
-                  console.error('Response data:', error.response.data);
-                  // You can handle the specific error here, e.g., show an error message to the user.
-                } else if (error.request) {
-                  // The request was made, but no response was received
-                  console.error('No response received:', error.request);
-                  // Handle as needed
-                } else {
-                  // Something happened in setting up the request
-                  console.error('Error setting up the request:', error.message);
-                  // Handle as needed
-                }
-              });
-          }}
+          onPress={handleRegistration}
         />
         <Button
           text={i18n.t('goBack')}
