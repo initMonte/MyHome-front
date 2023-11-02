@@ -25,18 +25,10 @@ export const authReducer = createSlice({
     session: {
       appId: '',
       jwt: '',
-      pnToken: '',
     },
     isFetching: false,
   },
   reducers: {
-    updatePNToken: (state, token) => {
-      state.session.pnToken = token.payload;
-      console.log(
-        'token.payload;token.payload;token.payload;token.payload;: ',
-        state.session.pnToken,
-      );
-    },
     loginAction: (state, token) => {
       console.log('ENTRE EXITOSAMENTE A AUTH REDUCER -> LOGIN ACTION');
       setClientToken(token.payload.data.token);
@@ -72,5 +64,5 @@ export const authReducer = createSlice({
   },
 });
 
-export const {updatePNToken, loginAction, logoutAction} = authReducer.actions;
+export const {loginAction, logoutAction} = authReducer.actions;
 export default authReducer.reducer;

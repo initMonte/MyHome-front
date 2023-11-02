@@ -7,10 +7,7 @@ import EditarPublicacionX from '../ui/screens/landingInmobiliaria/editarPublicac
 
 import NavigatorConstant from './NavigatorConstant';
 
-import i18n from '../assets/strings/I18n';
-
 const Stack = createNativeStackNavigator();
-const tabName = i18n.t('tabs.publicaciones');
 function InmobiliariaPublicacionesNavigator() {
   return (
     <Stack.Navigator
