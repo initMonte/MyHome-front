@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Button, StyleSheet, Pressable, FlatList } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, FlatList } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import IMAGES from '../../assets/images/images';
 import Theme from '../../styles/Theme';
 import i18n from '../../assets/strings/I18n';
+import Lightbox from 'react-native-lightbox-v2';
 
 const PhotoUploader = () => {
   const [imageSources, setImageSources] = useState([{ isAddImage: true }]);
@@ -48,10 +49,12 @@ const PhotoUploader = () => {
                 <IMAGES.SVG.ADD_IMAGE width={25} height={25} margin={43}/>
               </Pressable>
             ) : (
-              <Image
-                source={item}
-                style={{ width: 110, height: 110, borderRadius: 8 }}
-              />
+              <Lightbox source={item.uri} doubleTapZoomEnabled swipeToDismiss>
+                <Image
+                  source={item}
+                  style={{ width: '100%', height: '100%', borderRadius: 8, resizeMode: 'contain' }}
+                />
+              </Lightbox>
             )}
           </View>
         )}
