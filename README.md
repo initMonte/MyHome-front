@@ -58,3 +58,6 @@ yarn start
 - Creada navegacion para Publicacion X y agregada a las distintas ventanas de Inmobiliaria
 - Creada ventana de Publicacion X de Inmobiliaria
 - Navegacion para Editar Publicacion X, y conectada con Publicacion X
+- Implemenado Redux para manejo global de estados y persistencia de datos
+- Implementadas llamadas al servidor para Registrar usuario, acitvar Codigo de registro, Login, y algunos get
+- Implementado logout de la aplicacion para borrar los datos persistentes
