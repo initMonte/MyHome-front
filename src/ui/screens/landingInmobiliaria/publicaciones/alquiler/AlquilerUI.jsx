@@ -1,12 +1,68 @@
-import React from 'react';
-import {ScrollView, View, StatusBar, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ScrollView, View, StatusBar, StyleSheet, Text} from 'react-native';
+import {useSelector} from 'react-redux';
 
+import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
 import Theme from '../../../../../styles/Theme';
 import i18n from '../../../../../assets/strings/I18n';
 import CardState from '../../../../components/cardState';
 import IMAGES from '../../../../../assets/images/images';
 
+const Test = ({x, show}) => (
+  <>
+    {x.map(estateItem => (
+      <CardState
+        onPress={() => show()}
+        size="S"
+        image={IMAGES.OTHERS.TEMPORAL_IMAGE}
+        tittle={estateItem.steet}
+        ubication={estateItem.neighborhood}
+        logoRealState={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
+        amb={estateItem.roomsAmount}
+        dorm={estateItem.bedroomsAmount}
+        bath={estateItem.bathroomsAmount}
+        m2={
+          estateItem.coveredSquareMeters +
+          estateItem.semiUncoveredSquaremeters +
+          estateItem.uncoveredSquareMeters
+        }
+        price={estateItem.price}
+        currency={estateItem.currency}
+      />
+    ))}
+  </>
+);
+
 const AlquilerUI = ({showPublicacionX}) => {
+  const [estates, setEstates] = useState();
+  const id = useSelector(state => state.user.id);
+
+  useEffect(() => {
+    estatesWS
+      .getEstatesByUserId(id)
+      .then(response => {
+        // Get exitoso
+        console.log(response.data.estates);
+        setEstates(response.data.estates);
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  }, [id]);
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -16,57 +72,7 @@ const AlquilerUI = ({showPublicacionX}) => {
           showHideTransition={'fade'}
           hidden={false}
         />
-        <CardState
-          onPress={() => showPublicacionX()}
-          size="S"
-          favButton={true}
-          image={IMAGES.OTHERS.TEMPORAL_IMAGE}
-          tittle={'Av. Gral. Las Heras 2200'}
-          ubication={'Recoleta'}
-          logoRealState={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-          amb={3}
-          dorm={2}
-          bath={1}
-          m2={65}
-          description={'Venta. Departamento ubicado en 3° piso al frente. 2 dormitorios y 2 ba...'}
-          price={65000}
-          expenses={22000}
-          currency={'USD'}
-        />
-        <CardState
-          onPress={() => showPublicacionX()}
-          size="S"
-          favButton={true}
-          image={IMAGES.OTHERS.TEMPORAL_IMAGE}
-          tittle={'Av. Gral. Las Heras 2200'}
-          ubication={'Recoleta'}
-          logoRealState={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-          amb={3}
-          dorm={2}
-          bath={1}
-          m2={65}
-          description={'Venta. Departamento ubicado en 3° piso al frente. 2 dormitorios y 2 ba...'}
-          price={65000}
-          expenses={22000}
-          currency={'USD'}
-        />
-        <CardState
-          onPress={() => showPublicacionX()}
-          size="S"
-          favButton={true}
-          image={IMAGES.OTHERS.TEMPORAL_IMAGE}
-          tittle={'Av. Gral. Las Heras 2200'}
-          ubication={'Recoleta'}
-          logoRealState={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-          amb={3}
-          dorm={2}
-          bath={1}
-          m2={65}
-          description={'Venta. Departamento ubicado en 3° piso al frente. 2 dormitorios y 2 ba...'}
-          price={65000}
-          expenses={22000}
-          currency={'USD'}
-        />
+        {estates ? <Test x={estates} show={showPublicacionX} /> : null}
       </View>
     </ScrollView>
   );

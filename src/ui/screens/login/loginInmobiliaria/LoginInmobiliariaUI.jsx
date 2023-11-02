@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
 import {Image} from 'react-native-svg';
 
 import Theme from '../../../../styles/Theme';
@@ -15,12 +16,54 @@ import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 
+import {loginAction} from '../../../../redux/slices/AuthReducer';
+import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
+
 const LoginInmobiliariaUI = ({
   goBack,
   showRegister,
   showRecoveryPassword,
   showLandingInmobiliaria,
 }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+
+  const handleEmailChange = value => {
+    setEmail(value);
+  };
+
+  const handlePasswordChange = value => {
+    setPassword(value);
+  };
+
+  const handleLogin = () => {
+    userWS
+      .login(email, password)
+      .then(response => {
+        // Login exitoso
+        console.log(response);
+        dispatch(loginAction(response));
+        showLandingInmobiliaria();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
@@ -37,11 +80,13 @@ const LoginInmobiliariaUI = ({
           <InputText
             placeholder={i18n.t('placeholder_email')}
             keyboard="email-address"
+            changeValue={handleEmailChange}
           />
           <Text style={styles.text}>{i18n.t('pass')}</Text>
           <InputText
             placeholder={i18n.t('placeholder_password')}
             hideText={true}
+            changeValue={handlePasswordChange}
           />
           <Pressable onPress={showRecoveryPassword}>
             <Text style={styles.presable1}>{i18n.t('forgotPass')}</Text>
@@ -52,7 +97,7 @@ const LoginInmobiliariaUI = ({
           size="M"
           color="secondary"
           onPress={() => {
-            showLandingInmobiliaria();
+            handleLogin();
           }}
         />
         <View style={styles.container3}>

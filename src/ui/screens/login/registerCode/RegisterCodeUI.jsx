@@ -1,15 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
 import {Image} from 'react-native-svg';
+
+import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
-import Register from '../register/Register';
 
-const RegisterCodeUI = ({goBack, showRegisterSuccessful}) => {
+const RegisterCodeUI = ({email, goBack, showRegisterSuccessful}) => {
+  const [code, setCode] = useState('');
+
+  const handleCodeChange = value => {
+    setCode(value);
+  };
+
+  const handleRegistrationCode = () => {
+    userWS
+      .verifyCode(email, code)
+      .then(response => {
+        // Registro exitoso
+        showRegisterSuccessful();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
@@ -22,19 +54,20 @@ const RegisterCodeUI = ({goBack, showRegisterSuccessful}) => {
         <Text style={styles.textH1}>{i18n.t('realStateRegister')}</Text>
         <IMAGES.SVG.LOGO width={380} height={230} />
         <Text style={styles.text}>{i18n.t('emailSentTo')}</Text>
-        <Text style={styles.text2}>integrarConBack@gmail.com</Text>
+        <Text style={styles.text2}>{email}</Text>
         <Text style={styles.text}>{i18n.t('inputCode')}</Text>
         <InputText
           placeholder={i18n.t('placeholder_code')}
           size="M"
           keyboard="numeric"
+          changeValue={handleCodeChange}
         />
         <Button
           text={i18n.t('continue')}
           size="M"
           color="secondary"
           onPress={() => {
-            showRegisterSuccessful();
+            handleRegistrationCode();
           }}
         />
         <Button

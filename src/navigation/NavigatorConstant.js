@@ -46,7 +46,7 @@ const INMOBILIARIA_PERFIL_STACK = {
 const INMOBILIARIA_PUBLICACIONES_STACK = {
   PUBLICACIONES_TOP_TAB: 'Publicaciones',
   PUBLICACION_X: 'Publicacion X',
-  EDITAR_PUBLICACION_X: 'Editar publicacion X',
+  EDITAR_PUBLICACION_X: 'Editar publicacion',
 };
 
 export default {

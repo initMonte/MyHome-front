@@ -43,18 +43,3 @@ export const urlApi = {
     updateEstate: 'estates/', // Pasarle despues el id
   },
 };
-
-/*
-  postUsuario: uriApi + 'api/usuarios',
-  login: uriApi + 'api/usuarios/login',
-  getUsuarios: uriApi + 'api/usuarios',
-  getUserById: uriApi + 'api/usuarios:id',
-  deleteUserById: uriApi + 'api/usuarios:id',
-  postMessage: uriApi + 'api/contactos',
-  getContactos: uriApi + 'api/contactos',
-  getContactoById: uriApi + 'api/contactos/:id',
-  deleteContactoById: uriApi + 'api/contactos/',
-  deleteContactos: uriApi + 'api/contactos',
-  postCounter: uriApi + 'api/counters',
-  putCounterById: uriApi + 'api/counters/',
-*/

@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
@@ -20,6 +21,20 @@ const RegisterUI = ({
   showConsultas,
   showVisitasProgramadas,
 }) => {
+  const {id, email, email2, name, surname, telephone, telephone2, avatar} =
+    useSelector(state => state.user);
+  console.log(' ');
+  console.log('---------');
+  console.log('id: ' + id);
+  console.log('email: ' + email);
+  console.log('email2: ' + email2);
+  console.log('name: ' + name);
+  console.log('surname: ' + surname);
+  console.log('telephone: ' + telephone);
+  console.log('telephone2: ' + telephone2);
+  console.log('avatar: ' + avatar);
+  console.log('---------');
+  console.log(' ');
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -35,7 +50,9 @@ const RegisterUI = ({
             style={styles.profilePhoto}
           />
           <View>
-            <Text style={styles.textH1}>{'Integrar con Back'}</Text>
+            <Text style={styles.textH1}>
+              {surname ? name + ' ' + surname : name}
+            </Text>
             <Pressable onPress={() => showOpiniones()}>
               <Text style={styles.textStars}>
                 {'0, 3' + ' '}
