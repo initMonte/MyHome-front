@@ -64,3 +64,4 @@ yarn start
 - Implementado Delete user **NO TERMINADO, DA ERROR**
 - Implementando que usuario quede loggeado
 - Implementando endpoint a flujo de PassRecovery
+- Terminado flujo PassRecovery y mejorado flujo Register

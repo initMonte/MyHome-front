@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 import {Image} from 'react-native-svg';
 
 import Theme from '../../../../styles/Theme';
@@ -7,7 +8,40 @@ import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
 
+import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
+import {loginAction} from '../../../../redux/slices/AuthReducer';
+
 const RegisterSuccessfulUI = ({goBack, showLandingInmobiliaria}) => {
+  const {email, pass} = useSelector(state => state.user);
+  const password = pass;
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    userWS
+      .login(email, password)
+      .then(response => {
+        // Login exitoso
+        dispatch(loginAction(response));
+        showLandingInmobiliaria();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
@@ -20,14 +54,14 @@ const RegisterSuccessfulUI = ({goBack, showLandingInmobiliaria}) => {
         <Text style={styles.textH1}>{i18n.t('realStateRegister')}</Text>
         <IMAGES.SVG.LOGO width={380} height={230} />
         <Text style={styles.text}>{i18n.t('succesRegister')}</Text>
-        <Text style={styles.text2}>integrarConBack@gmail.com</Text>
+        <Text style={styles.text2}>{email}</Text>
         <IMAGES.SVG.SUCCESS width={100} height={100} />
         <Button
           text={i18n.t('login')}
           size="M"
           color="secondary"
           onPress={() => {
-            showLandingInmobiliaria();
+            handleLogin();
           }}
         />
       </View>

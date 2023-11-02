@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
+import {useSelector} from 'react-redux';
 import {Image} from 'react-native-svg';
 
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
@@ -10,7 +11,8 @@ import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 
-const RegisterCodeUI = ({email, goBack, showRegisterSuccessful}) => {
+const RegisterCodeUI = ({goBack, showRegisterSuccessful}) => {
+  const {email} = useSelector(state => state.user);
   const [code, setCode] = useState('');
 
   const handleCodeChange = value => {

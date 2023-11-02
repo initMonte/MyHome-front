@@ -11,11 +11,8 @@ function Register() {
     navigation.pop();
   };
 
-  const showRegisterCode = email => {
-    console.log('email en register.js: ' + email);
-    navigation.push(NavigatorConstant.LOGIN_STACK.REGISTER_CODE, {
-      email: email,
-    });
+  const showRegisterCode = () => {
+    navigation.push(NavigatorConstant.LOGIN_STACK.REGISTER_CODE);
   };
 
   return <RegisterUI goBack={goBack} showRegisterCode={showRegisterCode} />;

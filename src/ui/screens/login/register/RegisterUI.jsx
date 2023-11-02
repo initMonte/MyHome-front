@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  StatusBar,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {Image} from 'react-native-svg';
 
+import {saveLoginInfoAction} from '../../../../redux/slices/UserReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 import Theme from '../../../../styles/Theme';
@@ -24,6 +19,7 @@ const RegisterUI = ({goBack, showRegisterCode}) => {
   const [telephone, setTelephone] = useState('');
   const [telephone2, setTelephone2] = useState('');
   const [email2, setEmail2] = useState('');
+  const dispatch = useDispatch();
 
   const handleEmailChange = value => {
     setEmail(value);
@@ -54,7 +50,8 @@ const RegisterUI = ({goBack, showRegisterCode}) => {
       .register(email, password, name, telephone, telephone2, email2)
       .then(response => {
         // Registro exitoso
-        showRegisterCode(email);
+        dispatch(saveLoginInfoAction({email, password}));
+        showRegisterCode();
       })
       .catch(error => {
         if (error.response) {

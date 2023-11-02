@@ -1,5 +1,4 @@
 import Api from '../Api';
-import axios from 'axios';
 import {urlApi} from '../../../config/ApiConfig';
 
 export let userWS = {
@@ -22,6 +21,7 @@ export let userWS = {
   },
   verifyCode: async function (email, code) {
     console.log('email en UserEndpoints: ' + email);
+    console.log('code en UserEndpoints: ' + code);
     return await Api.post(urlApi.user.verifyCode, {email, code});
   },
   login: async function (email, password) {
