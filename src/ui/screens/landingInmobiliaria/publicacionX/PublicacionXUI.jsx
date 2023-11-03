@@ -83,6 +83,33 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
     fetchAvatar();
   }, [dispatch, realEstate, realEstateAvatar]);
 
+  const switchTypeAndStatus = () => {
+    switch (rentOrSale) {
+      case 'alquiler':
+        switch (status) {
+          case 'alquiler - venta':
+            return i18n.t('rent');
+          case 'reservada':
+            return i18n.t('rent_reserved');
+          case 'alquilada - vendida':
+            return i18n.t('rented');
+          default:
+            return;
+        }
+      case 'venta':
+        switch (status) {
+          case 'alquiler - venta':
+            return i18n.t('sell');
+          case 'reservada':
+            return i18n.t('sell_reserved');
+          case 'alquilada - vendida':
+            return i18n.t('sold');
+          default:
+            return;
+        }
+    }
+  };
+
   const switchOrientation = () => {
     switch (orientation) {
       case 'norte':
@@ -190,9 +217,7 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
           <Text style={styles.street}>{street + ' ' + addressNumber}</Text>
           <View style={styles.itemsRow}>
             <Text style={styles.ubication}>{neighborhood + ', ' + state}</Text>
-            <Text style={styles.ventaAlquiler}>
-              {rentOrSale === 'alquiler' ? i18n.t('rent') : i18n.t('sell')}
-            </Text>
+            <Text style={styles.ventaAlquiler}>{switchTypeAndStatus()}</Text>
           </View>
           <View style={styles.itemsRow}>
             <View style={styles.item}>
