@@ -66,3 +66,4 @@ yarn start
 - Implementando endpoint a flujo de PassRecovery
 - Terminado flujo PassRecovery y mejorado flujo Register
 - Empezando integracion de Publicaciones con el back
+- Implementado get Avatar, guardado de la imagen, y visualizacion en el perfil

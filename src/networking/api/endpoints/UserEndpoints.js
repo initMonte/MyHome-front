@@ -1,5 +1,6 @@
 import Api from '../Api';
 import {urlApi} from '../../../config/ApiConfig';
+const Buffer = require('buffer').Buffer;
 
 export let userWS = {
   register: async function (
@@ -33,9 +34,21 @@ export let userWS = {
     console.log('haciendo GET ME');
     return await Api.get(urlApi.user.me);
   },
-  getAvatar: async function () {
+  getAvatar: async function (avatarName) {
     console.log('haciendo GET AVATAR');
-    return await Api.get(urlApi.user.getAvatar);
+    console.log(urlApi.user.getAvatar + avatarName);
+
+    try {
+      const response = await Api.get(urlApi.user.getAvatar + avatarName, {
+        responseType: 'arraybuffer',
+      });
+      const base64 = Buffer.from(response.data, 'binary').toString('base64');
+      const imageUrl = `data:image/png;base64,${base64}`;
+      return imageUrl;
+    } catch (error) {
+      console.error('Error fetching avatar:', error);
+      return null;
+    }
   },
   confirmationCodeForgotPassword: async function (email) {
     console.log('Mandando codigo de recuperacion de PASS');

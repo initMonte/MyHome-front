@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   ScrollView,
   View,
@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
+import {saveAvatarAction} from '../../../../redux/slices/UserReducer';
 import {logoutAction} from '../../../../redux/slices/AuthReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
@@ -24,8 +25,29 @@ const RegisterUI = ({
   showVisitasProgramadas,
 }) => {
   const dispatch = useDispatch();
-  const {id, email, email2, name, surname, telephone, telephone2, avatar} =
-    useSelector(state => state.user);
+  const {
+    id,
+    email,
+    email2,
+    name,
+    surname,
+    telephone,
+    telephone2,
+    avatarName,
+    avatarImage,
+  } = useSelector(state => state.user);
+
+  useEffect(() => {
+    userWS
+      .getAvatar(avatarName)
+      .then(imageData => {
+        dispatch(saveAvatarAction(imageData));
+      })
+      .catch(error => {
+        console.error('Error fetching avatar:', error);
+      });
+  }, [avatarName, dispatch]);
+
   console.log(' ');
   console.log('---------');
   console.log('id: ' + id);
@@ -35,7 +57,7 @@ const RegisterUI = ({
   console.log('surname: ' + surname);
   console.log('telephone: ' + telephone);
   console.log('telephone2: ' + telephone2);
-  console.log('avatar: ' + avatar);
+  console.log('avatar: ' + avatarName);
   console.log('---------');
   console.log(' ');
 
@@ -79,10 +101,11 @@ const RegisterUI = ({
           hidden={false}
         />
         <View style={styles.containerRow}>
-          <Image
-            source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-            style={styles.profilePhoto}
-          />
+          <View style={styles.AvatarContainer}>
+            {avatarImage && (
+              <Image source={{uri: avatarImage}} style={styles.profilePhoto} />
+            )}
+          </View>
           <View>
             <Text style={styles.textH1}>
               {surname ? name + ' ' + surname : name}
@@ -205,6 +228,11 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.S,
   },
   profilePhoto: {
+    width: 77,
+    height: 77,
+    borderRadius: 45,
+  },
+  AvatarContainer: {
     width: 77,
     height: 77,
     marginRight: 26,

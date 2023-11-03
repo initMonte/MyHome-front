@@ -11,7 +11,8 @@ export const userReducer = createSlice({
     surname: '',
     telephone: '',
     telephone2: '',
-    avatar: null,
+    avatarName: '',
+    avatarImage: null,
   },
   reducers: {
     meAction: (state, response) => {
@@ -23,9 +24,10 @@ export const userReducer = createSlice({
       state.surname = response.payload.data.user.surname;
       state.telephone = response.payload.data.user.telephone;
       state.telephone2 = response.payload.data.user.telephone2;
+      state.avatarName = response.payload.data.user.avatar;
     },
-    getAvatarAction: (state, response) => {
-      state.avatar = response.payload.data;
+    saveAvatarAction: (state, response) => {
+      state.avatarImage = response.payload;
     },
     saveEmailAction: (state, responde) => {
       state.email = responde.payload.data.user.email;
@@ -37,6 +39,10 @@ export const userReducer = createSlice({
   },
 });
 
-export const {meAction, getAvatarAction, saveEmailAction, saveLoginInfoAction} =
-  userReducer.actions;
+export const {
+  meAction,
+  saveAvatarAction,
+  saveEmailAction,
+  saveLoginInfoAction,
+} = userReducer.actions;
 export default userReducer.reducer;
