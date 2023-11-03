@@ -19,7 +19,7 @@ import {meAction} from '../../../../../redux/slices/UserReducer';
 
 const MisDatosUI = ({goBack}) => {
   const dispatch = useDispatch();
-  const {id, email, email2, name, surname, telephone, telephone2, avatar} =
+  const {id, email, email2, name, surname, telephone, telephone2, avatarName} =
     useSelector(state => state.user);
 
   const [emailValue, setEmailValue] = useState('');
@@ -64,12 +64,11 @@ const MisDatosUI = ({goBack}) => {
         emailValue,
         email2Value,
         nameValue,
-        '',
         telephoneValue,
         telephone2Value,
       )
       .then(response => {
-        // Login exitoso
+        // Update exitoso
         console.log(response);
         dispatch(meAction(response));
         goBack();
@@ -102,10 +101,11 @@ const MisDatosUI = ({goBack}) => {
           hidden={false}
         />
         <View style={styles.containerRow}>
-          <Image
-            source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-            style={styles.profilePhoto}
-          />
+          <View style={styles.AvatarContainer}>
+            {avatarName && (
+              <Image source={{uri: avatarName}} style={styles.profilePhoto} />
+            )}
+          </View>
           <Text style={styles.textH1}>
             {surname ? name + ' ' + surname : name}
           </Text>
@@ -251,10 +251,15 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.M,
     fontWeight: Theme.fonts.BOLD,
   },
-  profilePhoto: {
+  AvatarContainer: {
     width: 77,
     height: 77,
     marginRight: 26,
+  },
+  profilePhoto: {
+    width: 77,
+    height: 77,
+    borderRadius: 45,
   },
 });
 

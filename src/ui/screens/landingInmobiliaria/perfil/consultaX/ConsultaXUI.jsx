@@ -8,6 +8,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 
 import Theme from '../../../../../styles/Theme';
 import i18n from '../../../../../assets/strings/I18n';
@@ -16,6 +17,7 @@ import Button from '../../../../components/button';
 import CardState from '../../../../components/cardState';
 
 const ConsultaXUI = ({goBack, showPublicacionX}) => {
+  const {name, avatarName} = useSelector(state => state.user);
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -26,12 +28,13 @@ const ConsultaXUI = ({goBack, showPublicacionX}) => {
           hidden={false}
         />
         <View style={styles.containerRow}>
-          <Image
-            source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-            style={styles.profilePhoto}
-          />
+          <View style={styles.AvatarContainer}>
+            {avatarName && (
+              <Image source={{uri: avatarName}} style={styles.profilePhoto} />
+            )}
+          </View>
           <View>
-            <Text style={styles.textH1}>{'Integrar con Back'}</Text>
+            <Text style={styles.textH1}>{name}</Text>
             <Text style={styles.text}>{'3 ' + i18n.t('questions')}</Text>
           </View>
         </View>
@@ -161,10 +164,15 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.M,
     fontWeight: Theme.fonts.BOLD,
   },
-  profilePhoto: {
+  AvatarContainer: {
     width: 77,
     height: 77,
     marginRight: 26,
+  },
+  profilePhoto: {
+    width: 77,
+    height: 77,
+    borderRadius: 45,
   },
   questionsPhoto: {
     width: 47,
