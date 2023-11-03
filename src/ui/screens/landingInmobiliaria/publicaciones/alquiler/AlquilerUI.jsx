@@ -12,26 +12,24 @@ import IMAGES from '../../../../../assets/images/images';
 const MapEstates = ({x, show}) => (
   <>
     {x
-      .filter(estateItem => estateItem.status === 'alquiler')
+      .filter(estateItem => estateItem.rentOrSale === 'alquiler')
       .map(estateItem => (
         <CardState
           key={estateItem._id}
           onPress={() => show(estateItem)}
           size="S"
           image={IMAGES.OTHERS.TEMPORAL_IMAGE}
-          tittle={estateItem.steet}
           ubication={estateItem.neighborhood}
-          logoRealState={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
           amb={estateItem.roomsAmount}
-          dorm={estateItem.bedroomsAmount}
-          bath={estateItem.bathroomsAmount}
           m2={
             estateItem.coveredSquareMeters +
             estateItem.semiUncoveredSquaremeters +
             estateItem.uncoveredSquareMeters
           }
           price={estateItem.price}
-          currency={estateItem.currency}
+          currency={
+            estateItem.currency === 'peso' ? i18n.t('ars') : i18n.t('usd')
+          }
         />
       ))}
   </>

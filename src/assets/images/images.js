@@ -45,6 +45,7 @@ import PILETA_WHITE from './icons/pileta-white.svg';
 import SAUNA_WHITE from './icons/sauna-white.svg';
 import JACUZZI_WHITE from './icons/jacuzzi-white.svg';
 import JUEGO_WHITE from './icons/juego-white.svg';
+import COMPASS_PRIMARY from './icons/compass-primary.svg';
 
 const IMAGES = {
   SVG: {
@@ -95,6 +96,7 @@ const IMAGES = {
     SAUNA_WHITE,
     JACUZZI_WHITE,
     JUEGO_WHITE,
+    COMPASS_PRIMARY,
   },
   OTHERS: {
     //IMAGEN_CUALQUIERA_EXCEPTO_SVG : require ('./backgrounds/imagen.webp') <-- asi se importa cualquier tipo de imagen que no sea SVG

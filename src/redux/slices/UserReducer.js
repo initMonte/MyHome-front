@@ -12,7 +12,6 @@ export const userReducer = createSlice({
     telephone: '',
     telephone2: '',
     avatarName: '',
-    avatarImage: null,
   },
   reducers: {
     meAction: (state, response) => {
@@ -26,9 +25,6 @@ export const userReducer = createSlice({
       state.telephone2 = response.payload.data.user.telephone2;
       state.avatarName = response.payload.data.user.avatar;
     },
-    saveAvatarAction: (state, response) => {
-      state.avatarImage = response.payload;
-    },
     saveEmailAction: (state, responde) => {
       state.email = responde.payload.data.user.email;
     },
@@ -36,13 +32,20 @@ export const userReducer = createSlice({
       state.email = token.payload.email;
       state.pass = token.payload.password;
     },
+    logoutUser: state => {
+      state.id = '';
+      state.email = '';
+      state.pass = '';
+      state.email2 = '';
+      state.name = '';
+      state.surname = '';
+      state.telephone = '';
+      state.telephone2 = '';
+      state.avatarName = '';
+    },
   },
 });
 
-export const {
-  meAction,
-  saveAvatarAction,
-  saveEmailAction,
-  saveLoginInfoAction,
-} = userReducer.actions;
+export const {meAction, saveEmailAction, saveLoginInfoAction, logoutUser} =
+  userReducer.actions;
 export default userReducer.reducer;

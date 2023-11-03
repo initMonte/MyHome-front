@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   ScrollView,
   View,
@@ -8,12 +8,15 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Share from 'react-native-share';
 
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
+
+import {saveRealEstateAvatarAction} from '../../../../redux/slices/EstateReducer';
+import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 const url = 'IntegrarConBack.com.ar';
 const message = i18n.t('share_text');
@@ -24,8 +27,12 @@ const options = {
 };
 
 const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
+  const dispatch = useDispatch();
   const {
     id,
+    title,
+    description,
+    rentOrSale,
     street,
     addressNumber,
     neighborhood,
@@ -50,11 +57,73 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
     price,
     currency,
     expenses,
+    expenseCurrency,
     latitude,
     longitude,
     images,
     realEstate,
+    realEstateAvatar,
   } = useSelector(state => state.estate);
+
+  console.log(realEstateAvatar);
+
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      try {
+        const response = await userWS.getUser(realEstate);
+        dispatch(saveRealEstateAvatarAction(response));
+      } catch (error) {
+        if (error.response && error.response.status === 403) {
+          console.error('Access denied. You are not authenticated.');
+        } else {
+          console.error('An error occurred:', error);
+        }
+      }
+    };
+    fetchAvatar();
+  }, [dispatch, realEstate, realEstateAvatar]);
+
+  const switchOrientation = () => {
+    switch (orientation) {
+      case 'norte':
+        return i18n.t('north');
+      case 'este':
+        return i18n.t('east');
+      case 'sur':
+        return i18n.t('south');
+      case 'oeste':
+        return i18n.t('west');
+    }
+  };
+
+  const switchEstateType = () => {
+    switch (estateType) {
+      case 'casa':
+        return i18n.t('house');
+      case 'ph':
+        return i18n.t('ph');
+      case 'departamento':
+        return i18n.t('department');
+      case 'local':
+        return i18n.t('local');
+      case 'oficina':
+        return i18n.t('office');
+      case 'galpon':
+        return i18n.t('galpon');
+      case 'terreno':
+        return i18n.t('terreno');
+    }
+  };
+
+  function switchCurrency(x) {
+    switch (x) {
+      case 'peso':
+        return i18n.t('ars');
+      case 'dolar':
+        return i18n.t('usd');
+    }
+  }
+
   return (
     <ScrollView style={styles.generalContainer} nestedScrollEnabled={true}>
       <View style={styles.container}>
@@ -66,7 +135,9 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
         />
         <View style={styles.containerImage}>
           <Image
-            source={IMAGES.OTHERS.TEMPORAL_IMAGE}
+            source={{
+              uri: 'https://storage.googleapis.com/my-home-storage/avatar/default.png',
+            }}
             style={styles.bigImage}
           />
           <View style={styles.rowBetween}>
@@ -92,51 +163,58 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
             </Pressable>
           </View>
           <View style={styles.containerTitle}>
-            <Text style={styles.title}>{'Dpto Recoleta 5amb 3dorm'}</Text>
-            <Text style={styles.price}>
-              {currency === 'peso'
-                ? i18n.t('ars') + ' ' + price
-                : i18n.t('usd') + ' ' + price}
-            </Text>
+            <Text style={styles.title}>{title}</Text>
+            <View style={styles.itemsRow}>
+              <Text style={styles.price}>
+                {switchCurrency(currency) + ' ' + price}
+              </Text>
+              <Text style={styles.expenses}>
+                {expenses
+                  ? '+' + switchCurrency(expenseCurrency) + ' ' + expenses
+                  : null}
+              </Text>
+            </View>
             <View style={styles.item}>
               <IMAGES.SVG.HOME_PRIMARY width={14} height={14} />
-              <Text style={styles.imageIconsFont}>{'Departamento'}</Text>
+              <Text style={styles.imageIconsFont}>{switchEstateType()}</Text>
             </View>
           </View>
-          <Image
-            source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-            style={styles.logoRealState}
-          />
+          {realEstateAvatar && (
+            <Image
+              source={{uri: realEstateAvatar}}
+              style={styles.logoRealState}
+            />
+          )}
         </View>
         <View style={styles.bodyContainer}>
           <Text style={styles.street}>{street + ' ' + addressNumber}</Text>
           <View style={styles.itemsRow}>
             <Text style={styles.ubication}>{neighborhood + ', ' + state}</Text>
             <Text style={styles.ventaAlquiler}>
-              {status === 'alquiler' ? i18n.t('rent') : i18n.t('sell')}
+              {rentOrSale === 'alquiler' ? i18n.t('rent') : i18n.t('sell')}
             </Text>
           </View>
           <View style={styles.itemsRow}>
             <View style={styles.item}>
-              <IMAGES.SVG.DOOR width={18} height={18} />
+              <IMAGES.SVG.DOOR width={16} height={16} />
               <Text style={styles.bodyIconsFont}>
                 {roomsAmount + ' ' + i18n.t('amb')}
               </Text>
             </View>
             <View style={styles.item}>
-              <IMAGES.SVG.BED width={18} height={18} />
+              <IMAGES.SVG.BED width={16} height={16} />
               <Text style={styles.bodyIconsFont}>
                 {bedroomsAmount + ' ' + i18n.t('dorm')}
               </Text>
             </View>
             <View style={styles.item}>
-              <IMAGES.SVG.SHOWER width={18} height={18} />
+              <IMAGES.SVG.SHOWER width={16} height={16} />
               <Text style={styles.bodyIconsFont}>
                 {bathroomsAmount + ' ' + i18n.t('bathrooms')}
               </Text>
             </View>
             <View style={styles.item}>
-              <IMAGES.SVG.RULER width={18} height={18} />
+              <IMAGES.SVG.RULER width={16} height={16} />
               <Text style={styles.bodyIconsFont}>
                 {coveredSquareMeters +
                   semiUncoveredSquaremeters +
@@ -146,54 +224,98 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
               </Text>
             </View>
           </View>
-          <Text style={styles.description}>
-            {
-              'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.'
-            }
-          </Text>
+          <Text style={styles.description}>{description}</Text>
           <View style={styles.itemscontainer}>
             <View style={styles.item}>
-              <IMAGES.SVG.BED_PRIMARY width={20} height={20} />
+              <IMAGES.SVG.COMPASS_PRIMARY width={20} height={20} />
               <Text style={styles.bodyIconsFont}>
-                {bedroomsAmount + ' ' + i18n.t('dorm')}
+                {frontOrBack === 'frente'
+                  ? i18n.t('frente')
+                  : i18n.t('contrafrente')}
               </Text>
             </View>
             <View style={styles.item}>
-              <IMAGES.SVG.SHOWER_PRIMARY width={20} height={20} />
+              <IMAGES.SVG.COMPASS_PRIMARY width={20} height={20} />
               <Text style={styles.bodyIconsFont}>
-                {bathroomsAmount + ' ' + i18n.t('bathrooms')}
+                {i18n.t('orientation') + ' ' + switchOrientation()}
               </Text>
             </View>
+            {coveredSquareMeters > 0 ? (
+              <View style={styles.item}>
+                <IMAGES.SVG.RULER_PRIMARY width={20} height={20} />
+                <Text style={styles.bodyIconsFont}>
+                  {coveredSquareMeters +
+                    ' ' +
+                    i18n.t('m2') +
+                    ' ' +
+                    i18n.t('surfaceCover')}
+                </Text>
+              </View>
+            ) : null}
+            {semiUncoveredSquaremeters > 0 ? (
+              <View style={styles.item}>
+                <IMAGES.SVG.RULER_PRIMARY width={20} height={20} />
+                <Text style={styles.bodyIconsFont}>
+                  {semiUncoveredSquaremeters +
+                    ' ' +
+                    i18n.t('m2') +
+                    ' ' +
+                    i18n.t('surfaceSemicover')}
+                </Text>
+              </View>
+            ) : null}
+            {uncoveredSquareMeters > 0 ? (
+              <View style={styles.item}>
+                <IMAGES.SVG.RULER_PRIMARY width={20} height={20} />
+                <Text style={styles.bodyIconsFont}>
+                  {uncoveredSquareMeters +
+                    ' ' +
+                    i18n.t('m2') +
+                    ' ' +
+                    i18n.t('surfaceUncover')}
+                </Text>
+              </View>
+            ) : null}
             <View style={styles.item}>
-              <IMAGES.SVG.RULER_PRIMARY width={20} height={20} />
+              <IMAGES.SVG.COMPASS_PRIMARY width={20} height={20} />
               <Text style={styles.bodyIconsFont}>
-                {coveredSquareMeters +
-                  ' ' +
-                  i18n.t('m2') +
-                  ' ' +
-                  i18n.t('surfaceCover')}
+                {antiquity + ' ' + i18n.t('antiguedad')}
               </Text>
             </View>
-            <View style={styles.item}>
-              <IMAGES.SVG.RULER_PRIMARY width={20} height={20} />
-              <Text style={styles.bodyIconsFont}>
-                {uncoveredSquareMeters +
-                  ' ' +
-                  i18n.t('m2') +
-                  ' ' +
-                  i18n.t('surfaceUncover')}
-              </Text>
-            </View>
-            <View style={styles.item}>
-              <IMAGES.SVG.CHECKBOX_PRIMARY width={20} height={20} />
-              <Text style={styles.bodyIconsFont}>{i18n.t('balcony')}</Text>
-            </View>
-            <View style={styles.item}>
-              <IMAGES.SVG.PARKING_PRIMARY width={20} height={20} />
-              <Text style={styles.bodyIconsFont}>
-                {garage + ' ' + i18n.t('parking')}
-              </Text>
-            </View>
+            {garage > 0 ? (
+              <View style={styles.item}>
+                <IMAGES.SVG.PARKING_PRIMARY width={20} height={20} />
+                <Text style={styles.bodyIconsFont}>
+                  {garage + ' ' + i18n.t('parking')}
+                </Text>
+              </View>
+            ) : null}
+            {balcony ? (
+              <View style={styles.item}>
+                <IMAGES.SVG.CHECKBOX_PRIMARY width={20} height={20} />
+                <Text style={styles.bodyIconsFont}>{i18n.t('balcony')}</Text>
+              </View>
+            ) : null}
+            {terrace ? (
+              <View style={styles.item}>
+                <IMAGES.SVG.CHECKBOX_PRIMARY width={20} height={20} />
+                <Text style={styles.bodyIconsFont}>{i18n.t('terraza')}</Text>
+              </View>
+            ) : null}
+            {storage ? (
+              <View style={styles.item}>
+                <IMAGES.SVG.CHECKBOX_PRIMARY width={20} height={20} />
+                <Text style={styles.bodyIconsFont}>{i18n.t('baulera')}</Text>
+              </View>
+            ) : null}
+            {amenites ? (
+              <View style={styles.item}>
+                <IMAGES.SVG.CHECKBOX_PRIMARY width={20} height={20} />
+                <Text style={styles.bodyIconsFont}>
+                  {i18n.t('amenities') + ': ' + amenites}
+                </Text>
+              </View>
+            ) : null}
           </View>
           <Text style={styles.photosFont}>{i18n.t('photos')}</Text>
           <ScrollView nestedScrollEnabled={true} horizontal={true}>
@@ -290,6 +412,13 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
   },
+  expenses: {
+    color: Theme.colors.PRIMARY,
+    fontSize: Theme.fonts.S,
+    fontWeight: Theme.fonts.BOLD,
+    marginTop: 5,
+    marginBottom: 5,
+  },
   logoRealState: {
     width: 70,
     height: 70,
@@ -314,7 +443,7 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     width: '100%',
-    paddingTop: 36,
+    paddingTop: 16,
     padding: 16,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',

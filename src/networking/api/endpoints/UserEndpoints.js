@@ -30,11 +30,16 @@ export let userWS = {
     console.log('password en UserEndpoint: ' + password);
     return await Api.post(urlApi.user.login, {email, password});
   },
+  getUser: async function (realEstateId) {
+    console.log('haciendo GET USER');
+    return await Api.get(urlApi.user.getUser + realEstateId);
+  },
   me: async function () {
     console.log('haciendo GET ME');
     return await Api.get(urlApi.user.me);
   },
   getAvatar: async function (avatarName) {
+    //Este endpoint por ahora ya no es necesario porque se pasa la url con el /me. Lo dejo por si mas adelante hace falta
     console.log('haciendo GET AVATAR');
     console.log(urlApi.user.getAvatar + avatarName);
 

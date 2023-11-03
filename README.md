@@ -67,3 +67,6 @@ yarn start
 - Terminado flujo PassRecovery y mejorado flujo Register
 - Empezando integracion de Publicaciones con el back
 - Implementado get Avatar, guardado de la imagen, y visualizacion en el perfil
+- Integracion **casi** completa de Publicacion X **(falta imagenes)**
+- Re-implemetando visualizacion de imagen de Perfil, para Me y de otros usuarios cuando entras a una propiedad
+- Implementacion de Delete user

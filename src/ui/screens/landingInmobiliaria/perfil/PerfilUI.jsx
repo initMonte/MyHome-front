@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   ScrollView,
   View,
@@ -13,8 +13,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
-import {saveAvatarAction} from '../../../../redux/slices/UserReducer';
 import {logoutAction} from '../../../../redux/slices/AuthReducer';
+import {logoutEstate} from '../../../../redux/slices/EstateReducer';
+import {logoutUser} from '../../../../redux/slices/UserReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 const RegisterUI = ({
@@ -25,28 +26,8 @@ const RegisterUI = ({
   showVisitasProgramadas,
 }) => {
   const dispatch = useDispatch();
-  const {
-    id,
-    email,
-    email2,
-    name,
-    surname,
-    telephone,
-    telephone2,
-    avatarName,
-    avatarImage,
-  } = useSelector(state => state.user);
-
-  useEffect(() => {
-    userWS
-      .getAvatar(avatarName)
-      .then(imageData => {
-        dispatch(saveAvatarAction(imageData));
-      })
-      .catch(error => {
-        console.error('Error fetching avatar:', error);
-      });
-  }, [avatarName, dispatch]);
+  const {id, email, email2, name, surname, telephone, telephone2, avatarName} =
+    useSelector(state => state.user);
 
   console.log(' ');
   console.log('---------');
@@ -63,6 +44,8 @@ const RegisterUI = ({
 
   const handleLogout = () => {
     dispatch(logoutAction());
+    dispatch(logoutEstate());
+    dispatch(logoutUser());
     showLogin();
   };
 
@@ -72,6 +55,8 @@ const RegisterUI = ({
       .then(response => {
         // Delete exitoso
         dispatch(logoutAction());
+        dispatch(logoutEstate());
+        dispatch(logoutUser());
         showLogin();
       })
       .catch(error => {
@@ -102,8 +87,8 @@ const RegisterUI = ({
         />
         <View style={styles.containerRow}>
           <View style={styles.AvatarContainer}>
-            {avatarImage && (
-              <Image source={{uri: avatarImage}} style={styles.profilePhoto} />
+            {avatarName && (
+              <Image source={{uri: avatarName}} style={styles.profilePhoto} />
             )}
           </View>
           <View>
