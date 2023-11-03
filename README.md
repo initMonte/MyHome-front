@@ -70,3 +70,4 @@ yarn start
 - Integracion **casi** completa de Publicacion X **(falta imagenes)**
 - Re-implemetando visualizacion de imagen de Avatar en todo el perfil, para Me y de otros usuarios cuando entras a una propiedad
 - Implementacion de Delete user
+- Implementando creacion de Propiedades **No terminado**

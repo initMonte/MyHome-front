@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
 import {Image} from 'react-native-svg';
@@ -187,18 +188,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               selected={selectedTipoPropiedad !== 'office'}
             />
             <ButtonSelect
-              text={i18n.t('quinta')}
-              image={
-                selectedTipoPropiedad !== 'quinta' ? (
-                  <IMAGES.SVG.HOME width={25} height={25} />
-                ) : (
-                  <IMAGES.SVG.HOME_WHITE width={25} height={25} />
-                )
-              }
-              onPress={() => handleButtonClick2('quinta')}
-              selected={selectedTipoPropiedad !== 'quinta'}
-            />
-            <ButtonSelect
               text={i18n.t('galpon')}
               image={
                 selectedTipoPropiedad !== 'galpon' ? (
@@ -248,7 +237,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             />
           </View>
           <InputText placeholder={i18n.t('placeholder_barrio')} />
-          <InputText placeholder={i18n.t('placeholder_localidad')} />
           <InputText placeholder={i18n.t('placeholder_province')} />
           <InputText placeholder={i18n.t('placeholder_country')} />
 
@@ -550,18 +538,12 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               flexWrap: 'wrap',
               marginHorizontal: 5,
             }}>
-            <ButtonSelect
-              text={i18n.t('parking')}
-              image={
-                !selectedButtons.includes('cochera') ? (
-                  <IMAGES.SVG.PARKING width={25} height={25} />
-                ) : (
-                  <IMAGES.SVG.PARKING_WHITE width={25} height={25} />
-                )
-              }
-              onPress={() => handleButtonClick10('cochera')}
-              selected={!selectedButtons.includes('cochera')}
-            />
+            <Text style={styles.text3}>
+              {i18n.t('parking')}
+              <Text style={styles.textOptional}>
+                {' ' + i18n.t('optional')}
+              </Text>
+            </Text>
             <InputText
               keyboard="phone-pad"
               size="S"

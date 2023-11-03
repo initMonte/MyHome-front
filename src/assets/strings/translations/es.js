@@ -133,7 +133,7 @@ export default {
   placeholder_strNumber: 'Número...',
   placeholder_floor: 'Piso...',
   placeholder_department: 'Dpto...',
-  placeholder_barrio: 'Barrio...',
+  placeholder_barrio: 'Barrio/Localidad...',
   placeholder_localidad: 'Localidad...',
   placeholder_province: 'Provincia...',
   placeholder_country: 'País...',
