@@ -841,76 +841,76 @@ const PublicarUI = ({goHome}) => {
             <ButtonSelect
               text={i18n.t('pool')}
               image={
-                !selectedAmenities.includes('pool') ? (
+                !selectedAmenities.includes(' pool') ? (
                   <IMAGES.SVG.PILETA width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.PILETA_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('pool')}
-              selected={!selectedAmenities.includes('pool')}
+              onPress={() => handleButtonClick11(' pool')}
+              selected={!selectedAmenities.includes(' pool')}
             />
             <ButtonSelect
               text={i18n.t('sauna')}
               image={
-                !selectedAmenities.includes('sauna') ? (
+                !selectedAmenities.includes(' sauna') ? (
                   <IMAGES.SVG.SAUNA width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.SAUNA_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('sauna')}
-              selected={!selectedAmenities.includes('sauna')}
+              onPress={() => handleButtonClick11(' sauna')}
+              selected={!selectedAmenities.includes(' sauna')}
             />
             <ButtonSelect
               text={i18n.t('sum')}
               image={
-                !selectedAmenities.includes('sum') ? (
+                !selectedAmenities.includes(' sum') ? (
                   <IMAGES.SVG.HOME width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.HOME_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('sum')}
-              selected={!selectedAmenities.includes('sum')}
+              onPress={() => handleButtonClick11(' sum')}
+              selected={!selectedAmenities.includes(' sum')}
             />
             <ButtonSelect
               text={i18n.t('quincho')}
               size="L"
               image={
-                !selectedAmenities.includes('quincho') ? (
+                !selectedAmenities.includes(' quincho') ? (
                   <IMAGES.SVG.QUINCHO width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.QUINCHO_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('quincho')}
-              selected={!selectedAmenities.includes('quincho')}
+              onPress={() => handleButtonClick11(' quincho')}
+              selected={!selectedAmenities.includes(' quincho')}
             />
             <ButtonSelect
               text={i18n.t('gameRoom')}
               image={
-                !selectedAmenities.includes('gameRoom') ? (
+                !selectedAmenities.includes(' gameRoom') ? (
                   <IMAGES.SVG.JUEGO width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.JUEGO_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('gameRoom')}
-              selected={!selectedAmenities.includes('gameRoom')}
+              onPress={() => handleButtonClick11(' gameRoom')}
+              selected={!selectedAmenities.includes(' gameRoom')}
               size="L"
             />
             <ButtonSelect
               text={i18n.t('jacuzzi')}
               image={
-                !selectedAmenities.includes('jacuzzi') ? (
+                !selectedAmenities.includes(' jacuzzi') ? (
                   <IMAGES.SVG.JACUZZI width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.JACUZZI_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('jacuzzi')}
-              selected={!selectedAmenities.includes('jacuzzi')}
+              onPress={() => handleButtonClick11(' jacuzzi')}
+              selected={!selectedAmenities.includes(' jacuzzi')}
             />
           </View>
 

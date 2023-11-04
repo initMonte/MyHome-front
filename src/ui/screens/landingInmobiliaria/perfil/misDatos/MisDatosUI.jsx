@@ -38,6 +38,7 @@ const MisDatosUI = ({goBack}) => {
   const [email2Value, setEmail2Value] = useState(email2);
   const [passwordValue, setPasswordValue] = useState('');
   const [newPasswordValue, setNewPasswordValue] = useState('');
+  const [selectedImageUri, setSelectedImageUri] = useState(null);
 
   const handleNameChange = value => {
     setNameValue(value);
@@ -63,6 +64,10 @@ const MisDatosUI = ({goBack}) => {
     setNewPasswordValue(value);
   };
 
+  const handleImageSelection = uri => {
+    setSelectedImageUri(uri);
+  };
+
   const [showPassword1, setShowPassword1] = useState(true);
 
   const handleShowPassword1 = () => {
@@ -84,6 +89,7 @@ const MisDatosUI = ({goBack}) => {
         surname,
         telephoneValue,
         telephone2Value,
+        selectedImageUri,
       )
       .then(response => {
         // Update exitoso
@@ -223,7 +229,10 @@ const MisDatosUI = ({goBack}) => {
           <View style={styles.littleBox}>
             <Text style={styles.text2}>{i18n.t('profilePhoto')}</Text>
           </View>
-          <ProfilePhotoUploader />
+          <ProfilePhotoUploader
+            imageSource={selectedImageUri}
+            onImageSelected={handleImageSelection}
+          />
 
           <Button
             onPress={() => handleSubmit()}

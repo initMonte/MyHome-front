@@ -1,5 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Pressable, FlatList, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import IMAGES from '../../assets/images/images';
 import Theme from '../../styles/Theme';
@@ -7,7 +15,12 @@ import i18n from '../../assets/strings/I18n';
 import Lightbox from 'react-native-lightbox-v2';
 import ImageViewer from './imageViewer';
 
-const ProfilePhotoUploader = (isAddImage = true, imageSource = null) => {
+const ProfilePhotoUploader = ({
+  onImageSelected,
+  isAddImage = true,
+  imageSource = null,
+}) => {
+  console.log(onImageSelected);
   const [image, setImage] = useState(imageSource);
   const [add, setAdd] = useState(isAddImage);
 
@@ -24,51 +37,58 @@ const ProfilePhotoUploader = (isAddImage = true, imageSource = null) => {
         path: 'images',
       },
       mediaType: 'photo',
-      multiple: true, 
+      multiple: true,
     };
-  
-    ImagePicker.launchImageLibrary(options, (response) => {
+
+    ImagePicker.launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('Selección de imagen cancelada');
       } else if (response.error) {
         console.log('Error: ', response.error);
       } else {
-        const newImage = response.assets.map((asset) => ({ uri: asset.uri }));
+        const newImage = response.assets.map(asset => ({uri: asset.uri}));
         console.log(response.assets);
         console.log(newImage);
         setAdd(null);
         setImage(newImage);
+
+        if (onImageSelected) {
+          onImageSelected(newImage[0].uri);
+        }
       }
     });
-  };  
+  };
 
   return (
-
     <View style={styles.container3}>
-        <View style={styles.imageContainerChild}>
+      <View style={styles.imageContainerChild}>
         {add && !image ? (
-            <Pressable onPress={selectImage}>
-                <IMAGES.SVG.ADD_IMAGE width={25} height={25} margin={43}/>
-            </Pressable>
+          <Pressable onPress={selectImage}>
+            <IMAGES.SVG.ADD_IMAGE width={25} height={25} margin={43} />
+          </Pressable>
         ) : (
-            <Pressable>
-            <TouchableOpacity style={styles.closeButton} onPress={() => deleteImage()}>
-                <Text style={styles.closeButtonText}>X</Text>
+          <Pressable>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => deleteImage()}>
+              <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={selectImage} style={styles.reloadButton}>
-                <IMAGES.SVG.ADD_IMAGE_WHITE width={18} height={18}/>
+              <IMAGES.SVG.ADD_IMAGE_WHITE width={18} height={18} />
             </TouchableOpacity>
             <Image
-                source={image}
-                style={{ width: '100%', height: '100%', borderRadius: 50, resizeMode: 'cover' }}
+              source={image}
+              style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: 50,
+                resizeMode: 'cover',
+              }}
             />
-            
-            </Pressable>
+          </Pressable>
         )}
-        </View>
+      </View>
     </View>
-
-
   );
 };
 
@@ -78,7 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.BACKGROUND,
     paddingHorizontal: -5,
     borderRadius: 50,
-    marginVertical: 10
+    marginVertical: 10,
   },
   text3: {
     marginTop: 10,

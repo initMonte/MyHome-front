@@ -47,7 +47,15 @@ export let userWS = {
     console.log('CAMBIANDO LA PASS');
     return await Api.post(urlApi.user.passwordChange, {email, password});
   },
-  update: async function (email, email2, name, surname, telephone, telephone2) {
+  update: async function (
+    email,
+    email2,
+    name,
+    surname,
+    telephone,
+    telephone2,
+    avatar,
+  ) {
     return await Api.put(
       urlApi.user.update,
       {
@@ -57,6 +65,7 @@ export let userWS = {
         surname,
         telephone,
         telephone2,
+        avatar,
       },
       {
         headers: {
