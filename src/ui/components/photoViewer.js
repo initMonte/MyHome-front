@@ -7,8 +7,10 @@ import i18n from '../../assets/strings/I18n';
 import Lightbox from 'react-native-lightbox-v2';
 import ImageViewer from './imageViewer';
 
-const PhotoUploader = () => {
-  const [imageSources, setImageSources] = useState([{ isAddImage: true }]);
+const PhotoViewer = ({imagesSources}) => {
+  console.log(imagesSources);
+  const [imageSources, setImageSources] = useState(imagesSources);
+  console.log(imageSources);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
@@ -18,11 +20,6 @@ const PhotoUploader = () => {
 
   const closeLightbox = () => {
     setSelectedImageIndex(null);
-  };
-
-  const deleteImage = (indexToRemove) => {
-    const updatedImages = imageSources.filter((_, index) => index !== indexToRemove);
-    setImageSources([...updatedImages]);
   };
 
   const selectImage = () => {
@@ -51,31 +48,18 @@ const PhotoUploader = () => {
   return (
 
     <View style={styles.container3}>
-      <Text style={styles.text3}>Agregar imágenes
-        <Text style={styles.textOptional2}>{'  ' + i18n.t('minimun2')}</Text>
-      </Text>
       <FlatList
         data={imageSources}
         horizontal
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
           <View style={styles.imageContainerChild}>
-            {item.isAddImage ? (
-              <Pressable onPress={selectImage}>
-                <IMAGES.SVG.ADD_IMAGE width={25} height={25} margin={43}/>
-              </Pressable>
-            ) : (
-              <Pressable onPress={() => selectImageIndex(index-1)}>
-                <TouchableOpacity style={styles.closeButton} onPress={() => deleteImage(index)}>
-                  <Text style={styles.closeButtonText}>X</Text>
-                </TouchableOpacity>
+            <Pressable onPress={() => selectImageIndex(index-1)}>
                 <Image
-                  source={item}
-                  style={{ width: '100%', height: '100%', borderRadius: 8, resizeMode: 'cover' }}
+                    source={item}
+                    style={{ width: '100%', height: '100%', borderRadius: 8, resizeMode: 'cover' }}
                 />
-                
-              </Pressable>
-            )}
+            </Pressable>
           </View>
         )}
       />
@@ -88,8 +72,6 @@ const PhotoUploader = () => {
         />
       )}
     </View>
-
-
   );
 };
 
@@ -99,7 +81,6 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.BACKGROUND,
     paddingHorizontal: -5,
     borderRadius: 10,
-    marginTop: 25
   },
   text3: {
     marginTop: 10,
@@ -152,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhotoUploader;
+export default PhotoViewer;

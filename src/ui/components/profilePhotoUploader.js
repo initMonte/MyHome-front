@@ -7,7 +7,7 @@ import i18n from '../../assets/strings/I18n';
 import Lightbox from 'react-native-lightbox-v2';
 import ImageViewer from './imageViewer';
 
-const PhotoUploader = () => {
+const ProfilePhotoUploader = () => {
   const [imageSources, setImageSources] = useState([{ isAddImage: true }]);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
@@ -51,9 +51,6 @@ const PhotoUploader = () => {
   return (
 
     <View style={styles.container3}>
-      <Text style={styles.text3}>Agregar imágenes
-        <Text style={styles.textOptional2}>{'  ' + i18n.t('minimun2')}</Text>
-      </Text>
       <FlatList
         data={imageSources}
         horizontal
@@ -152,4 +149,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhotoUploader;
+export default ProfilePhotoUploader;

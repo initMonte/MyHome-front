@@ -36,6 +36,10 @@ const ButtonSelect = ({ text, borderRadius = 10, onPress, size = 'M', color = 'p
       width: 110,
       height: 40,
    },
+   ORIENTACION: {
+    width: 80,
+    height: 40,
+ },
   });
 
   const fontsSizes = StyleSheet.create({
@@ -67,6 +71,11 @@ const ButtonSelect = ({ text, borderRadius = 10, onPress, size = 'M', color = 'p
     XXS: {
       fontSize: Theme.fonts.XXS,
       fontWeight: Theme.fonts.SEMIBOLD,
+      textAlign: 'center',
+    },
+    ORIENTACION: {
+      fontSize: Theme.fonts.M,
+      fontWeight: Theme.fonts.BOLD,
       textAlign: 'center',
     },
   });

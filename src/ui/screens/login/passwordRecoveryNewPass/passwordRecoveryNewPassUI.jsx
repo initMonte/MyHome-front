@@ -25,8 +25,23 @@ const PasswordRecoveryNewPassUI = ({goBack, showLandingInmobiliaria}) => {
       return handleNewPass();
     } else {
       setpasswordValid(false);
+      setErrorContraseña(i18n.t('newPassWrong'));
       return;
     }
+  };
+
+  const [errorContraseña, setErrorContraseña] = useState(false);
+
+  const [showPassword1, setShowPassword1] = useState(true);
+
+  const handleShowPassword1 = () => {
+    setShowPassword1(!showPassword1);
+  };
+
+  const [showPassword2, setShowPassword2] = useState(true);
+
+  const handleShowPassword2 = () => {
+    setShowPassword2(!showPassword2);
   };
 
   const handleNewPass = () => {
@@ -92,20 +107,41 @@ const PasswordRecoveryNewPassUI = ({goBack, showLandingInmobiliaria}) => {
         />
         <Text style={styles.textH1}>{i18n.t('passRecovery')}</Text>
         <IMAGES.SVG.LOGO width={380} height={230} />
-        <Text style={styles.text2}>{i18n.t('inputEmail')}</Text>
+        <Text style={styles.text2}>{i18n.t('passChange')}</Text>
         <View style={styles.container2}>
           <Text style={styles.text}>{i18n.t('newPass')}</Text>
+          <View style={{flexDirection: 'row'}}>
           <InputText
             placeholder={i18n.t('placeholder_password')}
-            hideText={true}
+            hideText={showPassword1}
             changeValue={setPassword}
+            contraseña={true}
+            flex={1}
           />
+          {showPassword1 
+              ?
+              <IMAGES.SVG.EYE_CLOSE width={20} height={20} onPress={handleShowPassword1} style={{marginTop: 25}}/>
+              :
+              <IMAGES.SVG.EYE_OPEN width={20} height={20} onPress={handleShowPassword1} style={{marginTop: 25}}/>
+            }
+          </View>
           <Text style={styles.text}>{i18n.t('newPass2')}</Text>
+          <View style={{flexDirection: 'row'}}>
           <InputText
             placeholder={i18n.t('placeholder_password')}
-            hideText={true}
+            hideText={showPassword2}
             changeValue={setPasswordRepeat}
+            contraseña={true}
+            flex={1}
+            error={errorContraseña}
           />
+          {showPassword2
+              ?
+              <IMAGES.SVG.EYE_CLOSE width={20} height={20} onPress={handleShowPassword2} style={{marginTop: 25}}/>
+              :
+              <IMAGES.SVG.EYE_OPEN width={20} height={20} onPress={handleShowPassword2} style={{marginTop: 25}}/>
+            }
+            </View> 
         </View>
         <Button
           text={i18n.t('confirm')}

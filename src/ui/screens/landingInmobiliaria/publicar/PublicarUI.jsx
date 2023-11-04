@@ -158,6 +158,11 @@ const PublicarUI = ({goHome}) => {
     }
   };
 
+  const [selectedOrientacion, setSelectedOrientacion] = useState('north');
+  const handleButtonClick12 = buttonName => {
+    setSelectedOrientacion(buttonName);
+  };
+
   const handlePostEstate = () => {
     const terrace = selectedButtons.includes('terrace');
     const balcony = selectedButtons.includes('balcony');
@@ -790,8 +795,40 @@ const PublicarUI = ({goHome}) => {
             changeValue={handleAntiquity}
           />
 
-          <Text style={styles.text3}>{i18n.t('orientation') + 'CAMBIAR A UN DEPLEGABLE O BOTONES COMO LOS DE DISPOSICION'}</Text>
-          <InputText placeholder={i18n.t('placeholder_orientacion')} />
+          <Text style={styles.text3}>{i18n.t('orientation')}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              marginTop: 10,
+              marginBottom: -30
+            }}>
+            <ButtonSelect
+              text={i18n.t('north')}
+              onPress={() => handleButtonClick12('north')}
+              selected={selectedOrientacion !== 'north'}
+              size={'ORIENTACION'}
+            />
+            <ButtonSelect
+              text={i18n.t('south')}
+              onPress={() => handleButtonClick12('south')}
+              selected={selectedOrientacion !== 'south'}
+              size={'ORIENTACION'}
+            />
+            <ButtonSelect
+              text={i18n.t('east')}
+              onPress={() => handleButtonClick12('east')}
+              selected={selectedOrientacion !== 'east'}
+              size={'ORIENTACION'}
+            />
+            <ButtonSelect
+              text={i18n.t('west')}
+              onPress={() => handleButtonClick12('west')}
+              selected={selectedOrientacion !== 'west'}
+              size={'ORIENTACION'}
+            />
+          </View>
 
           <Text style={styles.text3}>{i18n.t('amenities')}</Text>
           <View
