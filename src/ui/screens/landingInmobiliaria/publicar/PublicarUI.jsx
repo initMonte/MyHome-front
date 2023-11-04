@@ -245,7 +245,7 @@ const PublicarUI = ({goHome}) => {
       .then(response => {
         // Post Publicacion exitoso
         console.log(response);
-        // IR A PUBLICACIONES
+        goHome();
       })
       .catch(error => {
         if (error.response) {

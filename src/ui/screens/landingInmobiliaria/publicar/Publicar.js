@@ -8,7 +8,7 @@ function Publicar() {
   const navigation = useNavigation();
 
   const goHome = () => {
-    navigation.push(NavigatorConstant.NAVIGATOR.LANDING_INMOBILIARIA);
+    navigation.replace(NavigatorConstant.NAVIGATOR.LANDING_INMOBILIARIA);
   };
 
   return <PublicarUI goHome={goHome} />;
