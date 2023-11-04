@@ -34,7 +34,7 @@ export let estatesWS = {
     expenses,
     latitude,
     longitude,
-    file,
+    files,
     videoUrl,
     realEstateId,
   ) {
@@ -73,7 +73,7 @@ export let estatesWS = {
     formData.append('expenses', expenses);
     formData.append('latitude', latitude);
     formData.append('longitude', longitude);
-    formData.append('file', file);
+    formData.append('files', files);
     formData.append('videoUrl', videoUrl);
     formData.append('realEstateId', realEstateId);
     return await Api.post(urlApi.estate.createEstate, formData, {

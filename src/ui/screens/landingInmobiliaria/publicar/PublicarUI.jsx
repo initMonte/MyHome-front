@@ -169,11 +169,10 @@ const PublicarUI = ({goHome}) => {
     const storage = selectedButtons.includes('storage');
     const status = 'alquiler - venta'; //Se asume este estado, luego se puede cambiar en "editar"
     const floorDpto = floor + dpto;
+
     const latitude = 'String'; //Hardcodeado hasta entrega final
     const longitude = 'String'; //Hardcodeado hasta entrega final
     const images = []; //Hardcodeado hasta tener imagenes en back arregladas
-
-    const orientation = 'oeste'; //HARDCODEADO HASTA ARREGLAR EL COMPONENTE EN EL FRONT
 
     console.log('---------------------------------');
     console.log('---------------------------------');
@@ -236,7 +235,7 @@ const PublicarUI = ({goHome}) => {
         +parking,
         selectedDisposicion,
         +antiquity,
-        orientation,
+        selectedOrientacion,
         selectedAmenities,
         selectedPrecio,
         +price,
@@ -802,30 +801,30 @@ const PublicarUI = ({goHome}) => {
               justifyContent: 'center',
               flexWrap: 'wrap',
               marginTop: 10,
-              marginBottom: -30
+              marginBottom: -30,
             }}>
             <ButtonSelect
               text={i18n.t('north')}
-              onPress={() => handleButtonClick12('north')}
-              selected={selectedOrientacion !== 'north'}
+              onPress={() => handleButtonClick12('norte')}
+              selected={selectedOrientacion !== 'norte'}
               size={'ORIENTACION'}
             />
             <ButtonSelect
               text={i18n.t('south')}
-              onPress={() => handleButtonClick12('south')}
-              selected={selectedOrientacion !== 'south'}
+              onPress={() => handleButtonClick12('sur')}
+              selected={selectedOrientacion !== 'sur'}
               size={'ORIENTACION'}
             />
             <ButtonSelect
               text={i18n.t('east')}
-              onPress={() => handleButtonClick12('east')}
-              selected={selectedOrientacion !== 'east'}
+              onPress={() => handleButtonClick12('este')}
+              selected={selectedOrientacion !== 'este'}
               size={'ORIENTACION'}
             />
             <ButtonSelect
               text={i18n.t('west')}
-              onPress={() => handleButtonClick12('west')}
-              selected={selectedOrientacion !== 'west'}
+              onPress={() => handleButtonClick12('oeste')}
+              selected={selectedOrientacion !== 'oeste'}
               size={'ORIENTACION'}
             />
           </View>

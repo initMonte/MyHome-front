@@ -21,20 +21,23 @@ import ProfilePhotoUploader from '../../../../components/profilePhotoUploader';
 
 const MisDatosUI = ({goBack}) => {
   const dispatch = useDispatch();
-  const {id, email, email2, name, surname, telephone, telephone2, avatarName, pass} =
-    useSelector(state => state.user);
-
-  const [emailValue, setEmailValue] = useState('');
-  const [nameValue, setNameValue] = useState('');
-  const [telephoneValue, setTelephoneValue] = useState('');
-  const [telephone2Value, setTelephone2Value] = useState('');
-  const [email2Value, setEmail2Value] = useState('');
+  const {
+    id,
+    email,
+    email2,
+    name,
+    surname,
+    telephone,
+    telephone2,
+    avatarName,
+    pass,
+  } = useSelector(state => state.user);
+  const [nameValue, setNameValue] = useState(name);
+  const [telephoneValue, setTelephoneValue] = useState(telephone);
+  const [telephone2Value, setTelephone2Value] = useState(telephone2);
+  const [email2Value, setEmail2Value] = useState(email2);
   const [passwordValue, setPasswordValue] = useState('');
   const [newPasswordValue, setNewPasswordValue] = useState('');
-
-  const handleEmailChange = value => {
-    setEmailValue(value);
-  };
 
   const handleNameChange = value => {
     setNameValue(value);
@@ -75,9 +78,10 @@ const MisDatosUI = ({goBack}) => {
   const handleSubmit = () => {
     userWS
       .update(
-        emailValue,
+        email,
         email2Value,
         nameValue,
+        surname,
         telephoneValue,
         telephone2Value,
       )
@@ -123,10 +127,7 @@ const MisDatosUI = ({goBack}) => {
 
   const handleSubmitPass = () => {
     userWS
-      .passwordChange(
-        email,
-        newPasswordValue
-      )
+      .passwordChange(email, newPasswordValue)
       .then(response => {
         // Contraseña cambiada exitosa
         console.log(response);
@@ -170,15 +171,11 @@ const MisDatosUI = ({goBack}) => {
         </View>
         <View style={styles.box}>
           <Text style={styles.tittleBox}>{i18n.t('myData')}</Text>
-          <View style={styles.littleBox}>
-            <Text style={styles.text}>{i18n.t('email')}</Text>
-            <InputText
-              placeholder={i18n.t('placeholder_email')}
-              keyboard="email-address"
-              size="L"
-              changeValue={handleEmailChange}
-              ogValue={email}
-            />
+          <View style={styles.littleBoxEmail}>
+            <Text style={styles.textEmail}>
+              {i18n.t('email') + ' ' + email}
+            </Text>
+            <Text style={styles.opcional}>{i18n.t('cantBeChanged')}</Text>
           </View>
           <View style={styles.littleBox}>
             <Text style={styles.text}>{i18n.t('realStateName')}</Text>
@@ -222,11 +219,11 @@ const MisDatosUI = ({goBack}) => {
               ogValue={email2}
             />
           </View>
-          
+
           <View style={styles.littleBox}>
             <Text style={styles.text2}>{i18n.t('profilePhoto')}</Text>
           </View>
-          <ProfilePhotoUploader/>
+          <ProfilePhotoUploader />
 
           <Button
             onPress={() => handleSubmit()}
@@ -240,40 +237,58 @@ const MisDatosUI = ({goBack}) => {
           <View style={styles.littleBox}>
             <Text style={styles.text}>{i18n.t('actualPass')}</Text>
             <View style={{flexDirection: 'row'}}>
-            <InputText
-              placeholder={i18n.t('placeholder_password')}
-              keyboard="default"
-              size="CUSTOM_L"
-              hideText={showPassword1}
-              changeValue={handlePasswordChange}
-              flex={1}
-              error={errorContraseña}
-            />
-            {showPassword1 
-              ?
-              <IMAGES.SVG.EYE_CLOSE width={20} height={20} onPress={handleShowPassword1} style={{marginTop: 25}}/>
-              :
-              <IMAGES.SVG.EYE_OPEN width={20} height={20} onPress={handleShowPassword1} style={{marginTop: 25}}/>
-            }
+              <InputText
+                placeholder={i18n.t('placeholder_password')}
+                keyboard="default"
+                size="CUSTOM_L"
+                hideText={showPassword1}
+                changeValue={handlePasswordChange}
+                flex={1}
+                error={errorContraseña}
+              />
+              {showPassword1 ? (
+                <IMAGES.SVG.EYE_CLOSE
+                  width={20}
+                  height={20}
+                  onPress={handleShowPassword1}
+                  style={{marginTop: 25}}
+                />
+              ) : (
+                <IMAGES.SVG.EYE_OPEN
+                  width={20}
+                  height={20}
+                  onPress={handleShowPassword1}
+                  style={{marginTop: 25}}
+                />
+              )}
             </View>
           </View>
           <View style={styles.littleBox}>
             <Text style={styles.text}>{i18n.t('newPass')}</Text>
             <View style={{flexDirection: 'row'}}>
-            <InputText
-              placeholder={i18n.t('placeholder_password')}
-              keyboard="default"
-              size="CUSTOM_L"
-              hideText={showPassword2}
-              changeValue={handleNewPasswordChange}
-              flex={1}
-            />
-            {showPassword2 
-              ?
-              <IMAGES.SVG.EYE_CLOSE width={20} height={20} onPress={handleShowPassword2} style={{marginTop: 25}}/>
-              :
-              <IMAGES.SVG.EYE_OPEN width={20} height={20} onPress={handleShowPassword2} style={{marginTop: 25}}/>
-            }
+              <InputText
+                placeholder={i18n.t('placeholder_password')}
+                keyboard="default"
+                size="CUSTOM_L"
+                hideText={showPassword2}
+                changeValue={handleNewPasswordChange}
+                flex={1}
+              />
+              {showPassword2 ? (
+                <IMAGES.SVG.EYE_CLOSE
+                  width={20}
+                  height={20}
+                  onPress={handleShowPassword2}
+                  style={{marginTop: 25}}
+                />
+              ) : (
+                <IMAGES.SVG.EYE_OPEN
+                  width={20}
+                  height={20}
+                  onPress={handleShowPassword2}
+                  style={{marginTop: 25}}
+                />
+              )}
             </View>
           </View>
           <Button
@@ -283,7 +298,7 @@ const MisDatosUI = ({goBack}) => {
             size="ML"
           />
         </View>
-        
+
         <Button
           onPress={() => goBack()}
           text={i18n.t('goBack')}
@@ -322,6 +337,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: 'flex-start',
   },
+  littleBoxEmail: {
+    width: '100%',
+    marginTop: 20,
+    marginLeft: 24,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
   tittleBox: {
     color: Theme.colors.BLACK,
     fontSize: Theme.fonts.M,
@@ -333,6 +355,11 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.SM,
     fontWeight: Theme.fonts.BOLD,
     marginLeft: 20,
+  },
+  textEmail: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
   },
   text2: {
     color: Theme.colors.SECONDARY,

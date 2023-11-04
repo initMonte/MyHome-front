@@ -145,6 +145,7 @@ export default {
   placeholder_country: 'País...',
   placeholder_title: 'Título...',
   question_type: 'Tipo de consulta',
+  cantBeChanged: 'No puede ser cambiado.',
   date: 'Fecha:',
   turn: 'Turno:',
   views: 'vistas',
