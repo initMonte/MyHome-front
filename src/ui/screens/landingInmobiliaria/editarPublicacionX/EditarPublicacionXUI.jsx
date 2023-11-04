@@ -75,6 +75,11 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     }
   };
 
+  const [selectedOrientacion, setSelectedOrientacion] = useState('north');
+  const handleButtonClick12 = buttonName => {
+    setSelectedOrientacion(buttonName);
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
@@ -575,7 +580,39 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           <InputText placeholder={i18n.t('placeholder_antiguedad')} />
 
           <Text style={styles.text3}>{i18n.t('orientation')}</Text>
-          <InputText placeholder={i18n.t('placeholder_orientacion')} />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              marginTop: 10,
+              marginBottom: -30
+            }}>
+            <ButtonSelect
+              text={i18n.t('north')}
+              onPress={() => handleButtonClick12('north')}
+              selected={selectedOrientacion !== 'north'}
+              size={'ORIENTACION'}
+            />
+            <ButtonSelect
+              text={i18n.t('south')}
+              onPress={() => handleButtonClick12('south')}
+              selected={selectedOrientacion !== 'south'}
+              size={'ORIENTACION'}
+            />
+            <ButtonSelect
+              text={i18n.t('east')}
+              onPress={() => handleButtonClick12('east')}
+              selected={selectedOrientacion !== 'east'}
+              size={'ORIENTACION'}
+            />
+            <ButtonSelect
+              text={i18n.t('west')}
+              onPress={() => handleButtonClick12('west')}
+              selected={selectedOrientacion !== 'west'}
+              size={'ORIENTACION'}
+            />
+          </View>
 
           <Text style={styles.text3}>{i18n.t('amenities')}</Text>
           <View

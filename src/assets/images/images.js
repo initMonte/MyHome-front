@@ -25,6 +25,7 @@ import PILETA from './icons/pileta.svg';
 import JACUZZI from './icons/jacuzzi.svg';
 import JUEGO from './icons/juego.svg';
 import ADD_IMAGE from './icons/add_image.svg';
+import ADD_IMAGE_WHITE from './icons/add_image_white.svg';
 import BUTTON_BACK from './icons/button-back.svg';
 import BUTTON_EDIT from './icons/button-edit.svg';
 import BUTTON_SHARE from './icons/button-share.svg';
@@ -101,6 +102,7 @@ const IMAGES = {
     COMPASS_PRIMARY,
     EYE_OPEN,
     EYE_CLOSE,
+    ADD_IMAGE_WHITE,
   },
   OTHERS: {
     //IMAGEN_CUALQUIERA_EXCEPTO_SVG : require ('./backgrounds/imagen.webp') <-- asi se importa cualquier tipo de imagen que no sea SVG

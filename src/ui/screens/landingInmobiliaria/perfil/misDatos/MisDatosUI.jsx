@@ -17,6 +17,7 @@ import Button from '../../../../components/button';
 import InputText from '../../../../components/inputText';
 import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
 import {meAction} from '../../../../../redux/slices/UserReducer';
+import ProfilePhotoUploader from '../../../../components/profilePhotoUploader';
 
 const MisDatosUI = ({goBack}) => {
   const dispatch = useDispatch();
@@ -221,12 +222,11 @@ const MisDatosUI = ({goBack}) => {
               ogValue={email2}
             />
           </View>
+          
           <View style={styles.littleBox}>
-            <Text style={styles.text}>{i18n.t('profilePhoto')}</Text>
-            <Pressable>
-              <IMAGES.SVG.ADD_IMAGE width={25} height={25} margin={43}/>
-            </Pressable>
+            <Text style={styles.text2}>{i18n.t('profilePhoto')}</Text>
           </View>
+          <ProfilePhotoUploader/>
 
           <Button
             onPress={() => handleSubmit()}
@@ -333,6 +333,11 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.SM,
     fontWeight: Theme.fonts.BOLD,
     marginLeft: 20,
+  },
+  text2: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
   },
   opcional: {
     color: Theme.colors.PLACEHOLDER,
