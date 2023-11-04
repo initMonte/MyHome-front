@@ -37,6 +37,14 @@ const LoginInmobiliariaUI = ({
     setPassword(value);
   };
 
+  const [showPassword, setShowPassword] = useState(true);
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const [errorContraseña, setErrorContraseña] = useState(false);
+
   const handleLogin = () => {
     userWS
       .login(email, password)
@@ -54,6 +62,7 @@ const LoginInmobiliariaUI = ({
             error.response.status,
           );
           console.error('Response data:', error.response.data);
+          setErrorContraseña(i18n.t('passWrong'));
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
@@ -83,11 +92,23 @@ const LoginInmobiliariaUI = ({
             changeValue={handleEmailChange}
           />
           <Text style={styles.text}>{i18n.t('pass')}</Text>
-          <InputText
-            placeholder={i18n.t('placeholder_password')}
-            hideText={true}
-            changeValue={handlePasswordChange}
-          />
+          <View style={{flexDirection: 'row'}}>
+            <InputText
+              placeholder={i18n.t('placeholder_password')}
+              hideText={showPassword}
+              changeValue={handlePasswordChange}
+              contraseña={true}
+              error={errorContraseña}
+              flex={1}
+            />
+            {showPassword 
+              ?
+              <IMAGES.SVG.EYE_CLOSE width={20} height={20} onPress={handleShowPassword} style={{marginTop: 25}}/>
+              :
+              <IMAGES.SVG.EYE_OPEN width={20} height={20} onPress={handleShowPassword} style={{marginTop: 25}}/>
+            }
+            
+          </View>
           <Pressable onPress={showRecoveryPassword}>
             <Text style={styles.presable1}>{i18n.t('forgotPass')}</Text>
           </Pressable>

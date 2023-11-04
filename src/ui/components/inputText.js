@@ -1,6 +1,7 @@
 import React from 'react';
-import {TextInput, StyleSheet} from 'react-native';
+import {TextInput, StyleSheet, View, Text} from 'react-native';
 import Theme from '../../styles/Theme';
+import IMAGES from '../../assets/images/images';
 
 const InputText = ({
   placeholder,
@@ -12,6 +13,8 @@ const InputText = ({
   height = 40,
   changeValue,
   ogValue = '',
+  error = false,
+  flex = 0,
 }) => {
   const [input, onChangeInput] = React.useState(ogValue);
   const [focus, onChangeFocus] = React.useState(false);
@@ -26,6 +29,7 @@ const InputText = ({
     fontSize: Theme.fonts.S,
     fontWeight: Theme.fonts.BOLD,
     borderRadius: borderRadius,
+    flex: flex
   });
 
   const inputSizes = StyleSheet.create({
@@ -44,6 +48,9 @@ const InputText = ({
     XS: {
       width: 72,
     },
+    CUSTOM_L: {
+      width: 300,
+    },
   });
 
   function inputFocused() {
@@ -58,21 +65,25 @@ const InputText = ({
   }
 
   return (
-    <TextInput
-      style={[generalStyle, inputSizes[size], inputFocused()]}
-      onChangeText={text => {
-        onChangeInput(text);
-        changeValue(text);
-      }}
-      value={input}
-      onFocus={() => onChangeFocus(true)}
-      onBlur={() => onChangeFocus(false)}
-      placeholder={placeholder}
-      placeholderTextColor={Theme.colors.PLACEHOLDER}
-      keyboardType={keyboard}
-      secureTextEntry={hideText}
-      textAlignVertical={'top'}
-    />
+    <View style={{marginBottom: error ? 30 : 0}}>
+      
+      <TextInput
+        style={[generalStyle, inputSizes[size], inputFocused()]}
+        onChangeText={text => {
+          onChangeInput(text);
+          changeValue(text);
+        }}
+        value={input}
+        onFocus={() => onChangeFocus(true)}
+        onBlur={() => onChangeFocus(false)}
+        placeholder={placeholder}
+        placeholderTextColor={Theme.colors.PLACEHOLDER}
+        keyboardType={keyboard}
+        secureTextEntry={hideText}
+        textAlignVertical={'top'}
+      />
+      {error && <Text style={{color: 'red', position: 'absolute', bottom: -15, left: 20}}>{error}</Text>}
+    </View>
   );
 };
 

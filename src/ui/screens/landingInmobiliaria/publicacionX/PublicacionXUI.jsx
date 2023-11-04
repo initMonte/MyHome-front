@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   View,
@@ -14,6 +14,7 @@ import Share from 'react-native-share';
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
+import PhotoViewer from '../../../components/photoViewer';
 
 import {saveRealEstateAvatarAction} from '../../../../redux/slices/EstateReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
@@ -25,6 +26,8 @@ const options = {
   url,
   message,
 };
+
+
 
 const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
   const dispatch = useDispatch();
@@ -66,6 +69,8 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
   } = useSelector(state => state.estate);
 
   console.log(realEstateAvatar);
+
+  const [imagenesPrueba, setImagenesPrueba] = useState([IMAGES.OTHERS.TEMPORAL_IMAGE, IMAGES.OTHERS.TEMPORAL_IMAGE, IMAGES.OTHERS.TEMPORAL_IMAGE, IMAGES.OTHERS.TEMPORAL_IMAGE, IMAGES.OTHERS.TEMPORAL_IMAGE]);
 
   useEffect(() => {
     const fetchAvatar = async () => {
@@ -343,50 +348,7 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
             ) : null}
           </View>
           <Text style={styles.photosFont}>{i18n.t('photos')}</Text>
-          <ScrollView nestedScrollEnabled={true} horizontal={true}>
-            <View style={styles.photosRow}>
-              <Image
-                source={IMAGES.OTHERS.TEMPORAL_IMAGE}
-                style={styles.smallPhoto}
-              />
-              <Image
-                source={IMAGES.OTHERS.TEMPORAL_IMAGE}
-                style={styles.smallPhoto}
-              />
-              <Image
-                source={IMAGES.OTHERS.TEMPORAL_IMAGE}
-                style={styles.smallPhoto}
-              />
-              <Image
-                source={IMAGES.OTHERS.TEMPORAL_IMAGE}
-                style={styles.smallPhoto}
-              />
-              <Image
-                source={IMAGES.OTHERS.TEMPORAL_IMAGE}
-                style={styles.smallPhoto}
-              />
-              <Image
-                source={IMAGES.OTHERS.TEMPORAL_IMAGE}
-                style={styles.smallPhoto}
-              />
-              <Image
-                source={IMAGES.OTHERS.TEMPORAL_IMAGE}
-                style={styles.smallPhoto}
-              />
-              <Image
-                source={IMAGES.OTHERS.TEMPORAL_IMAGE}
-                style={styles.smallPhoto}
-              />
-              <Image
-                source={IMAGES.OTHERS.TEMPORAL_IMAGE}
-                style={styles.smallPhoto}
-              />
-              <Image
-                source={IMAGES.OTHERS.TEMPORAL_IMAGE}
-                style={styles.smallPhoto}
-              />
-            </View>
-          </ScrollView>
+          <PhotoViewer imagesSources={imagenesPrueba}></PhotoViewer>
         </View>
       </View>
     </ScrollView>

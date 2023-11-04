@@ -19,6 +19,8 @@ const RegisterCodeUI = ({goBack, showRegisterSuccessful}) => {
     setCode(value);
   };
 
+  const [errorCodigo, setErrorCodigo] = useState(false);
+
   const handleRegistrationCode = () => {
     userWS
       .verifyCode(email, code)
@@ -33,6 +35,7 @@ const RegisterCodeUI = ({goBack, showRegisterSuccessful}) => {
             'Server responded with an error status:',
             error.response.status,
           );
+          setErrorCodigo(i18n.t('codeWrong'));
           console.error('Response data:', error.response.data);
         } else if (error.request) {
           // Handle error
@@ -62,6 +65,7 @@ const RegisterCodeUI = ({goBack, showRegisterSuccessful}) => {
           placeholder={i18n.t('placeholder_code')}
           size="M"
           changeValue={handleCodeChange}
+          error={errorCodigo}
         />
         <Button
           text={i18n.t('continue')}

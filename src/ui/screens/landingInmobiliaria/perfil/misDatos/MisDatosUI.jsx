@@ -6,6 +6,7 @@ import {
   StatusBar,
   StyleSheet,
   Image,
+  Pressable,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -16,10 +17,11 @@ import Button from '../../../../components/button';
 import InputText from '../../../../components/inputText';
 import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
 import {meAction} from '../../../../../redux/slices/UserReducer';
+import ProfilePhotoUploader from '../../../../components/profilePhotoUploader';
 
 const MisDatosUI = ({goBack}) => {
   const dispatch = useDispatch();
-  const {id, email, email2, name, surname, telephone, telephone2, avatarName} =
+  const {id, email, email2, name, surname, telephone, telephone2, avatarName, pass} =
     useSelector(state => state.user);
 
   const [emailValue, setEmailValue] = useState('');
@@ -58,6 +60,18 @@ const MisDatosUI = ({goBack}) => {
     setNewPasswordValue(value);
   };
 
+  const [showPassword1, setShowPassword1] = useState(true);
+
+  const handleShowPassword1 = () => {
+    setShowPassword1(!showPassword1);
+  };
+
+  const [showPassword2, setShowPassword2] = useState(true);
+
+  const handleShowPassword2 = () => {
+    setShowPassword2(!showPassword2);
+  };
+
   const handleSubmit = () => {
     userWS
       .update(
@@ -72,6 +86,50 @@ const MisDatosUI = ({goBack}) => {
         console.log(response);
         dispatch(meAction(response));
         goBack();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
+  const [errorContraseña, setErrorContraseña] = useState(false);
+
+  const checkPassword = () => {
+    console.log(passwordValue);
+    console.log(email);
+    console.log(newPasswordValue);
+    // aca quiero comparar con la contraseña, que parece que no se guarda bien pq viene así -> ''
+    console.log(pass);
+    if (passwordValue === pass && newPasswordValue !== '') {
+      return handleSubmitPass();
+    } else {
+      setErrorContraseña(i18n.t('actualPassWrong'));
+      return;
+    }
+  };
+
+  const handleSubmitPass = () => {
+    userWS
+      .passwordChange(
+        email,
+        newPasswordValue
+      )
+      .then(response => {
+        // Contraseña cambiada exitosa
+        console.log(response);
       })
       .catch(error => {
         if (error.response) {
@@ -164,26 +222,12 @@ const MisDatosUI = ({goBack}) => {
               ogValue={email2}
             />
           </View>
+          
           <View style={styles.littleBox}>
-            <Text style={styles.text}>{i18n.t('actualPass')}</Text>
-            <InputText
-              placeholder={i18n.t('placeholder_password')}
-              keyboard="default"
-              size="L"
-              hideText={true}
-              changeValue={handlePasswordChange}
-            />
+            <Text style={styles.text2}>{i18n.t('profilePhoto')}</Text>
           </View>
-          <View style={styles.littleBox}>
-            <Text style={styles.text}>{i18n.t('newPass')}</Text>
-            <InputText
-              placeholder={i18n.t('placeholder_password')}
-              keyboard="default"
-              size="L"
-              hideText={true}
-              changeValue={handleNewPasswordChange}
-            />
-          </View>
+          <ProfilePhotoUploader/>
+
           <Button
             onPress={() => handleSubmit()}
             text={i18n.t('saveChanges')}
@@ -191,6 +235,55 @@ const MisDatosUI = ({goBack}) => {
             size="ML"
           />
         </View>
+        <View style={styles.box}>
+          <Text style={styles.tittleBox}>{i18n.t('passChange')}</Text>
+          <View style={styles.littleBox}>
+            <Text style={styles.text}>{i18n.t('actualPass')}</Text>
+            <View style={{flexDirection: 'row'}}>
+            <InputText
+              placeholder={i18n.t('placeholder_password')}
+              keyboard="default"
+              size="CUSTOM_L"
+              hideText={showPassword1}
+              changeValue={handlePasswordChange}
+              flex={1}
+              error={errorContraseña}
+            />
+            {showPassword1 
+              ?
+              <IMAGES.SVG.EYE_CLOSE width={20} height={20} onPress={handleShowPassword1} style={{marginTop: 25}}/>
+              :
+              <IMAGES.SVG.EYE_OPEN width={20} height={20} onPress={handleShowPassword1} style={{marginTop: 25}}/>
+            }
+            </View>
+          </View>
+          <View style={styles.littleBox}>
+            <Text style={styles.text}>{i18n.t('newPass')}</Text>
+            <View style={{flexDirection: 'row'}}>
+            <InputText
+              placeholder={i18n.t('placeholder_password')}
+              keyboard="default"
+              size="CUSTOM_L"
+              hideText={showPassword2}
+              changeValue={handleNewPasswordChange}
+              flex={1}
+            />
+            {showPassword2 
+              ?
+              <IMAGES.SVG.EYE_CLOSE width={20} height={20} onPress={handleShowPassword2} style={{marginTop: 25}}/>
+              :
+              <IMAGES.SVG.EYE_OPEN width={20} height={20} onPress={handleShowPassword2} style={{marginTop: 25}}/>
+            }
+            </View>
+          </View>
+          <Button
+            onPress={() => checkPassword()}
+            text={i18n.t('saveChanges')}
+            color={'primary'}
+            size="ML"
+          />
+        </View>
+        
         <Button
           onPress={() => goBack()}
           text={i18n.t('goBack')}
@@ -240,6 +333,11 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.SM,
     fontWeight: Theme.fonts.BOLD,
     marginLeft: 20,
+  },
+  text2: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
   },
   opcional: {
     color: Theme.colors.PLACEHOLDER,
