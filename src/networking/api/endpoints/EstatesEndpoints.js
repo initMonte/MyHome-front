@@ -34,11 +34,14 @@ export let estatesWS = {
     expenses,
     latitude,
     longitude,
-    files,
+    images,
     videoUrl,
     realEstateId,
   ) {
-    console.log(typeof expenses);
+    console.log(typeof pictures);
+    const pictures = images.filter(file => file);
+    console.log(typeof pictures);
+
     const formData = new FormData(); // Create a FormData object
 
     // Append all the variables to the FormData object
@@ -73,9 +76,18 @@ export let estatesWS = {
     formData.append('expenses', expenses);
     formData.append('latitude', latitude);
     formData.append('longitude', longitude);
-    formData.append('files', files);
+    pictures.forEach((file, index) => {
+      formData.append('pictures', {
+        uri: file,
+        type: 'image/jpeg', // Modify the content type as needed
+        name: `image_${index}.jpg`, // Set a unique name for each image
+      });
+    });
     formData.append('videoUrl', videoUrl);
     formData.append('realEstateId', realEstateId);
+    console.log('--------------_____________________---------------');
+    console.log(formData);
+    console.log('--------------_____________________---------------');
     return await Api.post(urlApi.estate.createEstate, formData, {
       headers: {
         'Content-Type': 'multipart/form-data', // Set the appropriate content type for file uploads

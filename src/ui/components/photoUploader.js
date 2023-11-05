@@ -1,5 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Pressable, FlatList, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import IMAGES from '../../assets/images/images';
 import Theme from '../../styles/Theme';
@@ -7,12 +15,12 @@ import i18n from '../../assets/strings/I18n';
 import Lightbox from 'react-native-lightbox-v2';
 import ImageViewer from './imageViewer';
 
-const PhotoUploader = () => {
-  const [imageSources, setImageSources] = useState([{ isAddImage: true }]);
+const PhotoUploader = ({onImageUrisChange}) => {
+  const [imageSources, setImageSources] = useState([{isAddImage: true}]);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  const selectImageIndex = (index) => {
+  const selectImageIndex = index => {
     setSelectedImageIndex(index);
   };
 
@@ -20,9 +28,12 @@ const PhotoUploader = () => {
     setSelectedImageIndex(null);
   };
 
-  const deleteImage = (indexToRemove) => {
-    const updatedImages = imageSources.filter((_, index) => index !== indexToRemove);
+  const deleteImage = indexToRemove => {
+    const updatedImages = imageSources.filter(
+      (_, index) => index !== indexToRemove,
+    );
     setImageSources([...updatedImages]);
+    onImageUrisChange(updatedImages.map(image => image.uri));
   };
 
   const selectImage = () => {
@@ -33,47 +44,57 @@ const PhotoUploader = () => {
         path: 'images',
       },
       mediaType: 'photo',
-      multiple: true, 
+      multiple: true,
     };
-  
-    ImagePicker.launchImageLibrary(options, (response) => {
+
+    ImagePicker.launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('Selección de imagen cancelada');
       } else if (response.error) {
         console.log('Error: ', response.error);
       } else {
-        const newImageSources = response.assets.map((asset) => ({ uri: asset.uri }));
-        setImageSources([...imageSources, ...newImageSources]);
+        const newImageSources = response.assets.map(asset => ({
+          uri: asset.uri,
+        }));
+        const updatedImages = [...imageSources, ...newImageSources];
+        setImageSources(updatedImages);
+        onImageUrisChange(updatedImages.map(image => image.uri));
       }
     });
-  };  
+  };
 
   return (
-
     <View style={styles.container3}>
-      <Text style={styles.text3}>Agregar imágenes
+      <Text style={styles.text3}>
+        Agregar imágenes
         <Text style={styles.textOptional2}>{'  ' + i18n.t('minimun2')}</Text>
       </Text>
       <FlatList
         data={imageSources}
         horizontal
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
+        renderItem={({item, index}) => (
           <View style={styles.imageContainerChild}>
             {item.isAddImage ? (
               <Pressable onPress={selectImage}>
-                <IMAGES.SVG.ADD_IMAGE width={25} height={25} margin={43}/>
+                <IMAGES.SVG.ADD_IMAGE width={25} height={25} margin={43} />
               </Pressable>
             ) : (
-              <Pressable onPress={() => selectImageIndex(index-1)}>
-                <TouchableOpacity style={styles.closeButton} onPress={() => deleteImage(index)}>
+              <Pressable onPress={() => selectImageIndex(index - 1)}>
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={() => deleteImage(index)}>
                   <Text style={styles.closeButtonText}>X</Text>
                 </TouchableOpacity>
                 <Image
                   source={item}
-                  style={{ width: '100%', height: '100%', borderRadius: 8, resizeMode: 'cover' }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: 8,
+                    resizeMode: 'cover',
+                  }}
                 />
-                
               </Pressable>
             )}
           </View>
@@ -82,14 +103,12 @@ const PhotoUploader = () => {
 
       {selectedImageIndex !== null && (
         <ImageViewer
-          images={imageSources.filter((item) => !item.isAddImage)}
+          images={imageSources.filter(item => !item.isAddImage)}
           currentIndex={selectedImageIndex}
           onClose={closeLightbox}
         />
       )}
     </View>
-
-
   );
 };
 
@@ -99,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.BACKGROUND,
     paddingHorizontal: -5,
     borderRadius: 10,
-    marginTop: 25
+    marginTop: 25,
   },
   text3: {
     marginTop: 10,

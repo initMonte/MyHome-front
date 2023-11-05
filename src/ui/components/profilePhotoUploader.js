@@ -5,7 +5,6 @@ import {
   Image,
   StyleSheet,
   Pressable,
-  FlatList,
   TouchableOpacity,
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';

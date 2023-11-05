@@ -30,6 +30,7 @@ const PublicarUI = ({goHome}) => {
   const [price, setPrice] = useState('');
   const [expenses, setExpenses] = useState('');
   const [parking, setParking] = useState('');
+  const [selectedImagesUri, setSelectedImagesUri] = useState([]);
   const [urlVideo, setUrlVideo] = useState('');
 
   const handleTitle = value => {
@@ -96,6 +97,10 @@ const PublicarUI = ({goHome}) => {
     setParking(value);
   };
 
+  const handleSelectedImageUris = uris => {
+    setSelectedImagesUri(uris);
+  };
+
   const handleUrlVideo = value => {
     setUrlVideo(value);
   };
@@ -158,7 +163,7 @@ const PublicarUI = ({goHome}) => {
     }
   };
 
-  const [selectedOrientacion, setSelectedOrientacion] = useState('north');
+  const [selectedOrientacion, setSelectedOrientacion] = useState('norte');
   const handleButtonClick12 = buttonName => {
     setSelectedOrientacion(buttonName);
   };
@@ -206,7 +211,7 @@ const PublicarUI = ({goHome}) => {
     console.log(parking);
     console.log(selectedDisposicion);
     console.log(antiquity);
-    console.log(images);
+    console.log(selectedImagesUri);
     console.log(urlVideo);
     console.log('---------------------------------');
     console.log('---------------------------------');
@@ -243,7 +248,7 @@ const PublicarUI = ({goHome}) => {
         expenses,
         latitude,
         longitude,
-        images,
+        selectedImagesUri,
         urlVideo,
       )
       .then(response => {
@@ -914,7 +919,7 @@ const PublicarUI = ({goHome}) => {
             />
           </View>
 
-          <PhotoUploader />
+          <PhotoUploader onImageUrisChange={handleSelectedImageUris} />
 
           <Text style={styles.text3}>
             {i18n.t('addVideo') + ' '}
