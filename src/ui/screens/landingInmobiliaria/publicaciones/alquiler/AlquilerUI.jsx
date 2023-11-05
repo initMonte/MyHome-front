@@ -18,7 +18,7 @@ const MapEstates = ({x, show}) => (
           key={estateItem._id}
           onPress={() => show(estateItem)}
           size="S"
-          image={IMAGES.OTHERS.TEMPORAL_IMAGE}
+          image={{uri: estateItem.images[0]}}
           ubication={estateItem.neighborhood}
           amb={estateItem.roomsAmount}
           m2={

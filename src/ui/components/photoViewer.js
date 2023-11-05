@@ -1,5 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Pressable, FlatList, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import IMAGES from '../../assets/images/images';
 import Theme from '../../styles/Theme';
@@ -7,14 +15,14 @@ import i18n from '../../assets/strings/I18n';
 import Lightbox from 'react-native-lightbox-v2';
 import ImageViewer from './imageViewer';
 
-const PhotoViewer = ({imagesSources}) => {
+const PhotoViewer = ({imagesSources, uri = false}) => {
   console.log(imagesSources);
   const [imageSources, setImageSources] = useState(imagesSources);
   console.log(imageSources);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  const selectImageIndex = (index) => {
+  const selectImageIndex = index => {
     setSelectedImageIndex(index);
   };
 
@@ -30,35 +38,53 @@ const PhotoViewer = ({imagesSources}) => {
         path: 'images',
       },
       mediaType: 'photo',
-      multiple: true, 
+      multiple: true,
     };
-  
-    ImagePicker.launchImageLibrary(options, (response) => {
+
+    ImagePicker.launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('Selección de imagen cancelada');
       } else if (response.error) {
         console.log('Error: ', response.error);
       } else {
-        const newImageSources = response.assets.map((asset) => ({ uri: asset.uri }));
+        const newImageSources = response.assets.map(asset => ({
+          uri: asset.uri,
+        }));
         setImageSources([...imageSources, ...newImageSources]);
       }
     });
-  };  
+  };
 
   return (
-
     <View style={styles.container3}>
       <FlatList
         data={imageSources}
         horizontal
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
+        renderItem={({item, index}) => (
           <View style={styles.imageContainerChild}>
-            <Pressable onPress={() => selectImageIndex(index-1)}>
+            <Pressable onPress={() => selectImageIndex(index - 1)}>
+              {uri ? (
                 <Image
-                    source={item}
-                    style={{ width: '100%', height: '100%', borderRadius: 8, resizeMode: 'cover' }}
+                  source={{uri: item}}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: 8,
+                    resizeMode: 'cover',
+                  }}
                 />
+              ) : (
+                <Image
+                  source={item}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: 8,
+                    resizeMode: 'cover',
+                  }}
+                />
+              )}
             </Pressable>
           </View>
         )}
@@ -66,9 +92,10 @@ const PhotoViewer = ({imagesSources}) => {
 
       {selectedImageIndex !== null && (
         <ImageViewer
-          images={imageSources.filter((item) => !item.isAddImage)}
+          images={imageSources.filter(item => !item.isAddImage)}
           currentIndex={selectedImageIndex}
           onClose={closeLightbox}
+          uri={uri}
         />
       )}
     </View>

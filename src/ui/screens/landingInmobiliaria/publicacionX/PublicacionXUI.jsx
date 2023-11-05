@@ -27,8 +27,6 @@ const options = {
   message,
 };
 
-
-
 const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
   const dispatch = useDispatch();
   const {
@@ -70,7 +68,13 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
 
   console.log(realEstateAvatar);
 
-  const [imagenesPrueba, setImagenesPrueba] = useState([IMAGES.OTHERS.TEMPORAL_IMAGE, IMAGES.OTHERS.TEMPORAL_IMAGE, IMAGES.OTHERS.TEMPORAL_IMAGE, IMAGES.OTHERS.TEMPORAL_IMAGE, IMAGES.OTHERS.TEMPORAL_IMAGE]);
+  const [imagenesPrueba, setImagenesPrueba] = useState([
+    IMAGES.OTHERS.TEMPORAL_IMAGE,
+    IMAGES.OTHERS.TEMPORAL_IMAGE,
+    IMAGES.OTHERS.TEMPORAL_IMAGE,
+    IMAGES.OTHERS.TEMPORAL_IMAGE,
+    IMAGES.OTHERS.TEMPORAL_IMAGE,
+  ]);
 
   useEffect(() => {
     const fetchAvatar = async () => {
@@ -166,12 +170,7 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
           hidden={false}
         />
         <View style={styles.containerImage}>
-          <Image
-            source={{
-              uri: 'https://storage.googleapis.com/my-home-storage/avatar/default.png',
-            }}
-            style={styles.bigImage}
-          />
+          <Image source={{uri: images[0]}} style={styles.bigImage} />
           <View style={styles.rowBetween}>
             <Pressable onPress={() => goBack()}>
               <IMAGES.SVG.BUTTON_BACK width={45} height={45} />
@@ -348,7 +347,7 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
             ) : null}
           </View>
           <Text style={styles.photosFont}>{i18n.t('photos')}</Text>
-          <PhotoViewer imagesSources={imagenesPrueba}></PhotoViewer>
+          <PhotoViewer imagesSources={images} uri={true} />
         </View>
       </View>
     </ScrollView>

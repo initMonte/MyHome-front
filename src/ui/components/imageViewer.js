@@ -1,18 +1,39 @@
 import React from 'react';
-import { Modal, View, Text, Image, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  Modal,
+  View,
+  Text,
+  Image,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import Swiper from 'react-native-swiper';
 import Theme from '../../styles/Theme';
 
-const ImageViewer = ({ images, currentIndex, onClose }) => {
+const ImageViewer = ({images, currentIndex, onClose, uri = false}) => {
   return (
     <Modal transparent={false} visible={true}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Text style={styles.closeButtonText}>X</Text>
       </TouchableOpacity>
-      <Swiper activeDotColor={Theme.colors.PRIMARY} dotColor={Theme.colors.SECONDARY} index={currentIndex} style={styles.wrapper} loop={false}>
+      <Swiper
+        activeDotColor={Theme.colors.PRIMARY}
+        dotColor={Theme.colors.SECONDARY}
+        index={currentIndex}
+        style={styles.wrapper}
+        loop={false}>
         {images.map((image, index) => (
           <View style={styles.slide} key={index}>
-            <Image source={image} style={styles.image} resizeMode="contain" />
+            {uri ? (
+              <Image
+                source={{uri: image}}
+                style={styles.image}
+                resizeMode="contain"
+              />
+            ) : (
+              <Image source={image} style={styles.image} resizeMode="contain" />
+            )}
           </View>
         ))}
       </Swiper>
@@ -22,13 +43,13 @@ const ImageViewer = ({ images, currentIndex, onClose }) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: Theme.colors.BLACK
+    backgroundColor: Theme.colors.BLACK,
   },
   slide: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    color: Theme.colors.PRIMARY
+    color: Theme.colors.PRIMARY,
   },
   image: {
     flex: 1,
