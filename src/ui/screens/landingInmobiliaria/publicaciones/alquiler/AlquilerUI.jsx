@@ -7,7 +7,6 @@ import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoint
 import Theme from '../../../../../styles/Theme';
 import i18n from '../../../../../assets/strings/I18n';
 import CardState from '../../../../components/cardState';
-import IMAGES from '../../../../../assets/images/images';
 
 const MapEstates = ({x, show}) => (
   <>

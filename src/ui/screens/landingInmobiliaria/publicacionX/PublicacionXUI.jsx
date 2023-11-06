@@ -327,7 +327,7 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
                 <Text style={styles.bodyIconsFont}>{i18n.t('baulera')}</Text>
               </View>
             ) : null}
-            {amenites ? (
+            {amenites[0] ? (
               <View style={styles.item}>
                 <IMAGES.SVG.CHECKBOX_PRIMARY width={20} height={20} />
                 <Text style={styles.bodyIconsFont}>
