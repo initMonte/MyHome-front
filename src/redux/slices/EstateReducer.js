@@ -9,6 +9,7 @@ export const estateReducer = createSlice({
     rentOrSale: '',
     street: '',
     addressNumber: '',
+    floor: '',
     neighborhood: '',
     state: '',
     country: '',
@@ -48,6 +49,7 @@ export const estateReducer = createSlice({
       state.rentOrSale = response.payload.rentOrSale;
       state.street = response.payload.street;
       state.addressNumber = response.payload.addressNumber;
+      state.floor = response.payload.floor;
       state.neighborhood = response.payload.neighborhood;
       state.state = response.payload.state;
       state.country = response.payload.country;

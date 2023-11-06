@@ -25,6 +25,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     rentOrSale,
     street,
     addressNumber,
+    floor,
     neighborhood,
     state,
     country,
@@ -57,9 +58,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
   const [newDescription, setDescription] = useState(description);
   const [newStreet, setStreet] = useState(street);
   const [newAddressNumber, setaddressNumber] = useState(addressNumber);
-  const [newFloor, setFloor] = useState('');
+  const [newFloorDpto, setFloorDpto] = useState(floor);
   const [newNeighborhood, setNeighborhood] = useState(neighborhood);
-  const [newDpto, setDpto] = useState('');
   const [newState, setState] = useState(state);
   const [newCountry, setCountry] = useState(country);
   const [newCoveredSquareMeters, setCoveredSquareMeters] =
@@ -94,12 +94,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     setaddressNumber(value);
   };
 
-  const handleFloor = value => {
-    setFloor(value);
-  };
-
-  const handleDpto = value => {
-    setDpto(value);
+  const handleFloorDpto = value => {
+    setFloorDpto(value);
   };
 
   const handleNeighborhood = value => {
@@ -242,7 +238,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
       .deleteEstate(id)
       .then(response => {
         // Delete exitoso
-        dispatch(logoutEstate());
         goHome();
       })
       .catch(error => {
@@ -268,8 +263,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     const newBalcony = selectedButtons.includes('balcony');
     const newStorage = selectedButtons.includes('storage');
 
-    const floorDpto = 'asd';
-
     const latitude = 'String'; //Hardcodeado hasta entrega final
     const longitude = 'String'; //Hardcodeado hasta entrega final
 
@@ -283,7 +276,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     console.log(selectedTipoPropiedad);
     console.log(newStreet);
     console.log(newAddressNumber);
-    console.log(floorDpto);
+    console.log(newFloorDpto);
     console.log(newNeighborhood);
     console.log(newState);
     console.log(newCountry);
@@ -318,7 +311,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
         selectedEstado,
         newStreet,
         +newAddressNumber,
-        floorDpto,
+        newFloorDpto,
         newNeighborhood,
         newState,
         newCountry,
@@ -517,9 +510,9 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-between',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
               flexWrap: 'wrap',
-              marginBottom: -65,
             }}>
             <InputText
               size="XS"
@@ -530,13 +523,11 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             />
             <InputText
               size="S"
-              keyboard="phone-pad"
-              placeholder={i18n.t('placeholder_floor') + ' (opc)'}
+              placeholder={i18n.t('placeholder_floorDpto')}
+              changeValue={handleFloorDpto}
+              ogValue={newFloorDpto}
             />
-            <InputText
-              size="S"
-              placeholder={i18n.t('placeholder_department') + ' (opc)'}
-            />
+            <Text style={styles.textOptional2}>{i18n.t('optional')}</Text>
           </View>
           <InputText
             placeholder={i18n.t('placeholder_barrio')}
@@ -1131,6 +1122,12 @@ const styles = StyleSheet.create({
   },
   textOptional: {
     marginLeft: 10,
+    color: Theme.colors.PLACEHOLDER,
+    fontSize: Theme.fonts.S,
+    fontWeight: Theme.fonts.LIGHT,
+  },
+  textOptional2: {
+    marginLeft: -20,
     color: Theme.colors.PLACEHOLDER,
     fontSize: Theme.fonts.S,
     fontWeight: Theme.fonts.LIGHT,

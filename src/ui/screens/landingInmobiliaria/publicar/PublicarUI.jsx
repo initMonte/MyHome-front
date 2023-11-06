@@ -18,13 +18,13 @@ const PublicarUI = ({goHome}) => {
   const [description, setDescription] = useState('');
   const [street, setStreet] = useState('');
   const [addressNumber, setaddressNumber] = useState('');
-  const [floor, setFloor] = useState('');
+  const [floorDpto, setFloorDpto] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
-  const [dpto, setDpto] = useState('');
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
   const [coveredSquareMeters, setCoveredSquareMeters] = useState('');
-  const [semiUncoveredSquaremeters, setSemiUncoveredSquaremeters] = useState('');
+  const [semiUncoveredSquaremeters, setSemiUncoveredSquaremeters] =
+    useState('');
   const [uncoveredSquareMeters, setUncoveredSquareMeters] = useState('');
   const [antiquity, setAntiquity] = useState('');
   const [price, setPrice] = useState('');
@@ -36,16 +36,16 @@ const PublicarUI = ({goHome}) => {
   const [errorAddressNumber, setErrorAddressNumber] = useState(false);
   const inputRefAdressNumber = useRef();
 
-  const [errorFloor, setErrorFloor] = useState(false);
-  const inputRefFloor = useRef();
-
-  const [errorCoveredSquareMeters, setErrorCoveredSquareMeters] = useState(false);
+  const [errorCoveredSquareMeters, setErrorCoveredSquareMeters] =
+    useState(false);
   const inputRefCoveredSquareMeters = useRef();
 
-  const [errorSemiUncoveredSquaremeters, setErrorSemiUncoveredSquaremeters] = useState(false);
+  const [errorSemiUncoveredSquaremeters, setErrorSemiUncoveredSquaremeters] =
+    useState(false);
   const inputRefSemiUncoveredSquaremeters = useRef();
 
-  const [errorUncoveredSquareMeters, setErrorUncoveredSquareMeters] = useState(false);
+  const [errorUncoveredSquareMeters, setErrorUncoveredSquareMeters] =
+    useState(false);
   const inputRefUncoveredSquareMeters = useRef();
 
   const [errorPrice, setErrorPrice] = useState(false);
@@ -81,7 +81,7 @@ const PublicarUI = ({goHome}) => {
   const [errorImages, setErrorImages] = useState(false);
   const inputRefImages = useRef();
 
-  const handleFocus = (ref) => {
+  const handleFocus = ref => {
     if (ref.current) {
       ref.current.focus();
     }
@@ -103,12 +103,8 @@ const PublicarUI = ({goHome}) => {
     setaddressNumber(value);
   };
 
-  const handleFloor = value => {
-    setFloor(value);
-  };
-
-  const handleDpto = value => {
-    setDpto(value);
+  const handleFloorDpto = value => {
+    setFloorDpto(value);
   };
 
   const handleNeighborhood = value => {
@@ -227,7 +223,6 @@ const PublicarUI = ({goHome}) => {
     const balcony = selectedButtons.includes('balcony');
     const storage = selectedButtons.includes('storage');
     const status = 'alquiler - venta'; //Se asume este estado, luego se puede cambiar en "editar"
-    const floorDpto = floor + dpto;
 
     const latitude = 'String'; //Hardcodeado hasta entrega final
     const longitude = 'String'; //Hardcodeado hasta entrega final
@@ -235,95 +230,95 @@ const PublicarUI = ({goHome}) => {
     console.log(selectedImagesUri);
     console.log(selectedImagesUri.length);
 
-    if (title === "") {
+    if (title === '') {
       setErrorTitle(i18n.t('mandatoryField'));
       handleFocus(inputRefTitle);
       return false;
     } else {
       setErrorTitle(false);
     }
-    
-    if (description === "") {
+
+    if (description === '') {
       setErrorDescription(i18n.t('mandatoryField'));
       handleFocus(inputRefDescription);
       return false;
     } else {
       setErrorDescription(false);
     }
-    
-    if (street === "") {
+
+    if (street === '') {
       setErrorStreet(i18n.t('mandatoryField'));
       handleFocus(inputRefStreet);
       return false;
     } else {
       setErrorStreet(false);
     }
-    
-    if (addressNumber === "") {
+
+    if (addressNumber === '') {
       setErrorAddressNumber(i18n.t('mandatoryField'));
       handleFocus(inputRefAdressNumber);
       return false;
     } else {
       setErrorAddressNumber(false);
     }
-    
-    if (neighborhood === "") {
+
+    if (neighborhood === '') {
       setErrorNeighborhood(i18n.t('mandatoryField'));
       handleFocus(inputRefNeighborhood);
       return false;
     } else {
       setErrorNeighborhood(false);
     }
-    
-    if (state === "") {
+
+    if (state === '') {
       setErrorState(i18n.t('mandatoryField'));
       handleFocus(inputRefState);
       return false;
     } else {
       setErrorState(false);
     }
-    
-    if (country === "") {
+
+    if (country === '') {
       setErrorCountry(i18n.t('mandatoryField'));
       handleFocus(inputRefCountry);
       return false;
     } else {
       setErrorCountry(false);
     }
-    
-    if (coveredSquareMeters === "") {
+
+    if (coveredSquareMeters === '') {
       setErrorCoveredSquareMeters(i18n.t('mandatoryField'));
       handleFocus(inputRefCoveredSquareMeters);
       return false;
     } else {
       setErrorCoveredSquareMeters(false);
     }
-    
-    if (semiUncoveredSquaremeters === "") {
+
+    if (semiUncoveredSquaremeters === '') {
       setErrorSemiUncoveredSquaremeters(i18n.t('mandatoryField'));
       handleFocus(inputRefSemiUncoveredSquaremeters);
       return false;
     } else {
       setErrorSemiUncoveredSquaremeters(false);
     }
-    
-    if (uncoveredSquareMeters === "") {
+
+    if (uncoveredSquareMeters === '') {
       setErrorUncoveredSquareMeters(i18n.t('mandatoryField'));
       handleFocus(inputRefUncoveredSquareMeters);
       return false;
     } else {
       setErrorUncoveredSquareMeters(false);
     }
-    
-    if (price === "") {
+
+    if (price === '') {
       setErrorPrice(i18n.t('mandatoryField'));
       handleFocus(inputRefPrice);
       return false;
     } else {
       setErrorPrice(false);
     }
-    
-    if (antiquity === "") {
+
+    if (antiquity === '') {
       setErrorAntiquity(i18n.t('mandatoryField'));
       handleFocus(inputRefAntiquity);
       return false;
@@ -337,21 +332,13 @@ const PublicarUI = ({goHome}) => {
     } else {
       setErrorImages(false);
     }
-    
+
     if (isNaN(addressNumber)) {
       setErrorAddressNumber(i18n.t('invalidNumber'));
       handleFocus(inputRefAdressNumber);
       return false;
     } else {
       setErrorAddressNumber(false);
-    }
-
-    if (isNaN(floor)) {
-      setErrorFloor(i18n.t('invalidNumber'));
-      handleFocus(inputRefFloor);
-      return false;
-    } else {
-      setErrorFloor(false);
     }
 
     if (isNaN(coveredSquareMeters)) {
@@ -420,7 +407,7 @@ const PublicarUI = ({goHome}) => {
     console.log(selectedTipoPropiedad);
     console.log(street);
     console.log(addressNumber);
-    console.log(floor + dpto);
+    console.log(floorDpto);
     console.log(neighborhood);
     console.log(state);
     console.log(country);
@@ -657,12 +644,12 @@ const PublicarUI = ({goHome}) => {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-between',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
               flexWrap: 'wrap',
-              marginBottom: -65,
             }}>
             <InputText
-              size="XS"
+              size="S"
               keyboard="phone-pad"
               placeholder={i18n.t('placeholder_strNumber')}
               changeValue={handleAddressNumber}
@@ -671,17 +658,10 @@ const PublicarUI = ({goHome}) => {
             />
             <InputText
               size="S"
-              keyboard="phone-pad"
-              placeholder={i18n.t('placeholder_floor') + ' (opc)'}
-              changeValue={handleFloor}
-              error={errorFloor}
-              innerRef={inputRefFloor}
+              placeholder={i18n.t('placeholder_floorDpto')}
+              changeValue={handleFloorDpto}
             />
-            <InputText
-              size="S"
-              changeValue={handleDpto}
-              placeholder={i18n.t('placeholder_department') + ' (opc)'}
-            />
+            <Text style={styles.textOptional2}>{i18n.t('optional')}</Text>
           </View>
           <InputText
             placeholder={i18n.t('placeholder_barrio')}
@@ -1179,7 +1159,10 @@ const PublicarUI = ({goHome}) => {
             />
           </View>
 
-          <PhotoUploader error={errorImages} onImageUrisChange={handleSelectedImageUris} />
+          <PhotoUploader
+            error={errorImages}
+            onImageUrisChange={handleSelectedImageUris}
+          />
 
           <Text style={styles.text3}>
             {i18n.t('addVideo') + ' '}
@@ -1242,6 +1225,12 @@ const styles = StyleSheet.create({
   },
   textOptional: {
     marginLeft: 10,
+    color: Theme.colors.PLACEHOLDER,
+    fontSize: Theme.fonts.S,
+    fontWeight: Theme.fonts.LIGHT,
+  },
+  textOptional2: {
+    marginLeft: -20,
     color: Theme.colors.PLACEHOLDER,
     fontSize: Theme.fonts.S,
     fontWeight: Theme.fonts.LIGHT,
