@@ -1,6 +1,6 @@
 export const config = {
   BASE_URL: 'https://myhome-366l.onrender.com/my-home/',
-  TIME_OUT: 5000,
+  TIME_OUT: 50000,
 };
 
 export const urlApi = {
