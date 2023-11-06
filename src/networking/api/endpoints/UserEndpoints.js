@@ -55,6 +55,9 @@ export let userWS = {
     telephone2,
     avatar,
   ) {
+    if (surname === undefined) {
+      surname = '';
+    }
     const formData = new FormData();
     formData.append('email', email);
     formData.append('email2', email2);

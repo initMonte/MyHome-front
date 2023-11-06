@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, Text, Pressable, StatusBar, StyleSheet} from 'react-native';
+import Theme from '../../../../styles/Theme';
+import IMAGES from '../../../../assets/images/images';
 //import i18n from '../../../../assets/strings/I18n';
 
 const ReservasUI = ({}) => {
@@ -11,16 +13,24 @@ const ReservasUI = ({}) => {
         showHideTransition={'fade'}
         hidden={false}
       />
-      <Text>{'Estoy en RESERVAS'}</Text>
+      <IMAGES.SVG.LOGO width={380} height={230} />
+      <Text style={styles.text}>{'Pagina en construccion'}</Text>
+      <Text style={styles.text}>{'Estoy en RESERVAS'}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ccc',
+    backgroundColor: Theme.colors.WHITE,
+  },
+  text: {
+    color: Theme.colors.BLACK,
+    fontSize: Theme.fonts.L,
   },
 });
 

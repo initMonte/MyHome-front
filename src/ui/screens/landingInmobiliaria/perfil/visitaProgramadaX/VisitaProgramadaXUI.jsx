@@ -34,7 +34,7 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
             )}
           </View>
           <View>
-            <Text style={styles.textH1}>{'Integrar con Back'}</Text>
+            <Text style={styles.textH1}>{name}</Text>
             <Text style={styles.text}>{'3 ' + i18n.t('programmedViews')}</Text>
           </View>
         </View>
