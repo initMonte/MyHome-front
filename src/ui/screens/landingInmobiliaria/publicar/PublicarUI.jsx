@@ -79,6 +79,7 @@ const PublicarUI = ({goHome}) => {
   const inputRefCountry = useRef();
 
   const [errorImages, setErrorImages] = useState(false);
+  const [sizeErrorImage, setSizeErrorImage] = useState(false);
 
   const [errorVideo, setErrorVideo] = useState(false);
   const inputRefVideo = useRef();
@@ -155,6 +156,11 @@ const PublicarUI = ({goHome}) => {
 
   const handleUrlVideo = value => {
     setUrlVideo(value);
+  };
+
+  const handleSizeErrorImage = value => {
+    setSizeErrorImage(value);
+    setErrorImages(i18n.t('errors.maxSizePhoto'));
   };
 
   const [selectedButton, setSelectedButton] = useState('venta');
@@ -411,7 +417,7 @@ const PublicarUI = ({goHome}) => {
     } else {
       setErrorVideo(false);
     }
-
+    /*
     console.log('---------------------------------');
     console.log('---------------------------------');
     console.log('PROBANDO BOTON PUBLICAR');
@@ -436,7 +442,6 @@ const PublicarUI = ({goHome}) => {
     console.log(selectedAmbiente);
     console.log(selectedDormitorio);
     console.log(selectedBaño);
-    console.log('TERRAZA, BALCON, BAULERA');
     console.log(terrace);
     console.log(balcony);
     console.log(storage);
@@ -448,6 +453,7 @@ const PublicarUI = ({goHome}) => {
     console.log(urlVideo);
     console.log('---------------------------------');
     console.log('---------------------------------');
+    */
     estatesWS
       .createEstate(
         title,
@@ -486,7 +492,7 @@ const PublicarUI = ({goHome}) => {
       )
       .then(response => {
         // Post Publicacion exitoso
-        console.log(response);
+        //console.log(response);
         goHome();
       })
       .catch(error => {
@@ -1176,6 +1182,8 @@ const PublicarUI = ({goHome}) => {
 
           <PhotoUploader
             error={errorImages}
+            sizeError={sizeErrorImage}
+            handleSizeErrorImage={handleSizeErrorImage}
             onImageUrisChange={handleSelectedImageUris}
           />
 

@@ -111,37 +111,55 @@ const PasswordRecoveryNewPassUI = ({goBack, showLandingInmobiliaria}) => {
         <View style={styles.container2}>
           <Text style={styles.text}>{i18n.t('newPass')}</Text>
           <View style={{flexDirection: 'row'}}>
-          <InputText
-            placeholder={i18n.t('placeholder_password')}
-            hideText={showPassword1}
-            changeValue={setPassword}
-            contraseña={true}
-            flex={1}
-          />
-          {showPassword1 
-              ?
-              <IMAGES.SVG.EYE_CLOSE width={20} height={20} onPress={handleShowPassword1} style={{marginTop: 25}}/>
-              :
-              <IMAGES.SVG.EYE_OPEN width={20} height={20} onPress={handleShowPassword1} style={{marginTop: 25}}/>
-            }
+            <InputText
+              placeholder={i18n.t('placeholder_password')}
+              hideText={showPassword1}
+              changeValue={setPassword}
+              contraseña={true}
+              flex={1}
+            />
+            {showPassword1 ? (
+              <IMAGES.SVG.EYE_CLOSE
+                width={20}
+                height={20}
+                onPress={handleShowPassword1}
+                style={{marginTop: 25}}
+              />
+            ) : (
+              <IMAGES.SVG.EYE_OPEN
+                width={20}
+                height={20}
+                onPress={handleShowPassword1}
+                style={{marginTop: 25}}
+              />
+            )}
           </View>
           <Text style={styles.text}>{i18n.t('newPass2')}</Text>
           <View style={{flexDirection: 'row'}}>
-          <InputText
-            placeholder={i18n.t('placeholder_password')}
-            hideText={showPassword2}
-            changeValue={setPasswordRepeat}
-            contraseña={true}
-            flex={1}
-            error={errorContraseña}
-          />
-          {showPassword2
-              ?
-              <IMAGES.SVG.EYE_CLOSE width={20} height={20} onPress={handleShowPassword2} style={{marginTop: 25}}/>
-              :
-              <IMAGES.SVG.EYE_OPEN width={20} height={20} onPress={handleShowPassword2} style={{marginTop: 25}}/>
-            }
-            </View> 
+            <InputText
+              placeholder={i18n.t('placeholder_password')}
+              hideText={showPassword2}
+              changeValue={setPasswordRepeat}
+              contraseña={true}
+              flex={1}
+              error={errorContraseña}
+            />
+            {showPassword2 ? (
+              <IMAGES.SVG.EYE_CLOSE
+                width={20}
+                height={20}
+                onPress={handleShowPassword2}
+                style={{marginTop: 25}}
+              />
+            ) : (
+              <IMAGES.SVG.EYE_OPEN
+                width={20}
+                height={20}
+                onPress={handleShowPassword2}
+                style={{marginTop: 25}}
+              />
+            )}
+          </View>
         </View>
         <Button
           text={i18n.t('confirm')}

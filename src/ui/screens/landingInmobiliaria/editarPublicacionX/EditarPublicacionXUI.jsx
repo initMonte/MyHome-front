@@ -124,6 +124,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
   const inputRefCountry = useRef();
 
   const [errorImages, setErrorImages] = useState(false);
+  const [sizeErrorImage, setSizeErrorImage] = useState(false);
 
   const [errorVideo, setErrorVideo] = useState(false);
   const inputRefVideo = useRef();
@@ -200,6 +201,11 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
 
   const handleUrlVideo = value => {
     setUrlVideo(value);
+  };
+
+  const handleSizeErrorImage = value => {
+    setSizeErrorImage(value);
+    setErrorImages(i18n.t('errors.maxSizePhoto'));
   };
 
   const [selectedButton, setSelectedButton] = useState(rentOrSale);
@@ -504,7 +510,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     } else {
       setErrorVideo(false);
     }
-
+    /*
     console.log('---------------------------------');
     console.log('---------------------------------');
     console.log('PROBANDO BOTON EDITAR');
@@ -541,6 +547,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     console.log(newUrlVideo);
     console.log('---------------------------------');
     console.log('---------------------------------');
+    */
     estatesWS
       .editEstate(
         id,
@@ -1284,6 +1291,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
 
           <PhotoUploader
             error={errorImages}
+            sizeError={sizeErrorImage}
+            handleSizeErrorImage={handleSizeErrorImage}
             onImageUrisChange={handleSelectedImageUris}
           />
 

@@ -1,6 +1,5 @@
 import Api from '../Api';
 import {urlApi} from '../../../config/ApiConfig';
-const Buffer = require('buffer').Buffer;
 
 export let userWS = {
   register: async function (
@@ -56,23 +55,23 @@ export let userWS = {
     telephone2,
     avatar,
   ) {
-    return await Api.put(
-      urlApi.user.update,
-      {
-        email,
-        email2,
-        name,
-        surname,
-        telephone,
-        telephone2,
-        avatar,
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('email2', email2);
+    formData.append('name', name);
+    formData.append('surname', surname);
+    formData.append('telephone', telephone);
+    formData.append('telephone2', telephone2);
+    formData.append('avatar', {
+      uri: avatar[0].uri,
+      type: 'image/jpeg',
+      name: 'avatar.jpg',
+    });
+    return await Api.put(urlApi.user.update, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // Set the appropriate content type for file uploads
       },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data', // Set the appropriate content type for file uploads
-        },
-      },
-    );
+    });
   },
   deleteUser: async function () {
     return await Api.delete(urlApi.user.deleteUser);

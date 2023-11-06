@@ -68,8 +68,6 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
       } catch (error) {
         if (error.response && error.response.status === 403) {
           console.error('Access denied. You are not authenticated.');
-        } else {
-          console.error('An error occurred:', error);
         }
       }
     };

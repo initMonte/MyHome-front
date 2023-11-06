@@ -15,12 +15,14 @@ import i18n from '../../assets/strings/I18n';
 import Lightbox from 'react-native-lightbox-v2';
 import ImageViewer from './imageViewer';
 
-const PhotoUploader = ({onImageUrisChange, error = false, imagenesEditar = false}) => {
+const PhotoUploader = ({
+  onImageUrisChange,
+  error = false,
+  sizeError = false,
+  handleSizeErrorImage,
+  imagenesEditar = false,
+}) => {
   const [imageSources, setImageSources] = useState([{isAddImage: true}]);
-
-  /*console.log(imagenesEditar);
-  const [imagenesEditarSources, setImagenesEditarSources] = useState([{isAddImage: true}, imagenesEditar]);
-  console.log(imagenesEditar);*/
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
@@ -59,10 +61,22 @@ const PhotoUploader = ({onImageUrisChange, error = false, imagenesEditar = false
       } else {
         const newImageSources = response.assets.map(asset => ({
           uri: asset.uri,
+          fileSize: asset.fileSize,
         }));
-        const updatedImages = [...imageSources, ...newImageSources];
-        setImageSources(updatedImages);
-        onImageUrisChange(updatedImages.map(image => image.uri));
+
+        // Check the file sizes
+        const exceedsSizeLimit = newImageSources.some(
+          image => image.fileSize > 10 * 1024 * 1024,
+        ); // MB in bytes
+
+        if (exceedsSizeLimit) {
+          console.log('La imagen seleccionada pesa mas de 10mb');
+          handleSizeErrorImage(exceedsSizeLimit);
+        } else {
+          const updatedImages = [...imageSources, ...newImageSources];
+          setImageSources(updatedImages);
+          onImageUrisChange(updatedImages.map(image => image.uri));
+        }
       }
     });
   };
@@ -73,6 +87,7 @@ const PhotoUploader = ({onImageUrisChange, error = false, imagenesEditar = false
         Agregar imágenes
         <Text style={styles.textOptional2}>{'  ' + i18n.t('minimun2')}</Text>
       </Text>
+      <Text style={styles.textOptional2}>{i18n.t('maxImageSize')}</Text>
       <FlatList
         data={imageSources}
         horizontal
@@ -112,7 +127,18 @@ const PhotoUploader = ({onImageUrisChange, error = false, imagenesEditar = false
           onClose={closeLightbox}
         />
       )}
-      {error && <Text style={{color: 'red', position: 'absolute', bottom: -25, left: 5}}>{error}</Text>}
+      {error && (
+        <Text
+          style={{color: 'red', position: 'absolute', bottom: -25, left: 5}}>
+          {error}
+        </Text>
+      )}
+      {sizeError && (
+        <Text
+          style={{color: 'red', position: 'absolute', bottom: -25, left: 5}}>
+          {error}
+        </Text>
+      )}
     </View>
   );
 };
@@ -124,7 +150,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: -5,
     borderRadius: 10,
     marginTop: 25,
-    marginBottom: 0
+    marginBottom: 0,
   },
   container33: {
     flex: 0.4,
@@ -132,7 +158,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: -5,
     borderRadius: 10,
     marginTop: 25,
-    marginBottom: 25
+    marginBottom: 25,
   },
   text3: {
     marginTop: 10,

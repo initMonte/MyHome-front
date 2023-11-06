@@ -101,13 +101,21 @@ const LoginInmobiliariaUI = ({
               error={errorContraseña}
               flex={1}
             />
-            {showPassword 
-              ?
-              <IMAGES.SVG.EYE_CLOSE width={20} height={20} onPress={handleShowPassword} style={{marginTop: 25}}/>
-              :
-              <IMAGES.SVG.EYE_OPEN width={20} height={20} onPress={handleShowPassword} style={{marginTop: 25}}/>
-            }
-            
+            {showPassword ? (
+              <IMAGES.SVG.EYE_CLOSE
+                width={20}
+                height={20}
+                onPress={handleShowPassword}
+                style={{marginTop: 25}}
+              />
+            ) : (
+              <IMAGES.SVG.EYE_OPEN
+                width={20}
+                height={20}
+                onPress={handleShowPassword}
+                style={{marginTop: 25}}
+              />
+            )}
           </View>
           <Pressable onPress={showRecoveryPassword}>
             <Text style={styles.presable1}>{i18n.t('forgotPass')}</Text>

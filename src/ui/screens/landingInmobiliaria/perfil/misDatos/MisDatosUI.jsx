@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
   Pressable,
-  ToastAndroid
+  ToastAndroid,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -17,21 +17,16 @@ import IMAGES from '../../../../../assets/images/images';
 import Button from '../../../../components/button';
 import InputText from '../../../../components/inputText';
 import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
-import {meAction, saveEmailAction} from '../../../../../redux/slices/UserReducer';
+import {
+  meAction,
+  saveEmailAction,
+} from '../../../../../redux/slices/UserReducer';
 import ProfilePhotoUploader from '../../../../components/profilePhotoUploader';
 
 const MisDatosUI = ({goBack}) => {
   const dispatch = useDispatch();
-  const {
-    id,
-    email,
-    email2,
-    name,
-    surname,
-    telephone,
-    telephone2,
-    avatarName,
-  } = useSelector(state => state.user);
+  const {id, email, email2, name, surname, telephone, telephone2, avatarName} =
+    useSelector(state => state.user);
   const [nameValue, setNameValue] = useState(name);
   const [telephoneValue, setTelephoneValue] = useState(telephone);
   const [telephone2Value, setTelephone2Value] = useState(telephone2);
@@ -46,7 +41,7 @@ const MisDatosUI = ({goBack}) => {
   const [errorTelephone2Value, setErrorTelephone2Value] = useState(false);
   const inputRefTelephone2Value = useRef();
 
-  const handleFocus = (ref) => {
+  const handleFocus = ref => {
     if (ref.current) {
       ref.current.focus();
     }
@@ -93,7 +88,6 @@ const MisDatosUI = ({goBack}) => {
   };
 
   const handleSubmit = () => {
-
     if (isNaN(telephoneValue)) {
       setErrorTelephoneValue(i18n.t('invalidNumber'));
       handleFocus(inputRefTelephoneValue);
@@ -220,21 +214,6 @@ const MisDatosUI = ({goBack}) => {
       });
   };
 
-  /*const checkPassword = () => {
-    console.log(passwordValue);
-    console.log(email);
-    console.log(newPasswordValue);
-    // aca quiero comparar con la contraseña, que parece que no se guarda bien pq viene así -> ''
-    console.log(pass);
-    if (passwordValue === pass && newPasswordValue !== '') {
-      return handleSubmitPass();
-    } else {
-      setErrorContraseña(i18n.t('actualPassWrong'));
-      return;
-    }
-  };*/
-
- 
   const checkPassword = () => {
     if (passwordValue !== '' && passwordValue === newPasswordValue) {
       return handleSubmitPass();
@@ -365,25 +344,16 @@ const MisDatosUI = ({goBack}) => {
         <View style={styles.box}>
           <Text style={styles.tittleBox}>{i18n.t('passChange')}</Text>
 
-          {!showCodeBox && !showPass ?
-
+          {!showCodeBox && !showPass ? (
             <View style={styles.littleBoxEmail}>
-              <Text style={styles.text333}>
-                {i18n.t('emailWillSendTo')}
-              </Text>
-              <Text style={styles.text3333}>
-                {email}
-              </Text>
+              <Text style={styles.text333}>{i18n.t('emailWillSendTo')}</Text>
+              <Text style={styles.text3333}>{email}</Text>
             </View>
-
-            :
-
+          ) : (
             <></>
+          )}
 
-          }
-
-          {showCodeBox ?
-
+          {showCodeBox ? (
             <View style={styles.littleBoxEmail}>
               <Text style={styles.text222}>{i18n.t('emailSentTo')}</Text>
               <Text style={styles.text2222}>{email}</Text>
@@ -395,128 +365,107 @@ const MisDatosUI = ({goBack}) => {
                 error={errorCodigo}
               />
             </View>
-
-          :
-
+          ) : (
             <></>
+          )}
 
-          }
-
-          {showPass && !showCodeBox ?
-
+          {showPass && !showCodeBox ? (
             <View>
-          <View style={styles.littleBox}>
-            <Text style={styles.text}>{i18n.t('newPass')}</Text>
-            <View style={{flexDirection: 'row'}}>
-              <InputText
-                placeholder={i18n.t('placeholder_password')}
-                keyboard="default"
-                size="CUSTOM_L"
-                hideText={showPassword1}
-                changeValue={handlePasswordChange}
-                flex={1}
-              />
-              {showPassword1 ? (
-                <IMAGES.SVG.EYE_CLOSE
-                  width={20}
-                  height={20}
-                  onPress={handleShowPassword1}
-                  style={{marginTop: 25}}
-                />
-              ) : (
-                <IMAGES.SVG.EYE_OPEN
-                  width={20}
-                  height={20}
-                  onPress={handleShowPassword1}
-                  style={{marginTop: 25}}
-                />
-              )}
+              <View style={styles.littleBox}>
+                <Text style={styles.text}>{i18n.t('newPass')}</Text>
+                <View style={{flexDirection: 'row'}}>
+                  <InputText
+                    placeholder={i18n.t('placeholder_password')}
+                    keyboard="default"
+                    size="CUSTOM_L"
+                    hideText={showPassword1}
+                    changeValue={handlePasswordChange}
+                    flex={1}
+                  />
+                  {showPassword1 ? (
+                    <IMAGES.SVG.EYE_CLOSE
+                      width={20}
+                      height={20}
+                      onPress={handleShowPassword1}
+                      style={{marginTop: 25}}
+                    />
+                  ) : (
+                    <IMAGES.SVG.EYE_OPEN
+                      width={20}
+                      height={20}
+                      onPress={handleShowPassword1}
+                      style={{marginTop: 25}}
+                    />
+                  )}
+                </View>
+              </View>
+              <View style={styles.littleBox}>
+                <Text style={styles.text}>{i18n.t('newPass2')}</Text>
+
+                <View style={{flexDirection: 'row'}}>
+                  <InputText
+                    placeholder={i18n.t('placeholder_password')}
+                    keyboard="default"
+                    size="CUSTOM_L"
+                    hideText={showPassword2}
+                    changeValue={handleNewPasswordChange}
+                    flex={1}
+                    error={errorContraseña}
+                  />
+                  {showPassword2 ? (
+                    <IMAGES.SVG.EYE_CLOSE
+                      width={20}
+                      height={20}
+                      onPress={handleShowPassword2}
+                      style={{marginTop: 25}}
+                    />
+                  ) : (
+                    <IMAGES.SVG.EYE_OPEN
+                      width={20}
+                      height={20}
+                      onPress={handleShowPassword2}
+                      style={{marginTop: 25}}
+                    />
+                  )}
+                </View>
+              </View>
             </View>
-          </View>
-          <View style={styles.littleBox}>
-            <Text style={styles.text}>{i18n.t('newPass2')}</Text>
+          ) : (
+            <></>
+          )}
 
-            
-            <View style={{flexDirection: 'row'}}>
-              <InputText
-                placeholder={i18n.t('placeholder_password')}
-                keyboard="default"
-                size="CUSTOM_L"
-                hideText={showPassword2}
-                changeValue={handleNewPasswordChange}
-                flex={1}
-                error={errorContraseña}
-              />
-              {showPassword2 ? (
-                <IMAGES.SVG.EYE_CLOSE
-                  width={20}
-                  height={20}
-                  onPress={handleShowPassword2}
-                  style={{marginTop: 25}}
-                />
-              ) : (
-                <IMAGES.SVG.EYE_OPEN
-                  width={20}
-                  height={20}
-                  onPress={handleShowPassword2}
-                  style={{marginTop: 25}}
-                />
-              )}
-            </View>
-            
-          
-          </View>
-
-          </View>
-
-          : <></>
-          }
-
-          {!showCodeBox && !showPass ?
-
-          <Button
-            onPress={() => handlePassRecovery()}
-            text={i18n.t('sendCode')}
-            color={'primary'}
-            size="ML"
-          />
-
-          :
-
-          <></>
-
-          }
-
-          {showPass ? 
-          
+          {!showCodeBox && !showPass ? (
             <Button
-            onPress={() => checkPassword()}
-            text={i18n.t('saveChanges')}
-            color={'primary'}
-            size="ML"
-          />
+              onPress={() => handlePassRecovery()}
+              text={i18n.t('sendCode')}
+              color={'primary'}
+              size="ML"
+            />
+          ) : (
+            <></>
+          )}
 
-          :
+          {showPass ? (
+            <Button
+              onPress={() => checkPassword()}
+              text={i18n.t('saveChanges')}
+              color={'primary'}
+              size="ML"
+            />
+          ) : (
+            <></>
+          )}
 
-          <></>
-          
-          }
-
-          {showCodeBox ?
-
+          {showCodeBox ? (
             <Button
               onPress={() => handleRegistrationCode()}
               text={i18n.t('continue')}
               color={'primary'}
               size="ML"
             />
-
-          :
-
-          <></>
-
-          }
-
+          ) : (
+            <></>
+          )}
         </View>
 
         <Button
@@ -591,26 +540,26 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.SM,
     fontWeight: Theme.fonts.BOLD,
     marginTop: 20,
-    marginLeft: 12
+    marginLeft: 12,
   },
   text222: {
     color: Theme.colors.SECONDARY,
     fontSize: Theme.fonts.SM,
     fontWeight: Theme.fonts.BOLD,
-    marginLeft: 12
+    marginLeft: 12,
   },
   text2222: {
     color: Theme.colors.SECONDARY,
     fontSize: Theme.fonts.SM,
     fontWeight: Theme.fonts.BOLD,
     marginTop: 10,
-    marginLeft: 60
+    marginLeft: 60,
   },
   text333: {
     color: Theme.colors.SECONDARY,
     fontSize: Theme.fonts.SM,
     fontWeight: Theme.fonts.BOLD,
-    marginLeft: 35
+    marginLeft: 35,
   },
   text3333: {
     color: Theme.colors.SECONDARY,
@@ -618,7 +567,7 @@ const styles = StyleSheet.create({
     fontWeight: Theme.fonts.BOLD,
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 60
+    marginLeft: 60,
   },
   opcional: {
     color: Theme.colors.PLACEHOLDER,

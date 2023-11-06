@@ -44,7 +44,7 @@ const AlquilerUI = ({showPublicacionX}) => {
       .getEstatesByUserId(id)
       .then(response => {
         // Get exitoso
-        console.log(response.data.estates);
+        //console.log(response.data.estates);
         setEstates(response.data.estates);
       })
       .catch(error => {
@@ -70,7 +70,6 @@ const AlquilerUI = ({showPublicacionX}) => {
     console.log(estateItem);
     console.log('--------____________------------');
     dispatch(saveEstateAction(estateItem));
-    console.log('--------____________------------');
     showPublicacionX();
   };
 

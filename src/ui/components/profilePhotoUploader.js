@@ -19,7 +19,6 @@ const ProfilePhotoUploader = ({
   isAddImage = true,
   imageSource = null,
 }) => {
-  console.log(onImageSelected);
   const [image, setImage] = useState(imageSource);
   const [add, setAdd] = useState(isAddImage);
 
@@ -45,14 +44,12 @@ const ProfilePhotoUploader = ({
       } else if (response.error) {
         console.log('Error: ', response.error);
       } else {
-        const newImage = response.assets.map(asset => ({uri: asset.uri}));
-        console.log(response.assets);
-        console.log(newImage);
+        const newImage = response.assets;
         setAdd(null);
         setImage(newImage);
 
         if (onImageSelected) {
-          onImageSelected(newImage[0].uri);
+          onImageSelected(newImage);
         }
       }
     });

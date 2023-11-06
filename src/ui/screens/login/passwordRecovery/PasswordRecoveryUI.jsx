@@ -25,7 +25,6 @@ const PasswordRecoveryUI = ({goBack, showPasswordRecoveryCode}) => {
       .confirmationCodeForgotPassword(email)
       .then(response => {
         // Recovery exitoso
-        console.log(response);
         dispatch(saveEmailAction(response));
         showPasswordRecoveryCode();
       })

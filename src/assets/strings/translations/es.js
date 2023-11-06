@@ -12,6 +12,7 @@ export default {
   invalidVideo: 'Ingrese un video de Youtube válido o deje este campo vacío.',
   mandatoryField: 'Campo obligatorio',
   mandatoryImages: 'Debe adjuntar al menos 2 imágenes',
+  maxImageSize: 'Tamaño máximo por imágen 10mb',
   sendCode: 'Enviar código',
   passwordChanged: 'Contraseña modificada con éxito!',
   emailWillSendTo: 'Te enviaremos un email a:',
@@ -189,5 +190,9 @@ export default {
   },
   errors: {
     upps: 'Ups! algo salió mal',
+    userAlreadyRegister:
+      'Un usuario con este mail y/o telefono ya se encuentra registrado',
+    maxSizePhoto:
+      'Una de las imágenes seleccionadas excede el tamaño máximo y no fue agregada',
   },
 };

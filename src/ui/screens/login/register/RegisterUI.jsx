@@ -19,6 +19,7 @@ const RegisterUI = ({goBack, showRegisterCode}) => {
   const [telephone, setTelephone] = useState('');
   const [telephone2, setTelephone2] = useState('');
   const [email2, setEmail2] = useState('');
+  const [error, setError] = useState('');
   const dispatch = useDispatch();
 
   const handleEmailChange = value => {
@@ -45,6 +46,10 @@ const RegisterUI = ({goBack, showRegisterCode}) => {
     setEmail2(value);
   };
 
+  const handleError = value => {
+    setError(value);
+  }
+
   const handleRegistration = () => {
     userWS
       .register(email, password, name, telephone, telephone2, email2)
@@ -54,7 +59,9 @@ const RegisterUI = ({goBack, showRegisterCode}) => {
         showRegisterCode();
       })
       .catch(error => {
-        if (error.response) {
+        if (error.response.data.message === 'User already registered') {
+          handleError(i18n.t('errors.userAlreadyRegister'));
+        } else if (error.response) {
           // Handle error
           console.error(
             'Server responded with an error status:',
@@ -136,6 +143,7 @@ const RegisterUI = ({goBack, showRegisterCode}) => {
           color="secondary"
           onPress={handleRegistration}
         />
+        {error ? <Text style={styles.error}>{error}</Text> : null}
         <Button
           text={i18n.t('goBack')}
           size="M"
@@ -190,6 +198,11 @@ const styles = StyleSheet.create({
     fontSize: Theme.fonts.M,
     fontWeight: Theme.fonts.BOLD,
     textDecorationLine: 'underline',
+  },
+  error: {
+    color: 'red',
+    fontSize: Theme.fonts.S,
+    fontWeight: Theme.fonts.LIGHT,
   },
 });
 

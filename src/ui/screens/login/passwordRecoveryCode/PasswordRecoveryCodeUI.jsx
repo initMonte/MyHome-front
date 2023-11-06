@@ -14,7 +14,6 @@ import InputText from '../../../components/inputText';
 const PasswordRecoveryCodeUI = ({goBack, showPasswordRecoveryNewPass}) => {
   const {email} = useSelector(state => state.user);
   const [code, setCode] = useState('');
-  console.log(email);
 
   const handleCodeChange = value => {
     setCode(value);
