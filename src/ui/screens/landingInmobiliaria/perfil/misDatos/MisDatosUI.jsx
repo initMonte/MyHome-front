@@ -235,38 +235,13 @@ const MisDatosUI = ({goBack}) => {
 
   const [errorContraseña, setErrorContraseña] = useState(false);
 
-  const handleLogin = () => {
-    userWS
-      .login(email, passwordValue)
-      .then(response => {
-        console.log('CONTRASEÑA ACTUAL OK');
-        handleSubmitPass();
-      })
-      .catch(error => {
-        if (error.response) {
-          // Handle error
-          console.error(
-            'Server responded with an error status:',
-            error.response.status,
-          );
-          console.error('Response data:', error.response.data);
-          setErrorContraseña(i18n.t('actualPassWrong'));
-        } else if (error.request) {
-          // Handle error
-          console.error('No response received:', error.request);
-        } else {
-          // Handle error
-          console.error('Error setting up the request:', error.message);
-        }
-      });
-  };
-
   const handleSubmitPass = () => {
     userWS
       .passwordChange(email, newPasswordValue)
       .then(response => {
-        // Contraseña cambiada exitosa
-        console.log(response);
+        setShowCodeBox(false);
+        setShowPass(false);
+        goBack();
       })
       .catch(error => {
         if (error.response) {

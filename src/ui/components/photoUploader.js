@@ -15,8 +15,12 @@ import i18n from '../../assets/strings/I18n';
 import Lightbox from 'react-native-lightbox-v2';
 import ImageViewer from './imageViewer';
 
-const PhotoUploader = ({onImageUrisChange, error = false}) => {
+const PhotoUploader = ({onImageUrisChange, error = false, imagenesEditar = false}) => {
   const [imageSources, setImageSources] = useState([{isAddImage: true}]);
+
+  /*console.log(imagenesEditar);
+  const [imagenesEditarSources, setImagenesEditarSources] = useState([{isAddImage: true}, imagenesEditar]);
+  console.log(imagenesEditar);*/
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
