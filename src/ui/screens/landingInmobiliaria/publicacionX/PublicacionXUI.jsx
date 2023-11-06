@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import WebView from 'react-native-webview';
 import Share from 'react-native-share';
 
 import Theme from '../../../../styles/Theme';
@@ -54,6 +55,7 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
     latitude,
     longitude,
     images,
+    videoUrl,
     realEstate,
     realEstateAvatar,
   } = useSelector(state => state.estate);
@@ -74,7 +76,10 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
     fetchAvatar();
   }, [dispatch, realEstate, realEstateAvatar]);
 
-  const url = images[0];
+  let url;
+  {
+    videoUrl ? (url = videoUrl) : (url = images[0]);
+  }
   const message = i18n.t('share_text');
 
   const options = {
@@ -149,6 +154,12 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
         return i18n.t('usd');
     }
   }
+
+  const embedYoutube = () => {
+    const videoID = videoUrl.split('v=')[1].split('&')[0];
+
+    return `https://www.youtube.com/embed/${videoID}`;
+  };
 
   return (
     <ScrollView style={styles.generalContainer} nestedScrollEnabled={true}>
@@ -338,6 +349,17 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
           </View>
           <Text style={styles.photosFont}>{i18n.t('photos')}</Text>
           <PhotoViewer imagesSources={images} uri={true} />
+          {videoUrl ? (
+            <View style={styles.containerVideo}>
+              <Text style={styles.photosFont}>{i18n.t('video')}</Text>
+              <WebView
+                style={styles.video}
+                source={{
+                  uri: embedYoutube(),
+                }}
+              />
+            </View>
+          ) : null}
         </View>
       </View>
     </ScrollView>
@@ -474,6 +496,13 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 5,
+  },
+  containerVideo: {
+    width: '100%',
+    height: 400,
+  },
+  video: {
+    marginBottom: 20,
   },
 });
 

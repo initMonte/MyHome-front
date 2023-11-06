@@ -81,6 +81,9 @@ const PublicarUI = ({goHome}) => {
   const [errorImages, setErrorImages] = useState(false);
   const inputRefImages = useRef();
 
+  const [errorVideo, setErrorVideo] = useState(false);
+  const inputRefVideo = useRef();
+
   const handleFocus = ref => {
     if (ref.current) {
       ref.current.focus();
@@ -217,6 +220,14 @@ const PublicarUI = ({goHome}) => {
   const handleButtonClick12 = buttonName => {
     setSelectedOrientacion(buttonName);
   };
+
+  function isYouTubeVideoURL(input) {
+    // Regular expression pattern for YouTube video URLs
+    const youtubeURLPattern =
+      /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[A-Za-z0-9_-]+/;
+
+    return youtubeURLPattern.test(input);
+  }
 
   const handlePostEstate = () => {
     const terrace = selectedButtons.includes('terrace');
@@ -395,6 +406,14 @@ const PublicarUI = ({goHome}) => {
       return false;
     } else {
       setErrorAntiquity(false);
+    }
+
+    if (urlVideo && !isYouTubeVideoURL(urlVideo)) {
+      setErrorVideo(i18n.t('invalidVideo'));
+      handleFocus(inputRefVideo);
+      return false;
+    } else {
+      setErrorVideo(false);
     }
 
     console.log('---------------------------------');
@@ -1171,6 +1190,8 @@ const PublicarUI = ({goHome}) => {
           <InputText
             placeholder={i18n.t('placeholder_URL')}
             changeValue={handleUrlVideo}
+            error={errorVideo}
+            innerRef={inputRefVideo}
           />
         </View>
 
