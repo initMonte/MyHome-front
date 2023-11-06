@@ -125,6 +125,9 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
 
   const [errorImages, setErrorImages] = useState(false);
 
+  const [errorVideo, setErrorVideo] = useState(false);
+  const inputRefVideo = useRef();
+
   const handleFocus = ref => {
     if (ref.current) {
       ref.current.focus();
@@ -311,6 +314,14 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
       });
   };
 
+  function isYouTubeVideoURL(input) {
+    // Regular expression pattern for YouTube video URLs
+    const youtubeURLPattern =
+      /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[A-Za-z0-9_-]+/;
+
+    return youtubeURLPattern.test(input);
+  }
+
   const handleEditEstate = () => {
     const newTerrace = selectedButtons.includes('terrace');
     const newBalcony = selectedButtons.includes('balcony');
@@ -484,6 +495,14 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
       return false;
     } else {
       setErrorAntiquity(false);
+    }
+
+    if (newUrlVideo && !isYouTubeVideoURL(newUrlVideo)) {
+      setErrorVideo(i18n.t('invalidVideo'));
+      handleFocus(inputRefVideo);
+      return false;
+    } else {
+      setErrorVideo(false);
     }
 
     console.log('---------------------------------');
@@ -1263,7 +1282,10 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             />
           </View>
 
-          <PhotoUploader error={errorImages} onImageUrisChange={handleSelectedImageUris} />
+          <PhotoUploader
+            error={errorImages}
+            onImageUrisChange={handleSelectedImageUris}
+          />
 
           <Text style={styles.text3}>
             {i18n.t('addVideo') + ' '}
@@ -1273,6 +1295,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             placeholder={i18n.t('placeholder_URL')}
             ogValue={newUrlVideo}
             changeValue={handleUrlVideo}
+            error={errorVideo}
+            innerRef={inputRefVideo}
           />
 
           <Text style={styles.text3}>{i18n.t('state')}</Text>
