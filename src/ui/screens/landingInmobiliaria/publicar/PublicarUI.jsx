@@ -177,7 +177,6 @@ const PublicarUI = ({goHome}) => {
 
     const latitude = 'String'; //Hardcodeado hasta entrega final
     const longitude = 'String'; //Hardcodeado hasta entrega final
-    const images = []; //Hardcodeado hasta tener imagenes en back arregladas
 
     console.log('---------------------------------');
     console.log('---------------------------------');

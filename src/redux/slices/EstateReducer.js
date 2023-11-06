@@ -35,6 +35,7 @@ export const estateReducer = createSlice({
     latitude: '',
     longitude: '',
     images: [],
+    videoUrl: '',
     realEstate: '',
     realEstateAvatar: '',
   },
@@ -73,6 +74,7 @@ export const estateReducer = createSlice({
       state.latitude = response.payload.latitude;
       state.longitude = response.payload.longitude;
       state.images = response.payload.images;
+      state.videoUrl = response.payload.videoUrl;
       state.realEstate = response.payload.realEstate;
     },
     saveRealEstateAvatarAction: (state, response) => {

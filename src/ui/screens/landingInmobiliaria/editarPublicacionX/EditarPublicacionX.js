@@ -12,7 +12,7 @@ function EditarPublicacionX() {
   };
 
   const goHome = () => {
-    navigation.push(NavigatorConstant.NAVIGATOR.LANDING_INMOBILIARIA);
+    navigation.replace(NavigatorConstant.NAVIGATOR.LANDING_INMOBILIARIA);
   };
 
   return <EditarPublicacionXUI goBack={goBack} goHome={goHome} />;

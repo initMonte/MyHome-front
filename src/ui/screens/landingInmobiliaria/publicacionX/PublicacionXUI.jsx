@@ -19,14 +19,6 @@ import PhotoViewer from '../../../components/photoViewer';
 import {saveRealEstateAvatarAction} from '../../../../redux/slices/EstateReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
-const url = 'IntegrarConBack.com.ar';
-const message = i18n.t('share_text');
-
-const options = {
-  url,
-  message,
-};
-
 const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
   const dispatch = useDispatch();
   const {
@@ -66,16 +58,6 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
     realEstateAvatar,
   } = useSelector(state => state.estate);
 
-  console.log(realEstateAvatar);
-
-  const [imagenesPrueba, setImagenesPrueba] = useState([
-    IMAGES.OTHERS.TEMPORAL_IMAGE,
-    IMAGES.OTHERS.TEMPORAL_IMAGE,
-    IMAGES.OTHERS.TEMPORAL_IMAGE,
-    IMAGES.OTHERS.TEMPORAL_IMAGE,
-    IMAGES.OTHERS.TEMPORAL_IMAGE,
-  ]);
-
   useEffect(() => {
     const fetchAvatar = async () => {
       try {
@@ -91,6 +73,14 @@ const PublicacionXUI = ({goBack, showEditarPublicacionX}) => {
     };
     fetchAvatar();
   }, [dispatch, realEstate, realEstateAvatar]);
+
+  const url = images[0];
+  const message = i18n.t('share_text');
+
+  const options = {
+    url,
+    message,
+  };
 
   const switchTypeAndStatus = () => {
     switch (rentOrSale) {

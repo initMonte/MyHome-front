@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {Image} from 'react-native-svg';
 
 import Theme from '../../../../styles/Theme';
@@ -10,54 +11,208 @@ import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 import ButtonSelect from '../../../components/buttonSelect';
 import PhotoUploader from '../../../components/photoUploader';
+import {estatesWS} from '../../../../networking/api/endpoints/EstatesEndpoints';
+import {logoutEstate} from '../../../../redux/slices/EstateReducer';
+import {meAction} from '../../../../redux/slices/AuthReducer';
+import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 const EditarPublicacionXUI = ({goBack, goHome}) => {
-  const [selectedButton, setSelectedButton] = useState('venta');
+  const dispatch = useDispatch();
+  const {
+    id,
+    title,
+    description,
+    rentOrSale,
+    street,
+    addressNumber,
+    neighborhood,
+    state,
+    country,
+    estateType,
+    coveredSquareMeters,
+    semiUncoveredSquaremeters,
+    uncoveredSquareMeters,
+    roomsAmount,
+    bathroomsAmount,
+    bedroomsAmount,
+    terrace,
+    balcony,
+    storage,
+    garage,
+    frontOrBack,
+    antiquity,
+    orientation,
+    amenites,
+    status,
+    price,
+    currency,
+    expenses,
+    expenseCurrency,
+    latitude,
+    longitude,
+    images,
+    videoUrl,
+  } = useSelector(state => state.estate);
+  const [newTitle, setTitle] = useState(title);
+  const [newDescription, setDescription] = useState(description);
+  const [newStreet, setStreet] = useState(street);
+  const [newAddressNumber, setaddressNumber] = useState(addressNumber);
+  const [newFloor, setFloor] = useState('');
+  const [newNeighborhood, setNeighborhood] = useState(neighborhood);
+  const [newDpto, setDpto] = useState('');
+  const [newState, setState] = useState(state);
+  const [newCountry, setCountry] = useState(country);
+  const [newCoveredSquareMeters, setCoveredSquareMeters] =
+    useState(coveredSquareMeters);
+  const [newSemiUncoveredSquaremeters, setSemiUncoveredSquaremeters] = useState(
+    semiUncoveredSquaremeters,
+  );
+  const [newUncoveredSquareMeters, setUncoveredSquareMeters] = useState(
+    uncoveredSquareMeters,
+  );
+  const [newAntiquity, setAntiquity] = useState(antiquity);
+  const [newPrice, setPrice] = useState(price);
+  const [newExpenses, setExpenses] = useState(expenses);
+  const [newParking, setParking] = useState(garage);
+  const [newSelectedImagesUri, setSelectedImagesUri] = useState([]);
+  console.log(images);
+  const [newUrlVideo, setUrlVideo] = useState(videoUrl);
+
+  const handleTitle = value => {
+    setTitle(value);
+  };
+
+  const handleDescription = value => {
+    setDescription(value);
+  };
+
+  const handleStreet = value => {
+    setStreet(value);
+  };
+
+  const handleAddressNumber = value => {
+    setaddressNumber(value);
+  };
+
+  const handleFloor = value => {
+    setFloor(value);
+  };
+
+  const handleDpto = value => {
+    setDpto(value);
+  };
+
+  const handleNeighborhood = value => {
+    setNeighborhood(value);
+  };
+
+  const handleCoveredSquareMeters = value => {
+    setCoveredSquareMeters(value);
+  };
+
+  const handleSemiUncoveredSquaremeters = value => {
+    setSemiUncoveredSquaremeters(value);
+  };
+
+  const handleUncoveredSquareMeters = value => {
+    setUncoveredSquareMeters(value);
+  };
+
+  const handleAntiquity = value => {
+    setAntiquity(value);
+  };
+
+  const handlePrice = value => {
+    setPrice(value);
+  };
+
+  const handleExpenses = value => {
+    setExpenses(value);
+  };
+
+  const handleState = value => {
+    setState(value);
+  };
+
+  const handleCountry = value => {
+    setCountry(value);
+  };
+
+  const handleParking = value => {
+    setParking(value);
+  };
+
+  const handleSelectedImageUris = uris => {
+    setSelectedImagesUri(uris);
+  };
+
+  const handleUrlVideo = value => {
+    setUrlVideo(value);
+  };
+
+  const [selectedButton, setSelectedButton] = useState(rentOrSale);
   const handleButtonClick = buttonName => {
     setSelectedButton(buttonName);
   };
 
-  const [selectedTipoPropiedad, setSelectedTipoPropiedad] = useState('house');
+  const [selectedTipoPropiedad, setSelectedTipoPropiedad] =
+    useState(estateType);
   const handleButtonClick2 = buttonName => {
     setSelectedTipoPropiedad(buttonName);
   };
 
-  const [selectedPrecio, setSelectedPrecio] = useState('pesos');
+  const [selectedPrecio, setSelectedPrecio] = useState(currency);
   const handleButtonClick3 = buttonName => {
     setSelectedPrecio(buttonName);
   };
 
-  const [selectedExpensa, setSelectedExpensa] = useState('pesos');
+  const [selectedExpensa, setSelectedExpensa] = useState(expenseCurrency);
   const handleButtonClick4 = buttonName => {
     setSelectedExpensa(buttonName);
   };
 
-  const [selectedAmbiente, setSelectedAmbiente] = useState('1');
+  const [selectedAmbiente, setSelectedAmbiente] = useState(
+    roomsAmount.toString(),
+  );
   const handleButtonClick5 = buttonName => {
     setSelectedAmbiente(buttonName);
   };
 
-  const [selectedDormitorio, setSelectedDormitorio] = useState('1');
+  const [selectedDormitorio, setSelectedDormitorio] = useState(
+    bedroomsAmount.toString(),
+  );
   const handleButtonClick6 = buttonName => {
     setSelectedDormitorio(buttonName);
   };
 
-  const [selectedBaño, setSelectedBaño] = useState('1');
+  const [selectedBaño, setSelectedBaño] = useState(bathroomsAmount.toString());
   const handleButtonClick7 = buttonName => {
     setSelectedBaño(buttonName);
   };
 
-  const [selectedDisposicion, setSelectedDisposicion] = useState('frente');
+  const [selectedDisposicion, setSelectedDisposicion] = useState(frontOrBack);
   const handleButtonClick8 = buttonName => {
     setSelectedDisposicion(buttonName);
   };
 
-  const [selectedEstado, setSelectedEstado] = useState('alquiler/venta');
+  const [selectedEstado, setSelectedEstado] = useState(status);
   const handleButtonClick9 = buttonName => {
     setSelectedEstado(buttonName);
   };
 
-  const [selectedButtons, setSelectedButtons] = useState([]);
+  const extras = [];
+  if (terrace) {
+    extras.push('terraza');
+  }
+  if (balcony) {
+    extras.push('balcony');
+  }
+  if (storage) {
+    extras.push('baulera');
+  }
+  console.log(extras);
+
+  const [selectedButtons, setSelectedButtons] = useState(extras);
   const handleButtonClick10 = buttonName => {
     if (selectedButtons.includes(buttonName)) {
       setSelectedButtons(selectedButtons.filter(btn => btn !== buttonName));
@@ -66,7 +221,9 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     }
   };
 
-  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const amenitesArray = amenites[0].split(',');
+
+  const [selectedAmenities, setSelectedAmenities] = useState(amenitesArray);
   const handleButtonClick11 = buttonName => {
     if (selectedAmenities.includes(buttonName)) {
       setSelectedAmenities(selectedAmenities.filter(btn => btn !== buttonName));
@@ -75,9 +232,141 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     }
   };
 
-  const [selectedOrientacion, setSelectedOrientacion] = useState('north');
+  const [selectedOrientacion, setSelectedOrientacion] = useState(orientation);
   const handleButtonClick12 = buttonName => {
     setSelectedOrientacion(buttonName);
+  };
+
+  const handleDeleteEstate = () => {
+    estatesWS
+      .deleteEstate(id)
+      .then(response => {
+        // Delete exitoso
+        dispatch(logoutEstate());
+        goHome();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
+  const handleEditEstate = () => {
+    const newTerrace = selectedButtons.includes('terrace');
+    const newBalcony = selectedButtons.includes('balcony');
+    const newStorage = selectedButtons.includes('storage');
+
+    const floorDpto = 'asd';
+
+    const latitude = 'String'; //Hardcodeado hasta entrega final
+    const longitude = 'String'; //Hardcodeado hasta entrega final
+
+    console.log('---------------------------------');
+    console.log('---------------------------------');
+    console.log('PROBANDO BOTON EDITAR');
+    console.log(newTitle);
+    console.log(newDescription);
+    console.log(selectedButton);
+    console.log(selectedEstado);
+    console.log(selectedTipoPropiedad);
+    console.log(newStreet);
+    console.log(newAddressNumber);
+    console.log(floorDpto);
+    console.log(newNeighborhood);
+    console.log(newState);
+    console.log(newCountry);
+    console.log(newCoveredSquareMeters);
+    console.log(newSemiUncoveredSquaremeters);
+    console.log(newUncoveredSquareMeters);
+    console.log(newPrice);
+    console.log(selectedPrecio);
+    console.log(newExpenses);
+    console.log(selectedExpensa);
+    console.log(selectedAmbiente);
+    console.log(selectedDormitorio);
+    console.log(selectedBaño);
+    console.log('TERRAZA, BALCON, BAULERA');
+    console.log(terrace);
+    console.log(balcony);
+    console.log(storage);
+    console.log(selectedAmenities);
+    console.log(newParking);
+    console.log(selectedDisposicion);
+    console.log(newAntiquity);
+    console.log(newSelectedImagesUri);
+    console.log(newUrlVideo);
+    console.log('---------------------------------');
+    console.log('---------------------------------');
+    estatesWS
+      .editEstate(
+        id,
+        newTitle,
+        newDescription,
+        selectedButton,
+        selectedEstado,
+        newStreet,
+        +newAddressNumber,
+        floorDpto,
+        newNeighborhood,
+        newState,
+        newCountry,
+        selectedTipoPropiedad,
+        +newCoveredSquareMeters,
+        +newSemiUncoveredSquaremeters,
+        +newUncoveredSquareMeters,
+        +selectedAmbiente,
+        +selectedBaño,
+        +selectedDormitorio,
+        newTerrace,
+        newBalcony,
+        newStorage,
+        +newParking,
+        selectedDisposicion,
+        +newAntiquity,
+        selectedOrientacion,
+        selectedAmenities,
+        selectedPrecio,
+        +newPrice,
+        selectedExpensa,
+        newExpenses,
+        latitude,
+        longitude,
+        newSelectedImagesUri,
+        newUrlVideo,
+      )
+      .then(response => {
+        // Edit Publicacion exitoso
+        console.log(response);
+        goHome();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
   };
 
   return (
@@ -93,15 +382,17 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           <Text style={styles.text3}>{i18n.t('stateTitle')}</Text>
           <InputText
             placeholder={i18n.t('placeholder_title')}
-            keyboard="email-address"
+            ogValue={newTitle}
+            changeValue={handleTitle}
           />
           <Text style={styles.text3}>{i18n.t('description')}</Text>
           <InputText
             placeholder={i18n.t('placeholder_description')}
-            keyboard="email-address"
+            ogValue={newDescription}
             borderWidth={1}
             borderRadius={8}
             height={120}
+            changeValue={handleDescription}
           />
           <View
             style={{
@@ -134,27 +425,27 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             <ButtonSelect
               text={i18n.t('house')}
               image={
-                selectedTipoPropiedad !== 'house' ? (
+                selectedTipoPropiedad !== 'casa' ? (
                   <IMAGES.SVG.HOME width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.HOME_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick2('house')}
-              selected={selectedTipoPropiedad !== 'house'}
+              onPress={() => handleButtonClick2('casa')}
+              selected={selectedTipoPropiedad !== 'casa'}
             />
             <ButtonSelect
               text={i18n.t('department')}
               size="L"
               image={
-                selectedTipoPropiedad !== 'department' ? (
+                selectedTipoPropiedad !== 'departamento' ? (
                   <IMAGES.SVG.DEPARTMENT width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.DEPARTMENT_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick2('department')}
-              selected={selectedTipoPropiedad !== 'department'}
+              onPress={() => handleButtonClick2('departamento')}
+              selected={selectedTipoPropiedad !== 'departamento'}
             />
             <ButtonSelect
               text={i18n.t('local')}
@@ -183,14 +474,14 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             <ButtonSelect
               text={i18n.t('office')}
               image={
-                selectedTipoPropiedad !== 'office' ? (
+                selectedTipoPropiedad !== 'oficina' ? (
                   <IMAGES.SVG.OFFICE width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.OFFICE_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick2('office')}
-              selected={selectedTipoPropiedad !== 'office'}
+              onPress={() => handleButtonClick2('oficina')}
+              selected={selectedTipoPropiedad !== 'oficina'}
             />
             <ButtonSelect
               text={i18n.t('galpon')}
@@ -218,7 +509,11 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             />
           </View>
           <Text style={styles.text3}>{i18n.t('address')}</Text>
-          <InputText placeholder={i18n.t('placeholder_street')} />
+          <InputText
+            placeholder={i18n.t('placeholder_street')}
+            ogValue={newStreet}
+            changeValue={handleStreet}
+          />
           <View
             style={{
               flexDirection: 'row',
@@ -229,6 +524,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             <InputText
               size="XS"
               keyboard="phone-pad"
+              ogValue={newAddressNumber.toString()}
+              changeValue={handleAddressNumber}
               placeholder={i18n.t('placeholder_strNumber')}
             />
             <InputText
@@ -241,9 +538,21 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               placeholder={i18n.t('placeholder_department') + ' (opc)'}
             />
           </View>
-          <InputText placeholder={i18n.t('placeholder_barrio')} />
-          <InputText placeholder={i18n.t('placeholder_province')} />
-          <InputText placeholder={i18n.t('placeholder_country')} />
+          <InputText
+            placeholder={i18n.t('placeholder_barrio')}
+            ogValue={newNeighborhood}
+            changeValue={handleNeighborhood}
+          />
+          <InputText
+            placeholder={i18n.t('placeholder_province')}
+            ogValue={newState}
+            changeValue={handleState}
+          />
+          <InputText
+            placeholder={i18n.t('placeholder_country')}
+            ogValue={newCountry}
+            changeValue={handleCountry}
+          />
 
           <View
             style={{
@@ -253,11 +562,13 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               marginBottom: -5,
               marginTop: 10,
             }}>
-            <Text style={styles.text3}>{i18n.t('surfaceCover') + ' '}</Text>
+            <Text style={styles.text3}>{i18n.t('surfaceCover')}</Text>
             <InputText
               keyboard="phone-pad"
               size="XS"
               placeholder={i18n.t('placeholder_number')}
+              ogValue={newCoveredSquareMeters.toString()}
+              changeValue={handleCoveredSquareMeters}
             />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
@@ -268,11 +579,13 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               flexWrap: 'wrap',
               marginBottom: -50,
             }}>
-            <Text style={styles.text3}>{i18n.t('surfaceSemicover') + ' '}</Text>
+            <Text style={styles.text3}>{i18n.t('surfaceSemicover')}</Text>
             <InputText
               keyboard="phone-pad"
               size="XS"
               placeholder={i18n.t('placeholder_number')}
+              ogValue={newSemiUncoveredSquaremeters.toString()}
+              changeValue={handleSemiUncoveredSquaremeters}
             />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
@@ -283,11 +596,13 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               flexWrap: 'wrap',
               marginBottom: -45,
             }}>
-            <Text style={styles.text3}>{i18n.t('surfaceUncover') + ' '}</Text>
+            <Text style={styles.text3}>{i18n.t('surfaceUncover')}</Text>
             <InputText
               keyboard="phone-pad"
               size="XS"
               placeholder={i18n.t('placeholder_number')}
+              ogValue={newUncoveredSquareMeters.toString()}
+              changeValue={handleUncoveredSquareMeters}
             />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
@@ -304,20 +619,22 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               text={'$'}
               size="XS"
               borderRadius={50}
-              onPress={() => handleButtonClick3('pesos')}
-              selected={selectedPrecio !== 'pesos'}
+              onPress={() => handleButtonClick3('peso')}
+              selected={selectedPrecio !== 'peso'}
             />
             <ButtonSelect
               text={'U$S'}
               size="XS"
               borderRadius={50}
-              onPress={() => handleButtonClick3('dolares')}
-              selected={selectedPrecio !== 'dolares'}
+              onPress={() => handleButtonClick3('dolar')}
+              selected={selectedPrecio !== 'dolar'}
             />
             <InputText
               keyboard="phone-pad"
               size="XS"
               placeholder={i18n.t('placeholder_number')}
+              ogValue={newPrice.toString()}
+              changeValue={handlePrice}
             />
           </View>
 
@@ -336,20 +653,22 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               text={'$'}
               size="XS"
               borderRadius={50}
-              onPress={() => handleButtonClick4('pesos')}
-              selected={selectedExpensa !== 'pesos'}
+              onPress={() => handleButtonClick4('peso')}
+              selected={selectedExpensa !== 'peso'}
             />
             <ButtonSelect
               text={'U$S'}
               size="XS"
               borderRadius={50}
-              onPress={() => handleButtonClick4('dolares')}
-              selected={selectedExpensa !== 'dolares'}
+              onPress={() => handleButtonClick4('dolar')}
+              selected={selectedExpensa !== 'dolar'}
             />
             <InputText
               keyboard="phone-pad"
               size="XS"
               placeholder={i18n.t('placeholder_number')}
+              ogValue={newExpenses.toString()}
+              changeValue={handleExpenses}
             />
           </View>
 
@@ -553,6 +872,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               keyboard="phone-pad"
               size="S"
               placeholder={i18n.t('placeholder_amount')}
+              ogValue={newParking.toString()}
+              changeValue={handleParking}
             />
           </View>
 
@@ -577,7 +898,11 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           </View>
 
           <Text style={styles.text3}>{i18n.t('antiguedad')}</Text>
-          <InputText placeholder={i18n.t('placeholder_antiguedad')} />
+          <InputText
+            placeholder={i18n.t('placeholder_antiguedad')}
+            ogValue={newAntiquity.toString()}
+            changeValue={handleAntiquity}
+          />
 
           <Text style={styles.text3}>{i18n.t('orientation')}</Text>
           <View
@@ -586,30 +911,30 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               justifyContent: 'center',
               flexWrap: 'wrap',
               marginTop: 10,
-              marginBottom: -30
+              marginBottom: -30,
             }}>
             <ButtonSelect
               text={i18n.t('north')}
-              onPress={() => handleButtonClick12('north')}
-              selected={selectedOrientacion !== 'north'}
+              onPress={() => handleButtonClick12('norte')}
+              selected={selectedOrientacion !== 'norte'}
               size={'ORIENTACION'}
             />
             <ButtonSelect
               text={i18n.t('south')}
-              onPress={() => handleButtonClick12('south')}
-              selected={selectedOrientacion !== 'south'}
+              onPress={() => handleButtonClick12('sur')}
+              selected={selectedOrientacion !== 'sur'}
               size={'ORIENTACION'}
             />
             <ButtonSelect
               text={i18n.t('east')}
-              onPress={() => handleButtonClick12('east')}
-              selected={selectedOrientacion !== 'east'}
+              onPress={() => handleButtonClick12('este')}
+              selected={selectedOrientacion !== 'este'}
               size={'ORIENTACION'}
             />
             <ButtonSelect
               text={i18n.t('west')}
-              onPress={() => handleButtonClick12('west')}
-              selected={selectedOrientacion !== 'west'}
+              onPress={() => handleButtonClick12('oeste')}
+              selected={selectedOrientacion !== 'oeste'}
               size={'ORIENTACION'}
             />
           </View>
@@ -626,86 +951,90 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             <ButtonSelect
               text={i18n.t('pool')}
               image={
-                !selectedAmenities.includes('pool') ? (
+                !selectedAmenities.includes(' pool') ? (
                   <IMAGES.SVG.PILETA width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.PILETA_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('pool')}
-              selected={!selectedAmenities.includes('pool')}
+              onPress={() => handleButtonClick11(' pool')}
+              selected={!selectedAmenities.includes(' pool')}
             />
             <ButtonSelect
               text={i18n.t('sauna')}
               image={
-                !selectedAmenities.includes('sauna') ? (
+                !selectedAmenities.includes(' sauna') ? (
                   <IMAGES.SVG.SAUNA width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.SAUNA_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('sauna')}
-              selected={!selectedAmenities.includes('sauna')}
+              onPress={() => handleButtonClick11(' sauna')}
+              selected={!selectedAmenities.includes(' sauna')}
             />
             <ButtonSelect
               text={i18n.t('sum')}
               image={
-                !selectedAmenities.includes('sum') ? (
+                !selectedAmenities.includes(' sum') ? (
                   <IMAGES.SVG.HOME width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.HOME_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('sum')}
-              selected={!selectedAmenities.includes('sum')}
+              onPress={() => handleButtonClick11(' sum')}
+              selected={!selectedAmenities.includes(' sum')}
             />
             <ButtonSelect
               text={i18n.t('quincho')}
               size="L"
               image={
-                !selectedAmenities.includes('quincho') ? (
+                !selectedAmenities.includes(' quincho') ? (
                   <IMAGES.SVG.QUINCHO width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.QUINCHO_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('quincho')}
-              selected={!selectedAmenities.includes('quincho')}
+              onPress={() => handleButtonClick11(' quincho')}
+              selected={!selectedAmenities.includes(' quincho')}
             />
             <ButtonSelect
               text={i18n.t('gameRoom')}
               image={
-                !selectedAmenities.includes('gameRoom') ? (
+                !selectedAmenities.includes(' gameRoom') ? (
                   <IMAGES.SVG.JUEGO width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.JUEGO_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('gameRoom')}
-              selected={!selectedAmenities.includes('gameRoom')}
+              onPress={() => handleButtonClick11(' gameRoom')}
+              selected={!selectedAmenities.includes(' gameRoom')}
               size="L"
             />
             <ButtonSelect
               text={i18n.t('jacuzzi')}
               image={
-                !selectedAmenities.includes('jacuzzi') ? (
+                !selectedAmenities.includes(' jacuzzi') ? (
                   <IMAGES.SVG.JACUZZI width={25} height={25} />
                 ) : (
                   <IMAGES.SVG.JACUZZI_WHITE width={25} height={25} />
                 )
               }
-              onPress={() => handleButtonClick11('jacuzzi')}
-              selected={!selectedAmenities.includes('jacuzzi')}
+              onPress={() => handleButtonClick11(' jacuzzi')}
+              selected={!selectedAmenities.includes(' jacuzzi')}
             />
           </View>
 
-          <PhotoUploader />
+          <PhotoUploader onImageUrisChange={handleSelectedImageUris} />
 
           <Text style={styles.text3}>
             {i18n.t('addVideo') + ' '}
             <Text style={styles.textOptional}>{i18n.t('optional')}</Text>
           </Text>
-          <InputText placeholder={i18n.t('placeholder_URL')} />
+          <InputText
+            placeholder={i18n.t('placeholder_URL')}
+            ogValue={newUrlVideo}
+            changeValue={handleUrlVideo}
+          />
 
           <Text style={styles.text3}>{i18n.t('state')}</Text>
           <View
@@ -719,8 +1048,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             <ButtonSelect
               text={i18n.t('sellingInRent')}
               size="XXS"
-              onPress={() => handleButtonClick9('alquiler/venta')}
-              selected={selectedEstado !== 'alquiler/venta'}
+              onPress={() => handleButtonClick9('alquiler - venta')}
+              selected={selectedEstado !== 'alquiler - venta'}
             />
             <ButtonSelect
               text={i18n.t('reserved')}
@@ -731,8 +1060,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             <ButtonSelect
               text={i18n.t('soldRented')}
               size="XXS"
-              onPress={() => handleButtonClick9('alquilada/vendida')}
-              selected={selectedEstado !== 'alquilada/vendida'}
+              onPress={() => handleButtonClick9('alquilada - vendida')}
+              selected={selectedEstado !== 'alquilada - vendida'}
             />
           </View>
         </View>
@@ -749,7 +1078,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             size="M"
             color="secondary"
             onPress={() => {
-              goHome();
+              handleDeleteEstate();
             }}
           />
           <Button
@@ -757,7 +1086,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             size="M"
             color="primary"
             onPress={() => {
-              goHome();
+              handleEditEstate();
             }}
           />
         </View>

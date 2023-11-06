@@ -29,7 +29,7 @@ const InputText = ({
     fontSize: Theme.fonts.S,
     fontWeight: Theme.fonts.BOLD,
     borderRadius: borderRadius,
-    flex: flex
+    flex: flex,
   });
 
   const inputSizes = StyleSheet.create({
@@ -66,7 +66,6 @@ const InputText = ({
 
   return (
     <View style={{marginBottom: error ? 30 : 0}}>
-      
       <TextInput
         style={[generalStyle, inputSizes[size], inputFocused()]}
         onChangeText={text => {
@@ -82,7 +81,12 @@ const InputText = ({
         secureTextEntry={hideText}
         textAlignVertical={'top'}
       />
-      {error && <Text style={{color: 'red', position: 'absolute', bottom: -15, left: 20}}>{error}</Text>}
+      {error && (
+        <Text
+          style={{color: 'red', position: 'absolute', bottom: -15, left: 20}}>
+          {error}
+        </Text>
+      )}
     </View>
   );
 };
