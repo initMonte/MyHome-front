@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   ScrollView,
   View,
@@ -16,7 +16,7 @@ import IMAGES from '../../../../../assets/images/images';
 import Button from '../../../../components/button';
 import InputText from '../../../../components/inputText';
 import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
-import {meAction} from '../../../../../redux/slices/UserReducer';
+import {meAction, saveEmailAction} from '../../../../../redux/slices/UserReducer';
 import ProfilePhotoUploader from '../../../../components/profilePhotoUploader';
 
 const MisDatosUI = ({goBack}) => {
@@ -30,7 +30,6 @@ const MisDatosUI = ({goBack}) => {
     telephone,
     telephone2,
     avatarName,
-    pass,
   } = useSelector(state => state.user);
   const [nameValue, setNameValue] = useState(name);
   const [telephoneValue, setTelephoneValue] = useState(telephone);
@@ -39,6 +38,18 @@ const MisDatosUI = ({goBack}) => {
   const [passwordValue, setPasswordValue] = useState('');
   const [newPasswordValue, setNewPasswordValue] = useState('');
   const [selectedImageUri, setSelectedImageUri] = useState(null);
+
+  const [errorTelephoneValue, setErrorTelephoneValue] = useState(false);
+  const inputRefTelephoneValue = useRef();
+
+  const [errorTelephone2Value, setErrorTelephone2Value] = useState(false);
+  const inputRefTelephone2Value = useRef();
+
+  const handleFocus = (ref) => {
+    if (ref.current) {
+      ref.current.focus();
+    }
+  };
 
   const handleNameChange = value => {
     setNameValue(value);
@@ -81,6 +92,23 @@ const MisDatosUI = ({goBack}) => {
   };
 
   const handleSubmit = () => {
+
+    if (isNaN(telephoneValue)) {
+      setErrorTelephoneValue(i18n.t('invalidNumber'));
+      handleFocus(inputRefTelephoneValue);
+      return false;
+    } else {
+      setErrorTelephoneValue(false);
+    }
+
+    if (isNaN(telephone2Value)) {
+      setErrorTelephone2Value(i18n.t('invalidNumber'));
+      handleFocus(inputRefTelephone2Value);
+      return false;
+    } else {
+      setErrorTelephone2Value(false);
+    }
+
     userWS
       .update(
         email,
@@ -115,9 +143,73 @@ const MisDatosUI = ({goBack}) => {
       });
   };
 
-  const [errorContraseña, setErrorContraseña] = useState(false);
+  const [showCodeBox, setShowCodeBox] = useState(false);
+  const [showPass, setShowPass] = useState(false);
 
-  const checkPassword = () => {
+  const handlePassRecovery = () => {
+    userWS
+      .confirmationCodeForgotPassword(email)
+      .then(response => {
+        // Recovery exitoso
+        console.log(response);
+        dispatch(saveEmailAction(response));
+        setShowCodeBox(true);
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
+  const [code, setCode] = useState('');
+  console.log(email);
+
+  const handleCodeChange = value => {
+    setCode(value);
+  };
+
+  const [errorCodigo, setErrorCodigo] = useState(false);
+
+  const handleRegistrationCode = () => {
+    userWS
+      .verifyCode(email, code)
+      .then(response => {
+        // Registro exitoso
+        setShowCodeBox(false);
+        setShowPass(true);
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          setErrorCodigo(i18n.t('codeWrong'));
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
+  /*const checkPassword = () => {
     console.log(passwordValue);
     console.log(email);
     console.log(newPasswordValue);
@@ -129,6 +221,44 @@ const MisDatosUI = ({goBack}) => {
       setErrorContraseña(i18n.t('actualPassWrong'));
       return;
     }
+  };*/
+
+ 
+  const checkPassword = () => {
+    if (passwordValue !== '' && passwordValue === newPasswordValue) {
+      return handleSubmitPass();
+    } else {
+      setErrorContraseña(i18n.t('newPassWrong'));
+      return;
+    }
+  };
+
+  const [errorContraseña, setErrorContraseña] = useState(false);
+
+  const handleLogin = () => {
+    userWS
+      .login(email, passwordValue)
+      .then(response => {
+        console.log('CONTRASEÑA ACTUAL OK');
+        handleSubmitPass();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+          setErrorContraseña(i18n.t('actualPassWrong'));
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
   };
 
   const handleSubmitPass = () => {
@@ -200,6 +330,8 @@ const MisDatosUI = ({goBack}) => {
               size="L"
               changeValue={handleTelephoneChange}
               ogValue={telephone}
+              error={errorTelephoneValue}
+              innerRef={inputRefTelephoneValue}
             />
           </View>
           <View style={styles.littleBox}>
@@ -213,6 +345,8 @@ const MisDatosUI = ({goBack}) => {
               size="L"
               changeValue={handleTelephone2Change}
               ogValue={telephone2}
+              error={errorTelephone2Value}
+              innerRef={inputRefTelephone2Value}
             />
           </View>
           <View style={styles.littleBox}>
@@ -243,8 +377,49 @@ const MisDatosUI = ({goBack}) => {
         </View>
         <View style={styles.box}>
           <Text style={styles.tittleBox}>{i18n.t('passChange')}</Text>
+
+          {!showCodeBox && !showPass ?
+
+            <View style={styles.littleBoxEmail}>
+              <Text style={styles.text333}>
+                {i18n.t('emailWillSendTo')}
+              </Text>
+              <Text style={styles.text3333}>
+                {email}
+              </Text>
+            </View>
+
+            :
+
+            <></>
+
+          }
+
+          {showCodeBox ?
+
+            <View style={styles.littleBoxEmail}>
+              <Text style={styles.text222}>{i18n.t('emailSentTo')}</Text>
+              <Text style={styles.text2222}>{email}</Text>
+              <Text style={styles.text22}>{i18n.t('inputCode')}</Text>
+              <InputText
+                placeholder={i18n.t('placeholder_code')}
+                size="M"
+                changeValue={handleCodeChange}
+                error={errorCodigo}
+              />
+            </View>
+
+          :
+
+            <></>
+
+          }
+
+          {showPass && !showCodeBox ?
+
+            <View>
           <View style={styles.littleBox}>
-            <Text style={styles.text}>{i18n.t('actualPass')}</Text>
+            <Text style={styles.text}>{i18n.t('newPass')}</Text>
             <View style={{flexDirection: 'row'}}>
               <InputText
                 placeholder={i18n.t('placeholder_password')}
@@ -253,7 +428,6 @@ const MisDatosUI = ({goBack}) => {
                 hideText={showPassword1}
                 changeValue={handlePasswordChange}
                 flex={1}
-                error={errorContraseña}
               />
               {showPassword1 ? (
                 <IMAGES.SVG.EYE_CLOSE
@@ -273,7 +447,9 @@ const MisDatosUI = ({goBack}) => {
             </View>
           </View>
           <View style={styles.littleBox}>
-            <Text style={styles.text}>{i18n.t('newPass')}</Text>
+            <Text style={styles.text}>{i18n.t('newPass2')}</Text>
+
+            
             <View style={{flexDirection: 'row'}}>
               <InputText
                 placeholder={i18n.t('placeholder_password')}
@@ -282,6 +458,7 @@ const MisDatosUI = ({goBack}) => {
                 hideText={showPassword2}
                 changeValue={handleNewPasswordChange}
                 flex={1}
+                error={errorContraseña}
               />
               {showPassword2 ? (
                 <IMAGES.SVG.EYE_CLOSE
@@ -299,13 +476,60 @@ const MisDatosUI = ({goBack}) => {
                 />
               )}
             </View>
+            
+          
           </View>
+
+          </View>
+
+          : <></>
+          }
+
+          {!showCodeBox && !showPass ?
+
           <Button
+            onPress={() => handlePassRecovery()}
+            text={i18n.t('sendCode')}
+            color={'primary'}
+            size="ML"
+          />
+
+          :
+
+          <></>
+
+          }
+
+          {showPass ? 
+          
+            <Button
             onPress={() => checkPassword()}
             text={i18n.t('saveChanges')}
             color={'primary'}
             size="ML"
           />
+
+          :
+
+          <></>
+          
+          }
+
+          {showCodeBox ?
+
+            <Button
+              onPress={() => handleRegistrationCode()}
+              text={i18n.t('continue')}
+              color={'primary'}
+              size="ML"
+            />
+
+          :
+
+          <></>
+
+          }
+
         </View>
 
         <Button
@@ -374,6 +598,40 @@ const styles = StyleSheet.create({
     color: Theme.colors.SECONDARY,
     fontSize: Theme.fonts.SM,
     fontWeight: Theme.fonts.BOLD,
+  },
+  text22: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
+    marginTop: 20,
+    marginLeft: 12
+  },
+  text222: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
+    marginLeft: 12
+  },
+  text2222: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
+    marginTop: 10,
+    marginLeft: 60
+  },
+  text333: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
+    marginLeft: 35
+  },
+  text3333: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 60
   },
   opcional: {
     color: Theme.colors.PLACEHOLDER,
