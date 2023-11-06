@@ -13,6 +13,7 @@ export default {
   mandatoryField: 'Campo obligatorio',
   mandatoryImages: 'Debe adjuntar al menos 2 imágenes',
   sendCode: 'Enviar código',
+  passwordChanged: 'Contraseña modificada con éxito!',
   emailWillSendTo: 'Te enviaremos un email a:',
   noAccount: 'No tengo cuenta, ',
   register: 'Registrarse',

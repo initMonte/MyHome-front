@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Image} from 'react-native-svg';
@@ -77,6 +77,59 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
   const [newSelectedImagesUri, setSelectedImagesUri] = useState([]);
   console.log(images);
   const [newUrlVideo, setUrlVideo] = useState(videoUrl);
+
+  const [errorAddressNumber, setErrorAddressNumber] = useState(false);
+  const inputRefAdressNumber = useRef();
+
+  const [errorCoveredSquareMeters, setErrorCoveredSquareMeters] =
+    useState(false);
+  const inputRefCoveredSquareMeters = useRef();
+
+  const [errorSemiUncoveredSquaremeters, setErrorSemiUncoveredSquaremeters] =
+    useState(false);
+  const inputRefSemiUncoveredSquaremeters = useRef();
+
+  const [errorUncoveredSquareMeters, setErrorUncoveredSquareMeters] =
+    useState(false);
+  const inputRefUncoveredSquareMeters = useRef();
+
+  const [errorPrice, setErrorPrice] = useState(false);
+  const inputRefPrice = useRef();
+
+  const [errorExpenses, setErrorExpenses] = useState(false);
+  const inputRefExpenses = useRef();
+
+  const [errorParking, setErrorParking] = useState(false);
+  const inputRefParking = useRef();
+
+  const [errorAntiquity, setErrorAntiquity] = useState(false);
+  const inputRefAntiquity = useRef();
+
+  const [errorTitle, setErrorTitle] = useState(false);
+  const inputRefTitle = useRef();
+
+  const [errorDescription, setErrorDescription] = useState(false);
+  const inputRefDescription = useRef();
+
+  const [errorStreet, setErrorStreet] = useState(false);
+  const inputRefStreet = useRef();
+
+  const [errorNeighborhood, setErrorNeighborhood] = useState(false);
+  const inputRefNeighborhood = useRef();
+
+  const [errorState, setErrorState] = useState(false);
+  const inputRefState = useRef();
+
+  const [errorCountry, setErrorCountry] = useState(false);
+  const inputRefCountry = useRef();
+
+  const [errorImages, setErrorImages] = useState(false);
+
+  const handleFocus = ref => {
+    if (ref.current) {
+      ref.current.focus();
+    }
+  };
 
   const handleTitle = value => {
     setTitle(value);
@@ -266,6 +319,173 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     const latitude = 'String'; //Hardcodeado hasta entrega final
     const longitude = 'String'; //Hardcodeado hasta entrega final
 
+    if (newTitle === '') {
+      setErrorTitle(i18n.t('mandatoryField'));
+      handleFocus(inputRefTitle);
+      return false;
+    } else {
+      setErrorTitle(false);
+    }
+
+    if (newDescription === '') {
+      setErrorDescription(i18n.t('mandatoryField'));
+      handleFocus(inputRefDescription);
+      return false;
+    } else {
+      setErrorDescription(false);
+    }
+
+    if (newStreet === '') {
+      setErrorStreet(i18n.t('mandatoryField'));
+      handleFocus(inputRefStreet);
+      return false;
+    } else {
+      setErrorStreet(false);
+    }
+
+    if (newAddressNumber === '') {
+      setErrorAddressNumber(i18n.t('mandatoryField'));
+      handleFocus(inputRefAdressNumber);
+      return false;
+    } else {
+      setErrorAddressNumber(false);
+    }
+
+    if (newNeighborhood === '') {
+      setErrorNeighborhood(i18n.t('mandatoryField'));
+      handleFocus(inputRefNeighborhood);
+      return false;
+    } else {
+      setErrorNeighborhood(false);
+    }
+
+    if (newState === '') {
+      setErrorState(i18n.t('mandatoryField'));
+      handleFocus(inputRefState);
+      return false;
+    } else {
+      setErrorState(false);
+    }
+
+    if (newCountry === '') {
+      setErrorCountry(i18n.t('mandatoryField'));
+      handleFocus(inputRefCountry);
+      return false;
+    } else {
+      setErrorCountry(false);
+    }
+
+    if (newCoveredSquareMeters === '') {
+      setErrorCoveredSquareMeters(i18n.t('mandatoryField'));
+      handleFocus(inputRefCoveredSquareMeters);
+      return false;
+    } else {
+      setErrorCoveredSquareMeters(false);
+    }
+
+    if (newSemiUncoveredSquaremeters === '') {
+      setErrorSemiUncoveredSquaremeters(i18n.t('mandatoryField'));
+      handleFocus(inputRefSemiUncoveredSquaremeters);
+      return false;
+    } else {
+      setErrorSemiUncoveredSquaremeters(false);
+    }
+
+    if (newUncoveredSquareMeters === '') {
+      setErrorUncoveredSquareMeters(i18n.t('mandatoryField'));
+      handleFocus(inputRefUncoveredSquareMeters);
+      return false;
+    } else {
+      setErrorUncoveredSquareMeters(false);
+    }
+
+    if (newPrice === '') {
+      setErrorPrice(i18n.t('mandatoryField'));
+      handleFocus(inputRefPrice);
+      return false;
+    } else {
+      setErrorPrice(false);
+    }
+
+    if (newAntiquity === '') {
+      setErrorAntiquity(i18n.t('mandatoryField'));
+      handleFocus(inputRefAntiquity);
+      return false;
+    } else {
+      setErrorAntiquity(false);
+    }
+
+    if (newSelectedImagesUri.length < 3) {
+      setErrorImages(i18n.t('mandatoryImages'));
+      return false;
+    } else {
+      setErrorImages(false);
+    }
+
+    if (isNaN(newAddressNumber)) {
+      setErrorAddressNumber(i18n.t('invalidNumber'));
+      handleFocus(inputRefAdressNumber);
+      return false;
+    } else {
+      setErrorAddressNumber(false);
+    }
+
+    if (isNaN(newCoveredSquareMeters)) {
+      setErrorCoveredSquareMeters(i18n.t('invalidNumber'));
+      handleFocus(inputRefCoveredSquareMeters);
+      return false;
+    } else {
+      setErrorCoveredSquareMeters(false);
+    }
+
+    if (isNaN(newSemiUncoveredSquaremeters)) {
+      setErrorSemiUncoveredSquaremeters(i18n.t('invalidNumber'));
+      handleFocus(inputRefSemiUncoveredSquaremeters);
+      return false;
+    } else {
+      setErrorSemiUncoveredSquaremeters(false);
+    }
+
+    if (isNaN(newUncoveredSquareMeters)) {
+      setErrorUncoveredSquareMeters(i18n.t('invalidNumber'));
+      handleFocus(inputRefUncoveredSquareMeters);
+      return false;
+    } else {
+      setErrorUncoveredSquareMeters(false);
+    }
+
+    if (isNaN(newPrice)) {
+      setErrorPrice(i18n.t('invalidNumber'));
+      handleFocus(inputRefPrice);
+      return false;
+    } else {
+      setErrorPrice(false);
+    }
+
+    if (isNaN(newExpenses)) {
+      setErrorExpenses(i18n.t('invalidNumber'));
+      handleFocus(inputRefExpenses);
+      return false;
+    } else {
+      setErrorExpenses(false);
+    }
+
+    if (isNaN(newParking)) {
+      setErrorParking(i18n.t('invalidNumber'));
+      handleFocus(inputRefParking);
+      return false;
+    } else {
+      setErrorParking(false);
+    }
+
+    if (isNaN(newAntiquity)) {
+      setErrorAntiquity(i18n.t('invalidNumber'));
+      handleFocus(inputRefAntiquity);
+      return false;
+    } else {
+      setErrorAntiquity(false);
+    }
+
     console.log('---------------------------------');
     console.log('---------------------------------');
     console.log('PROBANDO BOTON EDITAR');
@@ -377,6 +597,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             placeholder={i18n.t('placeholder_title')}
             ogValue={newTitle}
             changeValue={handleTitle}
+            error={errorTitle}
+            innerRef={inputRefTitle}
           />
           <Text style={styles.text3}>{i18n.t('description')}</Text>
           <InputText
@@ -386,6 +608,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             borderRadius={8}
             height={120}
             changeValue={handleDescription}
+            error={errorDescription}
+            innerRef={inputRefDescription}
           />
           <View
             style={{
@@ -506,6 +730,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             placeholder={i18n.t('placeholder_street')}
             ogValue={newStreet}
             changeValue={handleStreet}
+            error={errorStreet}
+            innerRef={inputRefStreet}
           />
           <View
             style={{
@@ -520,6 +746,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               ogValue={newAddressNumber.toString()}
               changeValue={handleAddressNumber}
               placeholder={i18n.t('placeholder_strNumber')}
+              error={errorAddressNumber}
+              innerRef={inputRefAdressNumber}
             />
             <InputText
               size="S"
@@ -533,16 +761,22 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             placeholder={i18n.t('placeholder_barrio')}
             ogValue={newNeighborhood}
             changeValue={handleNeighborhood}
+            error={errorNeighborhood}
+            innerRef={inputRefNeighborhood}
           />
           <InputText
             placeholder={i18n.t('placeholder_province')}
             ogValue={newState}
             changeValue={handleState}
+            error={errorState}
+            innerRef={inputRefState}
           />
           <InputText
             placeholder={i18n.t('placeholder_country')}
             ogValue={newCountry}
             changeValue={handleCountry}
+            error={errorCountry}
+            innerRef={inputRefCountry}
           />
 
           <View
@@ -560,6 +794,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               placeholder={i18n.t('placeholder_number')}
               ogValue={newCoveredSquareMeters.toString()}
               changeValue={handleCoveredSquareMeters}
+              error={errorCoveredSquareMeters}
+              innerRef={inputRefCoveredSquareMeters}
             />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
@@ -577,6 +813,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               placeholder={i18n.t('placeholder_number')}
               ogValue={newSemiUncoveredSquaremeters.toString()}
               changeValue={handleSemiUncoveredSquaremeters}
+              error={errorSemiUncoveredSquaremeters}
+              innerRef={inputRefSemiUncoveredSquaremeters}
             />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
@@ -594,6 +832,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               placeholder={i18n.t('placeholder_number')}
               ogValue={newUncoveredSquareMeters.toString()}
               changeValue={handleUncoveredSquareMeters}
+              error={errorUncoveredSquareMeters}
+              innerRef={inputRefUncoveredSquareMeters}
             />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
@@ -626,6 +866,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               placeholder={i18n.t('placeholder_number')}
               ogValue={newPrice.toString()}
               changeValue={handlePrice}
+              error={errorPrice}
+              innerRef={inputRefPrice}
             />
           </View>
 
@@ -660,6 +902,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               placeholder={i18n.t('placeholder_number')}
               ogValue={newExpenses.toString()}
               changeValue={handleExpenses}
+              error={errorExpenses}
+              innerRef={inputRefExpenses}
             />
           </View>
 
@@ -865,6 +1109,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               placeholder={i18n.t('placeholder_amount')}
               ogValue={newParking.toString()}
               changeValue={handleParking}
+              error={errorParking}
+              innerRef={inputRefParking}
             />
           </View>
 
@@ -893,6 +1139,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             placeholder={i18n.t('placeholder_antiguedad')}
             ogValue={newAntiquity.toString()}
             changeValue={handleAntiquity}
+            error={errorAntiquity}
+            innerRef={inputRefAntiquity}
           />
 
           <Text style={styles.text3}>{i18n.t('orientation')}</Text>
@@ -1015,7 +1263,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             />
           </View>
 
-          <PhotoUploader onImageUrisChange={handleSelectedImageUris} />
+          <PhotoUploader error={errorImages} onImageUrisChange={handleSelectedImageUris} />
 
           <Text style={styles.text3}>
             {i18n.t('addVideo') + ' '}

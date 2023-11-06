@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
   Pressable,
+  ToastAndroid
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -143,6 +144,16 @@ const MisDatosUI = ({goBack}) => {
       });
   };
 
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      i18n.t('passwordChanged'),
+      ToastAndroid.SHORT,
+      ToastAndroid.TOP,
+      0,
+      80,
+    );
+  };
+
   const [showCodeBox, setShowCodeBox] = useState(false);
   const [showPass, setShowPass] = useState(false);
 
@@ -235,38 +246,14 @@ const MisDatosUI = ({goBack}) => {
 
   const [errorContraseña, setErrorContraseña] = useState(false);
 
-  const handleLogin = () => {
-    userWS
-      .login(email, passwordValue)
-      .then(response => {
-        console.log('CONTRASEÑA ACTUAL OK');
-        handleSubmitPass();
-      })
-      .catch(error => {
-        if (error.response) {
-          // Handle error
-          console.error(
-            'Server responded with an error status:',
-            error.response.status,
-          );
-          console.error('Response data:', error.response.data);
-          setErrorContraseña(i18n.t('actualPassWrong'));
-        } else if (error.request) {
-          // Handle error
-          console.error('No response received:', error.request);
-        } else {
-          // Handle error
-          console.error('Error setting up the request:', error.message);
-        }
-      });
-  };
-
   const handleSubmitPass = () => {
     userWS
       .passwordChange(email, newPasswordValue)
       .then(response => {
-        // Contraseña cambiada exitosa
-        console.log(response);
+        setShowCodeBox(false);
+        setShowPass(false);
+        showToastWithGravityAndOffset();
+        goBack();
       })
       .catch(error => {
         if (error.response) {

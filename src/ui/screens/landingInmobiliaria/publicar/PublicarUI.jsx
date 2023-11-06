@@ -79,7 +79,6 @@ const PublicarUI = ({goHome}) => {
   const inputRefCountry = useRef();
 
   const [errorImages, setErrorImages] = useState(false);
-  const inputRefImages = useRef();
 
   const [errorVideo, setErrorVideo] = useState(false);
   const inputRefVideo = useRef();
@@ -237,9 +236,6 @@ const PublicarUI = ({goHome}) => {
 
     const latitude = 'String'; //Hardcodeado hasta entrega final
     const longitude = 'String'; //Hardcodeado hasta entrega final
-
-    console.log(selectedImagesUri);
-    console.log(selectedImagesUri.length);
 
     if (title === '') {
       setErrorTitle(i18n.t('mandatoryField'));
@@ -781,7 +777,7 @@ const PublicarUI = ({goHome}) => {
             />
             <InputText
               keyboard="phone-pad"
-              size="XS"
+              size="S"
               placeholder={i18n.t('placeholder_number')}
               changeValue={handlePrice}
               error={errorPrice}
@@ -816,7 +812,7 @@ const PublicarUI = ({goHome}) => {
             />
             <InputText
               keyboard="phone-pad"
-              size="XS"
+              size="S"
               placeholder={i18n.t('placeholder_number')}
               changeValue={handleExpenses}
               error={errorExpenses}
