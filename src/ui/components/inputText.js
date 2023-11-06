@@ -15,6 +15,7 @@ const InputText = ({
   ogValue = '',
   error = false,
   flex = 0,
+  innerRef = false
 }) => {
   const [input, onChangeInput] = React.useState(ogValue);
   const [focus, onChangeFocus] = React.useState(false);
@@ -66,6 +67,28 @@ const InputText = ({
 
   return (
     <View style={{marginBottom: error ? 30 : 0}}>
+
+      {innerRef ? 
+      
+      <TextInput
+        style={[generalStyle, inputSizes[size], inputFocused()]}
+        onChangeText={text => {
+          onChangeInput(text);
+          changeValue(text);
+        }}
+        value={input}
+        onFocus={() => onChangeFocus(true)}
+        onBlur={() => onChangeFocus(false)}
+        placeholder={placeholder}
+        placeholderTextColor={Theme.colors.PLACEHOLDER}
+        keyboardType={keyboard}
+        secureTextEntry={hideText}
+        textAlignVertical={'top'}
+        ref={innerRef}
+      />
+
+      :
+      
       <TextInput
         style={[generalStyle, inputSizes[size], inputFocused()]}
         onChangeText={text => {
@@ -81,12 +104,9 @@ const InputText = ({
         secureTextEntry={hideText}
         textAlignVertical={'top'}
       />
-      {error && (
-        <Text
-          style={{color: 'red', position: 'absolute', bottom: -15, left: 20}}>
-          {error}
-        </Text>
-      )}
+      
+      }
+      {error && <Text style={{color: 'red', position: 'absolute', bottom: -15, left: 20}}>{error}</Text>}
     </View>
   );
 };

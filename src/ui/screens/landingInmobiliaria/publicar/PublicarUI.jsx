@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
 import {Image} from 'react-native-svg';
 
@@ -32,6 +32,60 @@ const PublicarUI = ({goHome}) => {
   const [parking, setParking] = useState('');
   const [selectedImagesUri, setSelectedImagesUri] = useState([]);
   const [urlVideo, setUrlVideo] = useState('');
+
+  const [errorAddressNumber, setErrorAddressNumber] = useState(false);
+  const inputRefAdressNumber = useRef();
+
+  const [errorFloor, setErrorFloor] = useState(false);
+  const inputRefFloor = useRef();
+
+  const [errorCoveredSquareMeters, setErrorCoveredSquareMeters] = useState(false);
+  const inputRefCoveredSquareMeters = useRef();
+
+  const [errorSemiUncoveredSquaremeters, setErrorSemiUncoveredSquaremeters] = useState(false);
+  const inputRefSemiUncoveredSquaremeters = useRef();
+
+  const [errorUncoveredSquareMeters, setErrorUncoveredSquareMeters] = useState(false);
+  const inputRefUncoveredSquareMeters = useRef();
+
+  const [errorPrice, setErrorPrice] = useState(false);
+  const inputRefPrice = useRef();
+
+  const [errorExpenses, setErrorExpenses] = useState(false);
+  const inputRefExpenses = useRef();
+
+  const [errorParking, setErrorParking] = useState(false);
+  const inputRefParking = useRef();
+
+  const [errorAntiquity, setErrorAntiquity] = useState(false);
+  const inputRefAntiquity = useRef();
+
+  const [errorTitle, setErrorTitle] = useState(false);
+  const inputRefTitle = useRef();
+
+  const [errorDescription, setErrorDescription] = useState(false);
+  const inputRefDescription = useRef();
+
+  const [errorStreet, setErrorStreet] = useState(false);
+  const inputRefStreet = useRef();
+
+  const [errorNeighborhood, setErrorNeighborhood] = useState(false);
+  const inputRefNeighborhood = useRef();
+
+  const [errorState, setErrorState] = useState(false);
+  const inputRefState = useRef();
+
+  const [errorCountry, setErrorCountry] = useState(false);
+  const inputRefCountry = useRef();
+
+  const [errorImages, setErrorImages] = useState(false);
+  const inputRefImages = useRef();
+
+  const handleFocus = (ref) => {
+    if (ref.current) {
+      ref.current.focus();
+    }
+  };
 
   const handleTitle = value => {
     setTitle(value);
@@ -178,6 +232,184 @@ const PublicarUI = ({goHome}) => {
     const latitude = 'String'; //Hardcodeado hasta entrega final
     const longitude = 'String'; //Hardcodeado hasta entrega final
 
+    console.log(selectedImagesUri);
+    console.log(selectedImagesUri.length);
+
+    if (title === "") {
+      setErrorTitle(i18n.t('mandatoryField'));
+      handleFocus(inputRefTitle);
+      return false;
+    } else {
+      setErrorTitle(false);
+    }
+    
+    if (description === "") {
+      setErrorDescription(i18n.t('mandatoryField'));
+      handleFocus(inputRefDescription);
+      return false;
+    } else {
+      setErrorDescription(false);
+    }
+    
+    if (street === "") {
+      setErrorStreet(i18n.t('mandatoryField'));
+      handleFocus(inputRefStreet);
+      return false;
+    } else {
+      setErrorStreet(false);
+    }
+    
+    if (addressNumber === "") {
+      setErrorAddressNumber(i18n.t('mandatoryField'));
+      handleFocus(inputRefAdressNumber);
+      return false;
+    } else {
+      setErrorAddressNumber(false);
+    }
+    
+    if (neighborhood === "") {
+      setErrorNeighborhood(i18n.t('mandatoryField'));
+      handleFocus(inputRefNeighborhood);
+      return false;
+    } else {
+      setErrorNeighborhood(false);
+    }
+    
+    if (state === "") {
+      setErrorState(i18n.t('mandatoryField'));
+      handleFocus(inputRefState);
+      return false;
+    } else {
+      setErrorState(false);
+    }
+    
+    if (country === "") {
+      setErrorCountry(i18n.t('mandatoryField'));
+      handleFocus(inputRefCountry);
+      return false;
+    } else {
+      setErrorCountry(false);
+    }
+    
+    if (coveredSquareMeters === "") {
+      setErrorCoveredSquareMeters(i18n.t('mandatoryField'));
+      handleFocus(inputRefCoveredSquareMeters);
+      return false;
+    } else {
+      setErrorCoveredSquareMeters(false);
+    }
+    
+    if (semiUncoveredSquaremeters === "") {
+      setErrorSemiUncoveredSquaremeters(i18n.t('mandatoryField'));
+      handleFocus(inputRefSemiUncoveredSquaremeters);
+      return false;
+    } else {
+      setErrorSemiUncoveredSquaremeters(false);
+    }
+    
+    if (uncoveredSquareMeters === "") {
+      setErrorUncoveredSquareMeters(i18n.t('mandatoryField'));
+      handleFocus(inputRefUncoveredSquareMeters);
+      return false;
+    } else {
+      setErrorUncoveredSquareMeters(false);
+    }
+    
+    if (price === "") {
+      setErrorPrice(i18n.t('mandatoryField'));
+      handleFocus(inputRefPrice);
+      return false;
+    } else {
+      setErrorPrice(false);
+    }
+    
+    if (antiquity === "") {
+      setErrorAntiquity(i18n.t('mandatoryField'));
+      handleFocus(inputRefAntiquity);
+      return false;
+    } else {
+      setErrorAntiquity(false);
+    }
+
+    if (selectedImagesUri.length < 3) {
+      setErrorImages(i18n.t('mandatoryImages'));
+      return false;
+    } else {
+      setErrorImages(false);
+    }
+    
+    if (isNaN(addressNumber)) {
+      setErrorAddressNumber(i18n.t('invalidNumber'));
+      handleFocus(inputRefAdressNumber);
+      return false;
+    } else {
+      setErrorAddressNumber(false);
+    }
+
+    if (isNaN(floor)) {
+      setErrorFloor(i18n.t('invalidNumber'));
+      handleFocus(inputRefFloor);
+      return false;
+    } else {
+      setErrorFloor(false);
+    }
+
+    if (isNaN(coveredSquareMeters)) {
+      setErrorCoveredSquareMeters(i18n.t('invalidNumber'));
+      handleFocus(inputRefCoveredSquareMeters);
+      return false;
+    } else {
+      setErrorCoveredSquareMeters(false);
+    }
+
+    if (isNaN(semiUncoveredSquaremeters)) {
+      setErrorSemiUncoveredSquaremeters(i18n.t('invalidNumber'));
+      handleFocus(inputRefSemiUncoveredSquaremeters);
+      return false;
+    } else {
+      setErrorSemiUncoveredSquaremeters(false);
+    }
+
+    if (isNaN(uncoveredSquareMeters)) {
+      setErrorUncoveredSquareMeters(i18n.t('invalidNumber'));
+      handleFocus(inputRefUncoveredSquareMeters);
+      return false;
+    } else {
+      setErrorUncoveredSquareMeters(false);
+    }
+
+    if (isNaN(price)) {
+      setErrorPrice(i18n.t('invalidNumber'));
+      handleFocus(inputRefPrice);
+      return false;
+    } else {
+      setErrorPrice(false);
+    }
+
+    if (isNaN(expenses)) {
+      setErrorExpenses(i18n.t('invalidNumber'));
+      handleFocus(inputRefExpenses);
+      return false;
+    } else {
+      setErrorExpenses(false);
+    }
+
+    if (isNaN(parking)) {
+      setErrorParking(i18n.t('invalidNumber'));
+      handleFocus(inputRefParking);
+      return false;
+    } else {
+      setErrorParking(false);
+    }
+
+    if (isNaN(antiquity)) {
+      setErrorAntiquity(i18n.t('invalidNumber'));
+      handleFocus(inputRefAntiquity);
+      return false;
+    } else {
+      setErrorAntiquity(false);
+    }
+
     console.log('---------------------------------');
     console.log('---------------------------------');
     console.log('PROBANDO BOTON PUBLICAR');
@@ -288,6 +520,8 @@ const PublicarUI = ({goHome}) => {
             placeholder={i18n.t('placeholder_title')}
             keyboard="email-address"
             changeValue={handleTitle}
+            error={errorTitle}
+            innerRef={inputRefTitle}
           />
           <Text style={styles.text3}>{i18n.t('description')}</Text>
           <InputText
@@ -296,6 +530,8 @@ const PublicarUI = ({goHome}) => {
             borderWidth={1}
             borderRadius={8}
             height={120}
+            error={errorDescription}
+            innerRef={inputRefDescription}
           />
           <View
             style={{
@@ -415,6 +651,8 @@ const PublicarUI = ({goHome}) => {
           <InputText
             placeholder={i18n.t('placeholder_street')}
             changeValue={handleStreet}
+            error={errorStreet}
+            innerRef={inputRefStreet}
           />
           <View
             style={{
@@ -428,12 +666,16 @@ const PublicarUI = ({goHome}) => {
               keyboard="phone-pad"
               placeholder={i18n.t('placeholder_strNumber')}
               changeValue={handleAddressNumber}
+              error={errorAddressNumber}
+              innerRef={inputRefAdressNumber}
             />
             <InputText
               size="S"
               keyboard="phone-pad"
               placeholder={i18n.t('placeholder_floor') + ' (opc)'}
               changeValue={handleFloor}
+              error={errorFloor}
+              innerRef={inputRefFloor}
             />
             <InputText
               size="S"
@@ -444,14 +686,20 @@ const PublicarUI = ({goHome}) => {
           <InputText
             placeholder={i18n.t('placeholder_barrio')}
             changeValue={handleNeighborhood}
+            error={errorNeighborhood}
+            innerRef={inputRefNeighborhood}
           />
           <InputText
             placeholder={i18n.t('placeholder_province')}
             changeValue={handleState}
+            error={errorState}
+            innerRef={inputRefState}
           />
           <InputText
             placeholder={i18n.t('placeholder_country')}
             changeValue={handleCountry}
+            error={errorCountry}
+            innerRef={inputRefCountry}
           />
 
           <View
@@ -468,6 +716,8 @@ const PublicarUI = ({goHome}) => {
               size="XS"
               placeholder={i18n.t('placeholder_number')}
               changeValue={handleCoveredSquareMeters}
+              error={errorCoveredSquareMeters}
+              innerRef={inputRefCoveredSquareMeters}
             />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
@@ -484,6 +734,8 @@ const PublicarUI = ({goHome}) => {
               size="XS"
               placeholder={i18n.t('placeholder_number')}
               changeValue={handleSemiUncoveredSquaremeters}
+              error={errorSemiUncoveredSquaremeters}
+              innerRef={inputRefSemiUncoveredSquaremeters}
             />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
@@ -500,6 +752,8 @@ const PublicarUI = ({goHome}) => {
               size="XS"
               placeholder={i18n.t('placeholder_number')}
               changeValue={handleUncoveredSquareMeters}
+              error={errorUncoveredSquareMeters}
+              innerRef={inputRefUncoveredSquareMeters}
             />
             <Text style={styles.text3}>{i18n.t('m2')}</Text>
           </View>
@@ -531,6 +785,8 @@ const PublicarUI = ({goHome}) => {
               size="XS"
               placeholder={i18n.t('placeholder_number')}
               changeValue={handlePrice}
+              error={errorPrice}
+              innerRef={inputRefPrice}
             />
           </View>
 
@@ -564,6 +820,8 @@ const PublicarUI = ({goHome}) => {
               size="XS"
               placeholder={i18n.t('placeholder_number')}
               changeValue={handleExpenses}
+              error={errorExpenses}
+              innerRef={inputRefExpenses}
             />
           </View>
 
@@ -755,7 +1013,6 @@ const PublicarUI = ({goHome}) => {
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginHorizontal: 5,
             }}>
             <Text style={styles.text3}>
               {i18n.t('parking')}
@@ -768,6 +1025,8 @@ const PublicarUI = ({goHome}) => {
               size="S"
               placeholder={i18n.t('placeholder_amount')}
               changeValue={handleParking}
+              error={errorParking}
+              innerRef={inputRefParking}
             />
           </View>
 
@@ -796,6 +1055,8 @@ const PublicarUI = ({goHome}) => {
             placeholder={i18n.t('placeholder_antiguedad')}
             keyboard="phone-pad"
             changeValue={handleAntiquity}
+            error={errorAntiquity}
+            innerRef={inputRefAntiquity}
           />
 
           <Text style={styles.text3}>{i18n.t('orientation')}</Text>
@@ -918,7 +1179,7 @@ const PublicarUI = ({goHome}) => {
             />
           </View>
 
-          <PhotoUploader onImageUrisChange={handleSelectedImageUris} />
+          <PhotoUploader error={errorImages} onImageUrisChange={handleSelectedImageUris} />
 
           <Text style={styles.text3}>
             {i18n.t('addVideo') + ' '}

@@ -15,7 +15,7 @@ import i18n from '../../assets/strings/I18n';
 import Lightbox from 'react-native-lightbox-v2';
 import ImageViewer from './imageViewer';
 
-const PhotoUploader = ({onImageUrisChange}) => {
+const PhotoUploader = ({onImageUrisChange, error = false}) => {
   const [imageSources, setImageSources] = useState([{isAddImage: true}]);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
@@ -64,7 +64,7 @@ const PhotoUploader = ({onImageUrisChange}) => {
   };
 
   return (
-    <View style={styles.container3}>
+    <View style={error ? styles.container33 : styles.container3}>
       <Text style={styles.text3}>
         Agregar imágenes
         <Text style={styles.textOptional2}>{'  ' + i18n.t('minimun2')}</Text>
@@ -108,6 +108,7 @@ const PhotoUploader = ({onImageUrisChange}) => {
           onClose={closeLightbox}
         />
       )}
+      {error && <Text style={{color: 'red', position: 'absolute', bottom: -25, left: 5}}>{error}</Text>}
     </View>
   );
 };
@@ -119,6 +120,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: -5,
     borderRadius: 10,
     marginTop: 25,
+    marginBottom: 0
+  },
+  container33: {
+    flex: 0.4,
+    backgroundColor: Theme.colors.BACKGROUND,
+    paddingHorizontal: -5,
+    borderRadius: 10,
+    marginTop: 25,
+    marginBottom: 25
   },
   text3: {
     marginTop: 10,
