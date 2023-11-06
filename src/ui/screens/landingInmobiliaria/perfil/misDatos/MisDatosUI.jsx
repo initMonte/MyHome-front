@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
   Pressable,
+  ToastAndroid
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -143,6 +144,16 @@ const MisDatosUI = ({goBack}) => {
       });
   };
 
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      i18n.t('passwordChanged'),
+      ToastAndroid.SHORT,
+      ToastAndroid.TOP,
+      0,
+      80,
+    );
+  };
+
   const [showCodeBox, setShowCodeBox] = useState(false);
   const [showPass, setShowPass] = useState(false);
 
@@ -241,6 +252,7 @@ const MisDatosUI = ({goBack}) => {
       .then(response => {
         setShowCodeBox(false);
         setShowPass(false);
+        showToastWithGravityAndOffset();
         goBack();
       })
       .catch(error => {
