@@ -874,8 +874,8 @@ const PublicarUI = ({goHome}) => {
               text={'6+'}
               size="XS"
               borderRadius={50}
-              onPress={() => handleButtonClick5('6+')}
-              selected={selectedAmbiente !== '6+'}
+              onPress={() => handleButtonClick5('6')}
+              selected={selectedAmbiente !== '6'}
             />
           </View>
 
@@ -926,8 +926,8 @@ const PublicarUI = ({goHome}) => {
               text={'6+'}
               size="XS"
               borderRadius={50}
-              onPress={() => handleButtonClick6('6+')}
-              selected={selectedDormitorio !== '6+'}
+              onPress={() => handleButtonClick6('6')}
+              selected={selectedDormitorio !== '6'}
             />
           </View>
 
