@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import SplashScreen from 'react-native-splash-screen';
 
@@ -18,6 +19,11 @@ function Start() {
   const jwt = useSelector(state => state.auth.session.jwt);
 
   useEffect(() => {
+    GoogleSignin.configure({
+      androidClientId:
+        '1015144155681-v13vc3lvc8tbjcapbe20uafvtbuuodcf.apps.googleusercontent.com',
+    });
+
     const fetchData = async () => {
       if (jwt !== '') {
         try {
