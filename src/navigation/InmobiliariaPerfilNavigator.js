@@ -47,7 +47,7 @@ function InmobiliariaPefilNavigator() {
         component={Opiniones}
       />
       <Stack.Screen
-        name={NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACION_X}
+        name={NavigatorConstant.INMOBILIARIA_PERFIL_STACK.PUBLICACION_X}
         component={PublicacionX}
       />
     </Stack.Navigator>

@@ -1,36 +1,130 @@
-import React from 'react';
-import {View, Text, Pressable, StatusBar, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ScrollView, View, StatusBar, StyleSheet, Text} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+
+import {saveEstateAction} from '../../../../../redux/slices/EstateReducer';
+import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
 import Theme from '../../../../../styles/Theme';
+import CardState from '../../../../components/cardState';
 import IMAGES from '../../../../../assets/images/images';
-//import i18n from '../../../../assets/strings/I18n';
+import i18n from '../../../../../assets/strings/I18n';
+
+const MapEstates = ({x, show}) => (
+  <>
+    {x
+      .filter(estateItem => estateItem.rentOrSale === 'alquiler')
+      .map(estateItem => (
+        <CardState
+          key={estateItem._id}
+          onPress={() => show(estateItem)}
+          size="S"
+          image={{uri: estateItem.images[0]}}
+          ubication={estateItem.neighborhood}
+          amb={estateItem.roomsAmount}
+          m2={
+            estateItem.coveredSquareMeters +
+            estateItem.semiUncoveredSquaremeters +
+            estateItem.uncoveredSquareMeters
+          }
+          price={estateItem.price}
+          currency={
+            estateItem.currency === 'peso' ? i18n.t('ars') : i18n.t('usd')
+          }
+        />
+      ))}
+  </>
+);
 
 const VentaUI = ({}) => {
+  const [estates, setEstates] = useState();
+  const id = useSelector(state => state.user.id);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    estatesWS
+      .getEstatesByUserId(id)
+      .then(response => {
+        // Get exitoso
+        //console.log(response.data.estates);
+        setEstates(response.data.estates);
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  }, [id]);
+
+  const handleCardStateClick = estateItem => {
+    console.log('--------____________------------');
+    console.log(estateItem);
+    console.log('--------____________------------');
+    dispatch(saveEstateAction(estateItem));
+    showPublicacionX();
+  };
+
   return (
-    <View style={styles.container}>
-      <StatusBar
-        animated={true}
-        barStyle={'light-content'}
-        showHideTransition={'fade'}
-        hidden={false}
-      />
-      <IMAGES.SVG.LOGO width={380} height={230} />
-      <Text style={styles.text}>{'Pagina en construccion'}</Text>
-      <Text style={styles.text}>{'Estoy en VENTA'}</Text>
-    </View>
+    <ScrollView style={styles.generalContainer}>
+      <View style={styles.container}>
+        <StatusBar
+          animated={true}
+          barStyle={'light-content'}
+          showHideTransition={'fade'}
+          hidden={false}
+        />
+        {estates && estates.some(item => item.rentOrSale === 'alquiler') ? (
+          <MapEstates x={estates} show={handleCardStateClick} />
+        ) : (
+          <View style={styles.containerNoImage}>
+            <IMAGES.SVG.LOGO_PLACEHOLDER width={380} height={230} />
+            <Text style={styles.textNoImage}>
+              {i18n.t('noStatesFound_addFavStart') +
+                i18n.t('noStatesFound_sale') +
+                i18n.t('noStatesFound_addFavEnd')}
+            </Text>
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+  generalContainer: {
     backgroundColor: Theme.colors.WHITE,
   },
-  text: {
-    color: Theme.colors.BLACK,
+  container: {
+    marginTop: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    rowGap: 16,
+    width: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  containerNoImage: {
+    marginTop: 16,
+    alignItems: 'center',
+    width: '95%',
+  },
+  textNoImage: {
+    margin: 12,
+    color: Theme.colors.DISABLED,
     fontSize: Theme.fonts.L,
+    fontWeight: Theme.fonts.BOLD,
   },
 });
 

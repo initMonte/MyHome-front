@@ -2,9 +2,9 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Home from '../ui/screens/landingUser/home/Home';
-import Reservas from '../ui/screens/landingUser/reservas/Reservas';
-import Favoritos from '../ui/screens/landingUser/favoritos/Favoritos';
-import Perfil from '../ui/screens/landingUser/perfil/Perfil';
+import UserReservasNavigator from './UserReservasNavigator';
+import UserFavoritosNavigator from './UserFavoritosNavigator';
+import UserPefilNavigator from './UserPerfilNavigator';
 
 import i18n from '../assets/strings/I18n';
 import Theme from '../styles/Theme';
@@ -37,7 +37,7 @@ function LandingUserStackNavigator() {
       />
       <Tab.Screen
         name={NavigatorConstant.LANDING_USER_STACK.RESERVAS}
-        component={Reservas}
+        component={UserReservasNavigator}
         options={{
           tabBarLabel: i18n.t('tabs.reservas'),
           tabBarIcon: ({color}) => (
@@ -47,7 +47,7 @@ function LandingUserStackNavigator() {
       />
       <Tab.Screen
         name={NavigatorConstant.LANDING_USER_STACK.FAVORITOS}
-        component={Favoritos}
+        component={UserFavoritosNavigator}
         options={{
           tabBarLabel: i18n.t('tabs.favoritos'),
           tabBarIcon: ({color}) => (
@@ -57,7 +57,7 @@ function LandingUserStackNavigator() {
       />
       <Tab.Screen
         name={NavigatorConstant.LANDING_USER_STACK.PERFIL}
-        component={Perfil}
+        component={UserPefilNavigator}
         options={{
           headerShown: false,
           tabBarLabel: i18n.t('tabs.perfil'),

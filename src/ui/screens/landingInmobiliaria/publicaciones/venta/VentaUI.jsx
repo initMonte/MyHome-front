@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, StatusBar, StyleSheet} from 'react-native';
+import {ScrollView, View, StatusBar, StyleSheet, Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {saveEstateAction} from '../../../../../redux/slices/EstateReducer';
@@ -7,6 +7,7 @@ import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoint
 import Theme from '../../../../../styles/Theme';
 import i18n from '../../../../../assets/strings/I18n';
 import CardState from '../../../../components/cardState';
+import IMAGES from '../../../../../assets/images/images';
 
 const MapEstates = ({x, show}) => (
   <>
@@ -82,9 +83,18 @@ const VentaUI = ({showPublicacionX}) => {
           showHideTransition={'fade'}
           hidden={false}
         />
-        {estates ? (
+        {estates && estates.some(item => item.rentOrSale === 'venta') ? (
           <MapEstates x={estates} show={handleCardStateClick} />
-        ) : null}
+        ) : (
+          <View style={styles.containerNoImage}>
+            <IMAGES.SVG.LOGO_PLACEHOLDER width={380} height={230} />
+            <Text style={styles.textNoImage}>
+              {i18n.t('noStatesFound_createStart') +
+                i18n.t('noStatesFound_sale') +
+                i18n.t('noStatesFound_createEnd')}
+            </Text>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
@@ -99,13 +109,22 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginRight: 16,
     rowGap: 16,
+    width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  text: {
-    color: 'black',
+  containerNoImage: {
+    marginTop: 16,
+    alignItems: 'center',
+    width: '95%',
+  },
+  textNoImage: {
+    margin: 12,
+    color: Theme.colors.DISABLED,
+    fontSize: Theme.fonts.L,
+    fontWeight: Theme.fonts.BOLD,
   },
 });
 

@@ -12,7 +12,7 @@ function VisitaProgramadaX() {
   };
 
   const showPublicacionX = () => {
-    navigation.push(NavigatorConstant.LANDING_INMOBILIARIA_STACK.PUBLICACION_X);
+    navigation.push(NavigatorConstant.INMOBILIARIA_PERFIL_STACK.PUBLICACION_X);
   };
 
   return (

@@ -1,4 +1,5 @@
 import LOGO from './icons/logo.svg'; //<-- para importar cosas svg se hace asi
+import LOGO_PLACEHOLDER from './icons/logo-placeholder.svg';
 import GOOGLE from './icons/google.svg';
 import GROUP from './icons/group.svg';
 import SUCCESS from './icons/success.svg';
@@ -53,6 +54,7 @@ import EYE_CLOSE from './icons/eye-close.svg';
 const IMAGES = {
   SVG: {
     LOGO, //<-- la que importamos mas arriba
+    LOGO_PLACEHOLDER,
     GOOGLE,
     GROUP,
     SUCCESS,
