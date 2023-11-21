@@ -41,7 +41,7 @@ const ConsultaXUI = ({goBack, showPublicacionX}) => {
         <Text style={styles.textH1}>{i18n.t('question')}</Text>
         <View style={styles.box}>
           <View style={styles.row}>
-            <Text style={styles.tittleBox}>{i18n.t('questionFrom')}</Text>
+            <Text style={styles.tittleBox}>{i18n.t('questionTo')}</Text>
             <Text style={styles.date}>{'11/11/1111'}</Text>
           </View>
           <View style={styles.person}>
@@ -49,7 +49,7 @@ const ConsultaXUI = ({goBack, showPublicacionX}) => {
               source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
               style={styles.questionsPhoto}
             />
-            <Text style={styles.tittleBox}>{'Alguien Lopez'}</Text>
+            <Text style={styles.tittleBox}>{'Alguna Inmobiliaria'}</Text>
           </View>
           <View style={styles.flexStart}>
             <Text style={styles.textBox}>

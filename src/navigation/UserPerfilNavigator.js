@@ -7,7 +7,7 @@ import Consultas from '../ui/screens/landingUser/perfil/consultas/Consultas';
 import ConsultaX from '../ui/screens/landingUser/perfil/consultaX/ConsultaX';
 import VisitasProgramadas from '../ui/screens/landingUser/perfil/visitasProgramadas/VisitasProgramadas';
 import VisitaProgramadaX from '../ui/screens/landingUser/perfil/visitaProgramadaX/VisitaProgramadaX';
-import PublicacionX from '../ui/screens/landingUser/publicacionX/PublicacionX';
+import UserPublicacionXNavigator from './UserPublicacionXNavigator';
 
 import NavigatorConstant from './NavigatorConstant';
 
@@ -43,7 +43,7 @@ function UserPefilNavigator() {
       />
       <Stack.Screen
         name={NavigatorConstant.USER_PERFIL_STACK.PUBLICACION_X}
-        component={PublicacionX}
+        component={UserPublicacionXNavigator}
       />
     </Stack.Navigator>
   );

@@ -18,6 +18,12 @@ import CardState from '../../../../components/cardState';
 
 const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
   const {name, avatarName} = useSelector(state => state.user);
+
+  const handleShowPublicacion = () => {
+    // INCLUIR LOGICA DEL ESTATE
+    showPublicacionX();
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -60,7 +66,7 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
             </Text>
           </View>
           <CardState
-            onPress={() => showPublicacionX()}
+            onPress={() => handleShowPublicacion()}
             size="M"
             image={IMAGES.OTHERS.TEMPORAL_IMAGE}
             tittle="Av. Gral. Las Heras 2100"

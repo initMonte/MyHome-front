@@ -8,7 +8,7 @@ import ConsultaX from '../ui/screens/landingInmobiliaria/perfil/consultaX/Consul
 import VisitasProgramadas from '../ui/screens/landingInmobiliaria/perfil/visitasProgramadas/VisitasProgramadas';
 import VisitaProgramadaX from '../ui/screens/landingInmobiliaria/perfil/visitaProgramadaX/VisitaProgramadaX';
 import Opiniones from '../ui/screens/landingInmobiliaria/perfil/opiniones/Opiniones';
-import PublicacionX from '../ui/screens/landingInmobiliaria/publicacionX/PublicacionX';
+import InmobiliariaPublicacionXNavigator from './InmobiliariaPublicacionXNavigator';
 
 import NavigatorConstant from './NavigatorConstant';
 
@@ -48,7 +48,7 @@ function InmobiliariaPefilNavigator() {
       />
       <Stack.Screen
         name={NavigatorConstant.INMOBILIARIA_PERFIL_STACK.PUBLICACION_X}
-        component={PublicacionX}
+        component={InmobiliariaPublicacionXNavigator}
       />
     </Stack.Navigator>
   );

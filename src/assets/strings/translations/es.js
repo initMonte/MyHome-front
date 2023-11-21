@@ -67,6 +67,7 @@ export default {
   questions_description_user: 'Visualizá tus consultas realizadas.',
   questions_description_realState:
     'Visualizá las consultas que te realizaron otros usuarios.',
+  askViewTo: 'Pedido de visita enviado a:',
   askViewFrom: 'Pedido de visita de:',
   programmedView: 'Visita programada',
   programmedViews: 'Visitas programadas',
@@ -77,6 +78,7 @@ export default {
   actualPass: 'Contraseña actual:',
   saveChanges: 'Guardar cambios',
   reviews: 'Calificaciones',
+  questionTo: 'Consulta enviada a:',
   questionFrom: 'Consulta recibida de:',
   message: 'Mensaje:',
   stateTitle: 'Título de publicación',
@@ -180,14 +182,9 @@ export default {
   Comment: 'Comentario',
   send: 'Enviar',
   m2: 'm2',
+  contactRealEstate: 'Contactar Inmobiliaria',
+  reviewsAndComments: 'Calificación y Comentarios',
   share_text: 'Mirá la propiedad que encontré en MyHome! ',
-  imageType: {
-    svg: 'SVG File',
-    png: 'PNG File',
-    jpeg: 'JPEG File',
-    webp: 'WEBP File',
-    imageFromInternet: 'Image downloaded from internet',
-  },
   tabs: {
     home: 'Inicio',
     reservas: 'Reservas',

@@ -41,7 +41,7 @@ const INMOBILIARIA_PERFIL_STACK = {
   VISITAS_PROGRAMADAS: 'Visitas Programadas',
   VISITA_PROGRAMADA_X: 'Visita Programada X',
   OPINIONES: 'Opiniones',
-  PUBLICACION_X: 'Publicacion X',
+  PUBLICACION_X: 'Publicacion X Nav',
 };
 const USER_PERFIL_STACK = {
   PERFIL: 'Perfil usuario',
@@ -54,16 +54,27 @@ const USER_PERFIL_STACK = {
 };
 const INMOBILIARIA_PUBLICACIONES_STACK = {
   PUBLICACIONES_TOP_TAB: 'Publicaciones',
-  PUBLICACION_X: 'Publicacion X',
+  PUBLICACION_X: 'Publicacion X Nav',
   EDITAR_PUBLICACION_X: 'Editar publicacion',
 };
 const USER_FAVORITOS_STACK = {
   FAVORITOS_TOP_TAB: 'Favoritos User',
-  PUBLICACION_X: 'Publicacion X',
+  PUBLICACION_X: 'Publicacion X Nav',
 };
 const USER_RESERVAS_STACK = {
   RESERVAS: 'Reservas User',
   PUBLICACION_X: 'Publicacion X',
+};
+const INMOBILIARIA_PUBLICACION_X_STACK = {
+  PUBLICACION_X: 'Publicacion X',
+  EDITAR_PUBLICACION_X: 'Editar publicacion',
+};
+const USER_PUBLICACION_X_STACK = {
+  PUBLICACION_X: 'Publicacion X',
+  CONTACTO_PROPIEDAD_X: 'Contacto Propiedad X',
+  RESERVA_PROPIEDAD_X: 'Reserva Propiedad X',
+  CALIFICAR_INMOBILIARIA: 'Calificar Inmobiliaria',
+  VER_CALIFICACIONES: 'Ver Calificaciones',
 };
 
 export default {
@@ -78,4 +89,6 @@ export default {
   INMOBILIARIA_PUBLICACIONES_STACK,
   USER_FAVORITOS_STACK,
   USER_RESERVAS_STACK,
+  INMOBILIARIA_PUBLICACION_X_STACK,
+  USER_PUBLICACION_X_STACK,
 };

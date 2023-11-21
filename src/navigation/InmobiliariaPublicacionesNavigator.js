@@ -2,8 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Publicaciones from '../ui/screens/landingInmobiliaria/publicaciones/Publicaciones';
-import PublicacionX from '../ui/screens/landingInmobiliaria/publicacionX/PublicacionX';
-import EditarPublicacionX from '../ui/screens/landingInmobiliaria/editarPublicacionX/EditarPublicacionX';
+import InmobiliariaPublicacionXNavigator from './InmobiliariaPublicacionXNavigator';
 
 import NavigatorConstant from './NavigatorConstant';
 
@@ -25,15 +24,7 @@ function InmobiliariaPublicacionesNavigator() {
       />
       <Stack.Screen
         name={NavigatorConstant.INMOBILIARIA_PUBLICACIONES_STACK.PUBLICACION_X}
-        component={PublicacionX}
-      />
-      <Stack.Screen
-        name={
-          NavigatorConstant.INMOBILIARIA_PUBLICACIONES_STACK
-            .EDITAR_PUBLICACION_X
-        }
-        component={EditarPublicacionX}
-        options={{headerShown: true}}
+        component={InmobiliariaPublicacionXNavigator}
       />
     </Stack.Navigator>
   );

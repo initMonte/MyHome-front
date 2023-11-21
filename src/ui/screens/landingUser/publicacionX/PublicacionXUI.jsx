@@ -20,7 +20,13 @@ import PhotoViewer from '../../../components/photoViewer';
 import {saveRealEstateAvatarAction} from '../../../../redux/slices/EstateReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
-const PublicacionXUI = ({goBack}) => {
+const PublicacionXUI = ({
+  goBack,
+  showContactoPropiedadX,
+  showReservaPropiedadX,
+  showCalificarInmobiliaria,
+  showVerCalificaciones,
+}) => {
   const dispatch = useDispatch();
   const {
     id,
@@ -159,6 +165,13 @@ const PublicacionXUI = ({goBack}) => {
     return `https://www.youtube.com/embed/${videoID}`;
   };
 
+  const onRent = () => {
+    if (rentOrSale === 'alquiler' && status === 'alquiler - venta') {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <ScrollView style={styles.generalContainer} nestedScrollEnabled={true}>
       <View style={styles.container}>
@@ -175,7 +188,7 @@ const PublicacionXUI = ({goBack}) => {
               <IMAGES.SVG.BUTTON_BACK width={45} height={45} />
             </Pressable>
             <Pressable>
-              <IMAGES.SVG.BUTTON_EDIT width={45} height={45} />
+              <IMAGES.SVG.FAV_BUTTON_NOT_ADDED width={45} height={45} />
             </Pressable>
           </View>
           <View style={styles.flexEnd}>
@@ -358,6 +371,50 @@ const PublicacionXUI = ({goBack}) => {
               />
             </View>
           ) : null}
+          <View style={styles.containerMargin}>
+            <Text style={styles.textH3}>{i18n.t('contactRealEstate')}</Text>
+            <View style={styles.RowBottom}>
+              {realEstateAvatar && (
+                <Image
+                  source={{uri: realEstateAvatar}}
+                  style={styles.logoBottom}
+                />
+              )}
+              <>
+                <Text style={styles.realStateName}>INTEGRAR CON BACK</Text>
+              </>
+              <Pressable
+                style={styles.circleButton}
+                onPress={showContactoPropiedadX}>
+                <IMAGES.SVG.MAIL_WHITE width={25} height={25} />
+              </Pressable>
+              {onRent ? (
+                <Pressable
+                  style={styles.circleButton}
+                  onPress={showReservaPropiedadX}>
+                  <Text style={styles.textButton}>{i18n.t('reserve')}</Text>
+                </Pressable>
+              ) : null}
+            </View>
+            <Text style={styles.textBottom}>
+              {i18n.t('phone') + ' ' + 'INTEGRAR TELEFONO'}
+            </Text>
+            <Text style={styles.textBottom}>
+              {i18n.t('email') + ' ' + 'INTEGRAR EMAIL'}
+            </Text>
+          </View>
+          <View style={styles.containerMargin}>
+            <Text style={styles.textH3}>{i18n.t('reviewsAndComments')}</Text>
+            <View style={styles.RowBottom}>
+              <Text style={styles.stars}>
+                0,0
+                <Text style={styles.amountReviews}>0 calficaciones</Text>
+              </Text>
+              <Pressable style={styles.button} onPress={showVerCalificaciones}>
+                <Text style={styles.textButtonBottom}>{i18n.t('seeAll')}</Text>
+              </Pressable>
+            </View>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -501,6 +558,72 @@ const styles = StyleSheet.create({
   },
   video: {
     marginBottom: 20,
+  },
+  containerMargin: {
+    marginBottom: 20,
+  },
+  textH3: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.M,
+    fontWeight: Theme.fonts.BOLD,
+    marginTop: 24,
+    marginBottom: 12,
+  },
+  RowBottom: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'no-wrap',
+    columnGap: 10,
+    maginTop: 12,
+    marginBottom: 26,
+  },
+  logoBottom: {
+    width: 70,
+    height: 70,
+    borderRadius: 45,
+  },
+  realStateName: {
+    color: Theme.colors.PRIMARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
+  },
+  circleButton: {
+    width: 70,
+    height: 70,
+    borderRadius: 45,
+    backgroundColor: Theme.colors.PRIMARY,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textButton: {
+    color: Theme.colors.WHITE,
+    fontWeight: Theme.fonts.BOLD,
+  },
+  textBottom: {
+    color: Theme.colors.BLACK,
+    fontWeight: Theme.fonts.BOLD,
+    marginBottom: 12,
+  },
+  stars: {
+    color: Theme.colors.PRIMARY,
+    fontSize: Theme.fonts.XL,
+    fontWeight: Theme.fonts.BOLD,
+  },
+  amountReviews: {
+    color: Theme.colors.PLACEHOLDER,
+    fontSize: Theme.fonts.S,
+    fontWeight: Theme.fonts.LIGHT,
+  },
+  button: {
+    backgroundColor: Theme.colors.SECONDARY,
+    borderRadius: 5,
+    padding: 6,
+  },
+  textButtonBottom: {
+    color: Theme.colors.WHITE,
+    fontWeight: Theme.fonts.SEMIBOLD,
   },
 });
 

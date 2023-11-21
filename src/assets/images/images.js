@@ -16,6 +16,7 @@ import TERRAIN from './icons/terrain.svg';
 import PARKING from './icons/parking.svg';
 import LOGOUT from './icons/logout.svg';
 import MAIL from './icons/mail.svg';
+import MAIL_WHITE from './icons/mail-white.svg';
 import TRASH from './icons/trash.svg';
 import USER from './icons/user.svg';
 import HOME_HEART from './icons/home-heart.svg';
@@ -73,6 +74,7 @@ const IMAGES = {
     TRASH,
     USER,
     MAIL,
+    MAIL_WHITE,
     HOME_HEART,
     STAR_FILL,
     QUINCHO,

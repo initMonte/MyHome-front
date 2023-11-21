@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Reservas from '../ui/screens/landingUser/reservas/Reservas';
-import PublicacionX from '../ui/screens/landingUser/publicacionX/PublicacionX';
+import UserPublicacionXNavigator from './UserPublicacionXNavigator';
 
 import NavigatorConstant from './NavigatorConstant';
 
@@ -17,9 +17,8 @@ function UserReservasNavigator() {
         component={Reservas}
       />
       <Stack.Screen
-        name={NavigatorConstant.USER_FAVORITOS_STACK.PUBLICACION_X}
-        component={PublicacionX}
-        options={{headerShown: true}}
+        name={NavigatorConstant.USER_RESERVAS_STACK.PUBLICACION_X}
+        component={UserPublicacionXNavigator}
       />
     </Stack.Navigator>
   );
