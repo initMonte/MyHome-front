@@ -37,7 +37,7 @@ yarn start
 - Agregado svg del logo
 - Agregada libreria de navegacion
 - Agregados iconos de la App
-- Agregada libreria de Splash e implementada **(tuve que desactivar el "Splash automatico" de Android 12 y eso genera un pequeño retraso al inicio :c)**
+- Agregada libreria de Splash e implementada
 - Implementando Navigation basica
 - Creados componentes Button y InputText, personalizables para lo necesario segun el Figma
 - Solucionado error del styles.xml que causaba crasheo con el TextInput de React Native
@@ -50,7 +50,7 @@ yarn start
 - Creadas pantallas de Venta y Alquiler en Inmobiliaria
 - Agregados iconos SVG varios
 - Pequeñas modificaciones en Navigators y Constants
-- Modificaciones al styling de los bottomNav y topNav **(Como hacer que cuando se entra a Perfil a alguna otra ventana del Stack deje de verse seleccionado el bottom nav?)**
+- Modificaciones al styling de los bottomNav y topNav
 - Creando PerfilNavigator para inmobiliaria
 - Creaada ventana de Perfil
 - Creadas ventanas de Consultas, Visitas Programadas y Opiniones para Inmobiliaria
@@ -61,13 +61,16 @@ yarn start
 - Implemenado Redux para manejo global de estados y persistencia de datos
 - Implementadas llamadas al servidor para Registrar usuario, acitvar Codigo de registro, Login, y algunos get
 - Implementado logout de la aplicacion para borrar los datos persistentes
-- Implementado Delete user **NO TERMINADO, DA ERROR**
+- Implementado Delete user
 - Implementando que usuario quede loggeado
 - Implementando endpoint a flujo de PassRecovery
 - Terminado flujo PassRecovery y mejorado flujo Register
 - Empezando integracion de Publicaciones con el back
 - Implementado get Avatar, guardado de la imagen, y visualizacion en el perfil
-- Integracion **casi** completa de Publicacion X **(falta imagenes)**
+- Integracion completa de Publicacion X
 - Re-implemetando visualizacion de imagen de Avatar en todo el perfil, para Me y de otros usuarios cuando entras a una propiedad
 - Implementacion de Delete user
-- Implementando creacion de Propiedades **No terminado**
+- Implementando creacion de Propiedades
+- Implementado Login y Logout de Google para usuarios
+- Implementada navegacion de User
+- Creadas ventanas **(no terminado)** de perfil en usuario y de favoritos

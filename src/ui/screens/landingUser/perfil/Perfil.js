@@ -11,7 +11,26 @@ function Perfil() {
     navigation.replace(NavigatorConstant.NAVIGATOR.LOGIN);
   };
 
-  return <PerfilUI showLogin={showLogin} />;
+  const showMisDatos = () => {
+    navigation.push(NavigatorConstant.USER_PERFIL_STACK.MIS_DATOS);
+  };
+
+  const showConsultas = () => {
+    navigation.push(NavigatorConstant.USER_PERFIL_STACK.CONSULTAS);
+  };
+
+  const showVisitasProgramadas = () => {
+    navigation.push(NavigatorConstant.USER_PERFIL_STACK.VISITAS_PROGRAMADAS);
+  };
+
+  return (
+    <PerfilUI
+      showLogin={showLogin}
+      showMisDatos={showMisDatos}
+      showConsultas={showConsultas}
+      showVisitasProgramadas={showVisitasProgramadas}
+    />
+  );
 }
 
 export default Perfil;

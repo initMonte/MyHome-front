@@ -18,7 +18,7 @@ import {logoutEstate} from '../../../../redux/slices/EstateReducer';
 import {logoutUser} from '../../../../redux/slices/UserReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
-const RegisterUI = ({
+const PerfilUI = ({
   showLogin,
   showOpiniones,
   showMisDatos,
@@ -224,4 +224,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterUI;
+export default PerfilUI;
