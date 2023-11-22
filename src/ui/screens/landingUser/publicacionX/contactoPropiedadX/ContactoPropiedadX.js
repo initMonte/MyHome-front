@@ -6,7 +6,11 @@ import ContactoPropiedadXUI from './ContactoPropiedadXUI';
 function ContactoPropiedadX() {
   const navigation = useNavigation();
 
-  return <ContactoPropiedadXUI />;
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  return <ContactoPropiedadXUI goBack={goBack} />;
 }
 
 export default ContactoPropiedadX;

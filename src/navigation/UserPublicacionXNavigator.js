@@ -24,12 +24,18 @@ function InmobiliariaPublicacionXNavigator() {
       <Stack.Screen
         name={NavigatorConstant.USER_PUBLICACION_X_STACK.CONTACTO_PROPIEDAD_X}
         component={ContactoPropiedadX}
-        options={{headerShown: true}}
+        options={{
+          headerTitle: 'Contactar',
+          headerShown: true,
+        }}
       />
       <Stack.Screen
         name={NavigatorConstant.USER_PUBLICACION_X_STACK.RESERVA_PROPIEDAD_X}
         component={ReservaPropiedadX}
-        options={{headerShown: true}}
+        options={{
+          headerTitle: 'Reservar',
+          headerShown: true,
+        }}
       />
       <Stack.Screen
         name={NavigatorConstant.USER_PUBLICACION_X_STACK.CALIFICAR_INMOBILIARIA}
