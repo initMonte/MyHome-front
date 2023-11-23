@@ -6,7 +6,11 @@ import CalificarInmobiliariaUI from './CalificarInmobiliariaUI';
 function CalificarInmobiliaria() {
   const navigation = useNavigation();
 
-  return <CalificarInmobiliariaUI />;
+  const goBack = () => {
+    navigation.popToTop();
+  };
+
+  return <CalificarInmobiliariaUI goBack={goBack} />;
 }
 
 export default CalificarInmobiliaria;

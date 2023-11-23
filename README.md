@@ -75,4 +75,6 @@ yarn start
 - Implementada navegacion de User
 - Creadas ventanas **(no terminado)** de perfil en usuario y de favoritos
 - Creadas ventanas de PublicacionX **(No terminado)**
-
+- Endpoint loginGoogle
+- Componentes starSelector y starShow
+- Modificaciones en ventanas varias de la parte de PublicacionX

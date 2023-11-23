@@ -19,6 +19,7 @@ export const urlApi = {
     addFavorite: 'users/favorites/', // Pasarle despues el id
     unFavorite: 'users/favorites/', // Pasarle despues el id
     viewFavorites: 'users/me/favorites',
+    userLogin: 'users/user-login',
   },
   contact: {
     pruebaContact: 'contacts/prueba-contact',

@@ -10,14 +10,10 @@ import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
+import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
-const LoginUI = ({
-  showRegister,
-  showRecoveryPassword,
-  showLandingUser,
-  showLoginInmobiliaria,
-}) => {
-  const handleSignInUser = async () => {
+const LoginUI = ({showLandingUser, showLoginInmobiliaria}) => {
+  const handleSignInGoogle = async () => {
     try {
       console.log('1');
       await GoogleSignin.hasPlayServices();
@@ -26,21 +22,17 @@ const LoginUI = ({
       console.log('3');
       console.log(userInfo);
       //dispatch(loginAction(userInfo.));
+      /*
+      const response = await userWS.loginGogle(
+        userInfo.user.email,
+        userInfo.user.givenName,
+        userInfo.user.familyName,
+      );
+      console.log(response);
+      */
       showLandingUser();
     } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('4');
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('5');
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('6');
-        // play services not available or outdated
-      } else {
-        console.log('7');
-        // some other error happened
-      }
+      console.error('Error caught:', error);
     }
   };
 
@@ -75,7 +67,7 @@ const LoginUI = ({
           size="XL"
           image={<IMAGES.SVG.GOOGLE width={90} height={90} />}
           onPress={() => {
-            handleSignInUser();
+            handleSignInGoogle();
           }}
         />
         <Button

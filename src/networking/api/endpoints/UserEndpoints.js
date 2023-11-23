@@ -79,4 +79,10 @@ export let userWS = {
   deleteUser: async function () {
     return await Api.delete(urlApi.user.deleteUser);
   },
+  loginGogle: async function (email, name, surname) {
+    console.log('email en UserEndpoint: ' + email);
+    console.log('name en UserEndpoint: ' + name);
+    console.log('surname en UserEndpoint: ' + surname);
+    return await Api.post(urlApi.user.userLogin, {email, name, surname});
+  },
 };

@@ -16,6 +16,7 @@ import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
 import PhotoViewer from '../../../components/photoViewer';
+import StarShow from '../../../components/starShow';
 
 import {saveRealEstateAvatarAction} from '../../../../redux/slices/EstateReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
@@ -406,10 +407,11 @@ const PublicacionXUI = ({
           <View style={styles.containerMargin}>
             <Text style={styles.textH3}>{i18n.t('reviewsAndComments')}</Text>
             <View style={styles.RowBottom}>
-              <Text style={styles.stars}>
-                0,0
+              <Text style={styles.stars}>0,0</Text>
+              <View style={styles.columnContainer}>
+                <StarShow stars={3.4} />
                 <Text style={styles.amountReviews}>0 calficaciones</Text>
-              </Text>
+              </View>
               <Pressable style={styles.button} onPress={showVerCalificaciones}>
                 <Text style={styles.textButtonBottom}>{i18n.t('seeAll')}</Text>
               </Pressable>
@@ -578,6 +580,13 @@ const styles = StyleSheet.create({
     columnGap: 10,
     maginTop: 12,
     marginBottom: 26,
+  },
+  columnContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'baseline',
+    flexWrap: 'no-wrap',
+    rowGap: 8,
   },
   logoBottom: {
     width: 70,

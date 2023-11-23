@@ -20,6 +20,8 @@ import MAIL_WHITE from './icons/mail-white.svg';
 import TRASH from './icons/trash.svg';
 import USER from './icons/user.svg';
 import HOME_HEART from './icons/home-heart.svg';
+import STAR from './icons/star.svg';
+import STAR_HALF from './icons/star-half.svg';
 import STAR_FILL from './icons/star-fill.svg';
 import QUINCHO from './icons/quincho.svg';
 import SAUNA from './icons/sauna.svg';
@@ -76,6 +78,8 @@ const IMAGES = {
     MAIL,
     MAIL_WHITE,
     HOME_HEART,
+    STAR,
+    STAR_HALF,
     STAR_FILL,
     QUINCHO,
     SAUNA,

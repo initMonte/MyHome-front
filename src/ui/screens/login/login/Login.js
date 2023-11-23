@@ -16,14 +16,6 @@ function Login() {
   console.log(' ');
   const navigation = useNavigation();
 
-  const showRecoveryPassword = () => {
-    navigation.push(NavigatorConstant.LOGIN_STACK.PASSWORD_RECOVERY);
-  };
-
-  const showRegister = () => {
-    navigation.push(NavigatorConstant.LOGIN_STACK.REGISTER);
-  };
-
   const showLandingUser = () => {
     navigation.replace(NavigatorConstant.NAVIGATOR.LANDING_USER);
   };
@@ -34,8 +26,6 @@ function Login() {
 
   return (
     <LoginUI
-      showRegister={showRegister}
-      showRecoveryPassword={showRecoveryPassword}
       showLandingUser={showLandingUser}
       showLoginInmobiliaria={showLoginInmobiliaria}
     />

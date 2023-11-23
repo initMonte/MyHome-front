@@ -1,8 +1,16 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet } from 'react-native';
+import {Pressable, Text, StyleSheet} from 'react-native';
 import Theme from '../../styles/Theme';
 
-const ButtonSelect = ({ text, borderRadius = 10, onPress, size = 'M', color = 'primaryInverted', image, selected }) => {
+const ButtonSelect = ({
+  text,
+  borderRadius = 10,
+  onPress,
+  size = 'M',
+  color = 'primaryInverted',
+  image,
+  selected,
+}) => {
   const button = StyleSheet.create({
     margin: 4,
     borderRadius: borderRadius,

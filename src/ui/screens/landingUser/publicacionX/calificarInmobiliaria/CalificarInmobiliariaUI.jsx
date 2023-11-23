@@ -1,36 +1,122 @@
-import React from 'react';
-import {View, Text, Pressable, StatusBar, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, View, Text, StyleSheet, Image} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+
 import Theme from '../../../../../styles/Theme';
 import IMAGES from '../../../../../assets/images/images';
-//import i18n from '../../../../assets/strings/I18n';
+import i18n from '../../../../../assets/strings/I18n';
 
-const CalificarInmobiliariaUI = ({}) => {
+import InputText from '../../../../components/inputText';
+import Button from '../../../../components/button';
+import StarSelector from '../../../../components/starSelector';
+
+const CalificarInmobiliariaUI = ({goBack}) => {
+  const {realEstate, realEstateAvatar} = useSelector(state => state.estate);
+
+  const [comment, setComment] = useState('');
+  const [stars, setStars] = useState('');
+
+  const handleComment = value => {
+    setComment(value);
+  };
+
+  const handleStars = value => {
+    setStars(value);
+    console.log(value);
+  };
+
+  const handleSend = () => {
+    goBack();
+  };
+
   return (
-    <View style={styles.container}>
-      <StatusBar
-        animated={true}
-        barStyle={'light-content'}
-        showHideTransition={'fade'}
-        hidden={false}
-      />
-      <IMAGES.SVG.LOGO width={380} height={230} />
-      <Text style={styles.text}>{'Pagina en construccion'}</Text>
-      <Text style={styles.text}>{'Estoy en CALIFICAR INMOBILIARIA'}</Text>
-    </View>
+    <ScrollView style={styles.generalContainer}>
+      <View style={styles.container}>
+        <Text style={styles.textH1}>{i18n.t('reserve_success')}</Text>
+        <Text style={styles.textDescription}>{i18n.t('thanks')}</Text>
+        <View style={styles.containerBody}>
+          <Text style={styles.textDescription}>{i18n.t('pleaseReview')}</Text>
+          <View style={styles.RowRealEstate}>
+            <Image
+              source={{uri: realEstateAvatar}}
+              style={styles.logoRealEstate}
+            />
+            <View style={styles.ColumnRealEstate}>
+              <Text style={styles.realStateName}>INTEGRAR CON BACK</Text>
+              <StarSelector changeValue={handleStars} />
+            </View>
+          </View>
+          <Text style={styles.textH2}>{i18n.t('Comment')}</Text>
+          <InputText
+            placeholder={i18n.t('placeholder_comment')}
+            changeValue={handleComment}
+            borderWidth={1}
+            borderRadius={8}
+            height={120}
+          />
+        </View>
+        <Button text={i18n.t('reserve')} onPress={() => handleSend()} />
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+  generalContainer: {
     backgroundColor: Theme.colors.WHITE,
   },
-  text: {
-    color: Theme.colors.BLACK,
+  container: {
+    padding: 12,
+    width: '100%',
+    alignItems: 'center',
+  },
+  textH1: {
+    color: Theme.colors.PRIMARY,
     fontSize: Theme.fonts.L,
+    fontWeight: Theme.fonts.BOLD,
+    marginTop: 24,
+  },
+  textDescription: {
+    color: Theme.colors.BLACK,
+    fontWeight: Theme.fonts.LIGHT,
+    marginBottom: 34,
+  },
+  containerBody: {
+    alignItems: 'flex-start',
+    width: '100%',
+    marginTop: 34,
+    marginBottom: 24,
+  },
+  textH2: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
+    marginLeft: 6,
+    marginTop: 24,
+  },
+  RowRealEstate: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    flexWrap: 'no-wrap',
+    columnGap: 16,
+  },
+  ColumnRealEstate: {
+    alignItems: 'center',
+    flexWrap: 'no-wrap',
+    rowGap: 8,
+  },
+  logoRealEstate: {
+    width: 70,
+    height: 70,
+    borderRadius: 45,
+    borderWidth: 1,
+    borderColor: Theme.colors.BLACK,
+  },
+  realStateName: {
+    color: Theme.colors.PRIMARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
   },
 });
 

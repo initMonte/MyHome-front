@@ -166,6 +166,15 @@ export default {
   placeholder_province: 'Provincia...',
   placeholder_country: 'País...',
   placeholder_title: 'Título...',
+  aboutToReserve: 'Esta por reservar este inmueble:',
+  toReserve_start:
+    'Para reservar debe abonar un 50% del costo del alquiler. Por lo que en caso de proseguir se le facturara ',
+  toReserve_end: ' + impuestos a su tarjeta.',
+  cardData: 'Datos de la tarjeta:',
+  cardName: 'Nombre en la tarjeta',
+  cardNumber: 'Numero de tarjeta',
+  cardCode: 'Codigo de seguridad',
+  cardExpiry: 'Fecha de vencimiento',
   question_type: 'Tipo de consulta',
   cantBeChanged: 'No puede ser cambiado.',
   date: 'Fecha y hora:',
@@ -178,8 +187,8 @@ export default {
   reserve: 'Reservar',
   reserve_success: '¡Reserva realizada!',
   thanks: '¡Gracias por confiar en nosotros!',
-  wantToReview:
-    'Si desea, puede calificar y dejar un comentario sobre la inmobiliaria para ayudar a futuros usuarios',
+  pleaseReview:
+    'Por favor, califique y deje un comentario sobre la inmobiliaria para ayudar a futuros usuarios',
   Comment: 'Comentario',
   send: 'Enviar',
   m2: 'm2',
