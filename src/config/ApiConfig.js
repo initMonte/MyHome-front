@@ -3,6 +3,9 @@ export const config = {
   TIME_OUT: 50000,
 };
 
+const apiKey = '700a8426-1ae9-4cce-9d5c-2b436fb2fe70';
+export const styleUrl = `https://tiles.stadiamaps.com/styles/alidade_smooth.json?api_key=${apiKey}`;
+
 export const urlApi = {
   user: {
     pruebaUser: 'users/prueba-usuario',

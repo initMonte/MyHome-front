@@ -71,7 +71,7 @@ const MisDatosUI = ({goBack}) => {
   };
 
   const handleSubmit = () => {
-    if (isNaN(telephoneValue)) {
+    if (telephoneValue && isNaN(telephoneValue)) {
       setErrorTelephoneValue(i18n.t('invalidNumber'));
       handleFocus(inputRefTelephoneValue);
       return false;
@@ -79,7 +79,7 @@ const MisDatosUI = ({goBack}) => {
       setErrorTelephoneValue(false);
     }
 
-    if (isNaN(telephone2Value)) {
+    if (telephone2Value && isNaN(telephone2Value)) {
       setErrorTelephone2Value(i18n.t('invalidNumber'));
       handleFocus(inputRefTelephone2Value);
       return false;
@@ -92,7 +92,7 @@ const MisDatosUI = ({goBack}) => {
         email,
         email2Value,
         nameValue,
-        surname,
+        surnameValue,
         telephoneValue,
         telephone2Value,
         selectedImageUri,
@@ -119,16 +119,6 @@ const MisDatosUI = ({goBack}) => {
           console.error('Error setting up the request:', error.message);
         }
       });
-  };
-
-  const showToastWithGravityAndOffset = () => {
-    ToastAndroid.showWithGravityAndOffset(
-      i18n.t('passwordChanged'),
-      ToastAndroid.SHORT,
-      ToastAndroid.TOP,
-      0,
-      80,
-    );
   };
 
   return (

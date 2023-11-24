@@ -59,10 +59,7 @@ const PerfilUI = ({
       .deleteUser()
       .then(response => {
         // Delete exitoso
-        dispatch(logoutAction());
-        dispatch(logoutEstate());
-        dispatch(logoutUser());
-        showLogin();
+        handleLogout();
       })
       .catch(error => {
         if (error.response) {

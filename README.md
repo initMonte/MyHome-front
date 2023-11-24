@@ -78,3 +78,6 @@ yarn start
 - Endpoint loginGoogle
 - Componentes starSelector y starShow
 - Modificaciones en ventanas varias de la parte de PublicacionX
+- Creada pantalla de Filtros de Busqueda **(No terminada)**
+- Modificada la navegacion levemente
+- Ahora se puede loguear, desloguear, eliminar cuenta, y hacer update de cuenta de usuarios normales **(Bug el loguear cuando crea la cuenta y luego intenta loguearse)**

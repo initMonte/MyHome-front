@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import Home from '../ui/screens/landingUser/home/Home';
+import UserHomeNavigator from './UserHomeNavigator';
 import UserReservasNavigator from './UserReservasNavigator';
 import UserFavoritosNavigator from './UserFavoritosNavigator';
 import UserPefilNavigator from './UserPerfilNavigator';
@@ -26,7 +26,7 @@ function LandingUserStackNavigator() {
       }}>
       <Tab.Screen
         name={NavigatorConstant.LANDING_USER_STACK.HOME}
-        component={Home}
+        component={UserHomeNavigator}
         options={{
           headerShown: false,
           tabBarLabel: i18n.t('tabs.home'),

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
 import {Image} from 'react-native-svg';
+import {useDispatch} from 'react-redux';
 import {
   GoogleSignin,
   statusCodes,
@@ -10,9 +11,13 @@ import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
 import IMAGES from '../../../../assets/images/images';
 import Button from '../../../components/button';
+
+import {loginAction} from '../../../../redux/slices/AuthReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 const LoginUI = ({showLandingUser, showLoginInmobiliaria}) => {
+  const dispatch = useDispatch();
+
   const handleSignInGoogle = async () => {
     try {
       console.log('1');
@@ -21,18 +26,17 @@ const LoginUI = ({showLandingUser, showLoginInmobiliaria}) => {
       const userInfo = await GoogleSignin.signIn();
       console.log('3');
       console.log(userInfo);
-      //dispatch(loginAction(userInfo.));
-      /*
-      const response = await userWS.loginGogle(
+      const response = await userWS.loginGoogle(
         userInfo.user.email,
         userInfo.user.givenName,
         userInfo.user.familyName,
+        userInfo.user.photo,
       );
       console.log(response);
-      */
+      await dispatch(loginAction(response));
       showLandingUser();
     } catch (error) {
-      console.error('Error caught:', error);
+      console.log('Error caught:', error);
     }
   };
 
