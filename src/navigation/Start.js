@@ -8,7 +8,7 @@ import SplashScreen from 'react-native-splash-screen';
 import {setClientToken} from '../networking/api/Api';
 import {userWS} from '../networking/api/endpoints/UserEndpoints';
 import {meAction} from '../redux/slices/UserReducer';
-import {logoutAction} from '../redux/slices/AuthReducer';
+import {logoutAction, saveRoleAction} from '../redux/slices/AuthReducer';
 
 import RootNavigator from './RootNavigator';
 
@@ -31,6 +31,7 @@ function Start() {
           console.log(jwt);
           const response = await userWS.me();
           dispatch(meAction(response));
+          dispatch(saveRoleAction(response));
           console.log(response.data);
         } catch (error) {
           if (error.response && error.response.status === 403) {

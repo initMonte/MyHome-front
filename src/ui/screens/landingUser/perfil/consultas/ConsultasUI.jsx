@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   View,
@@ -8,15 +8,81 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Theme from '../../../../../styles/Theme';
 import i18n from '../../../../../assets/strings/I18n';
 import IMAGES from '../../../../../assets/images/images';
 import Button from '../../../../components/button';
+import {contactWS} from '../../../../../networking/api/endpoints/ContactEndpoints';
+import {saveContactAction} from '../../../../../redux/slices/ContactReducer';
 
 const ConsultasUI = ({goBack, showConsultaX}) => {
+  const dispatch = useDispatch();
   const {name, avatarName} = useSelector(state => state.user);
+  const [contacts, setContacts] = useState();
+  const [contactsLen, setContactsLen] = useState();
+
+  useEffect(() => {
+    contactWS
+      .getContacts()
+      .then(response => {
+        // Get exitoso
+        console.log(response.data.contacts);
+        setContacts(response.data.contacts);
+        setContactsLen(response.data.contacts.length);
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  }, []);
+
+  const handleContactClick = contactItem => {
+    console.log('--------____________------------');
+    console.log(contactItem);
+    console.log('--------____________------------');
+    dispatch(saveContactAction(contactItem));
+    showConsultaX();
+  };
+
+  const handleDate = date => {
+    const dateAux = new Date(date);
+    const day = dateAux.getDate().toString().padStart(2, '0');
+    const month = (dateAux.getMonth() + 1).toString().padStart(2, '0');
+    const year = dateAux.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  };
+
+  const MapContacts = ({x, show}) => (
+    <>
+      {x.map(contactItem => (
+        <Pressable onPress={() => show(contactItem)} style={styles.button}>
+          <Image source={{uri: avatarName}} style={styles.questionsPhoto} />
+          <View>
+            <Text style={styles.textButton}>{name}</Text>
+            <Text style={styles.textDescription}>
+              {handleDate(contactItem.date)}
+            </Text>
+          </View>
+        </Pressable>
+      ))}
+    </>
+  );
+
   return (
     <View style={styles.generalContainer}>
       <StatusBar
@@ -33,82 +99,28 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
         </View>
         <View>
           <Text style={styles.textH1}>{name}</Text>
-          <Text style={styles.text}>{'3 ' + i18n.t('questions')}</Text>
+          {contacts ? (
+            <Text style={styles.text}>
+              {contactsLen + ' ' + i18n.t('questions')}
+            </Text>
+          ) : null}
         </View>
       </View>
       <Text style={styles.textH1}>{i18n.t('questions')}</Text>
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
-          <Pressable onPress={() => showConsultaX()} style={styles.button}>
-            <Image
-              source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-              style={styles.questionsPhoto}
-            />
-            <View>
-              <Text style={styles.textButton}>{'Alguien Lopez'}</Text>
-              <Text style={styles.textDescription}>{'11/11/1111'}</Text>
-            </View>
-          </Pressable>
-          <Pressable onPress={() => showConsultaX()} style={styles.button}>
-            <Image
-              source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-              style={styles.questionsPhoto}
-            />
-            <View>
-              <Text style={styles.textButton}>{'Alguien Lopez'}</Text>
-              <Text style={styles.textDescription}>{'11/11/1111'}</Text>
-            </View>
-          </Pressable>
-          <Pressable onPress={() => showConsultaX()} style={styles.button}>
-            <Image
-              source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-              style={styles.questionsPhoto}
-            />
-            <View>
-              <Text style={styles.textButton}>{'Alguien Lopez'}</Text>
-              <Text style={styles.textDescription}>{'11/11/1111'}</Text>
-            </View>
-          </Pressable>
-          <Pressable onPress={() => showConsultaX()} style={styles.button}>
-            <Image
-              source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-              style={styles.questionsPhoto}
-            />
-            <View>
-              <Text style={styles.textButton}>{'Alguien Lopez'}</Text>
-              <Text style={styles.textDescription}>{'11/11/1111'}</Text>
-            </View>
-          </Pressable>
-          <Pressable onPress={() => showConsultaX()} style={styles.button}>
-            <Image
-              source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-              style={styles.questionsPhoto}
-            />
-            <View>
-              <Text style={styles.textButton}>{'Alguien Lopez'}</Text>
-              <Text style={styles.textDescription}>{'11/11/1111'}</Text>
-            </View>
-          </Pressable>
-          <Pressable onPress={() => showConsultaX()} style={styles.button}>
-            <Image
-              source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-              style={styles.questionsPhoto}
-            />
-            <View>
-              <Text style={styles.textButton}>{'Alguien Lopez'}</Text>
-              <Text style={styles.textDescription}>{'11/11/1111'}</Text>
-            </View>
-          </Pressable>
-          <Pressable onPress={() => showConsultaX()} style={styles.button}>
-            <Image
-              source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-              style={styles.questionsPhoto}
-            />
-            <View>
-              <Text style={styles.textButton}>{'Alguien Lopez'}</Text>
-              <Text style={styles.textDescription}>{'11/11/1111'}</Text>
-            </View>
-          </Pressable>
+          {contacts ? (
+            <MapContacts x={contacts} show={handleContactClick} />
+          ) : (
+            <>
+              <Text style={styles.textNoQuestions}>
+                {i18n.t('noQuestionsFound_start')}
+              </Text>
+              <Text style={styles.text2NoQuestions}>
+                {i18n.t('noQuestionsFound_end')}
+              </Text>
+            </>
+          )}
         </View>
       </ScrollView>
       <Button
@@ -190,6 +202,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 45,
     borderColor: Theme.colors.SECONDARY,
+  },
+  textNoQuestions: {
+    alignSelf: 'center',
+    marginTop: 16,
+    marginBottom: 8,
+    color: Theme.colors.WHITE,
+    fontSize: Theme.fonts.M,
+    fontWeight: Theme.fonts.BOLD,
+  },
+  text2NoQuestions: {
+    alignSelf: 'center',
+    color: Theme.colors.WHITE,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.SEMIBOLD,
   },
 });
 

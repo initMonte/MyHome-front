@@ -39,6 +39,11 @@ export const estateReducer = createSlice({
     videoUrl: '',
     realEstate: '',
     realEstateAvatar: '',
+    realEstateName: '',
+    realEstateTelephone1: '',
+    realEstateTelephone2: '',
+    realEstateEmail1: '',
+    realEstateEmail2: '',
   },
   reducers: {
     saveEstateAction: (state, response) => {
@@ -79,6 +84,14 @@ export const estateReducer = createSlice({
       state.videoUrl = response.payload.videoUrl;
       state.realEstate = response.payload.realEstate;
     },
+    saveRealEstateAction: (state, response) => {
+      state.realEstateAvatar = response.payload.data.user.avatar;
+      state.realEstateName = response.payload.data.user.name;
+      state.realEstateTelephone1 = response.payload.data.user.telephone;
+      state.realEstateTelephone2 = response.payload.data.user.telephone2;
+      state.realEstateEmail1 = response.payload.data.user.email;
+      state.realEstateEmail2 = response.payload.data.user.email2;
+    },
     saveRealEstateAvatarAction: (state, response) => {
       console.log('SAVE REAL ESTATE AVATAR');
       state.realEstateAvatar = response.payload.data.user.avatar;
@@ -118,9 +131,20 @@ export const estateReducer = createSlice({
       state.images = [];
       state.realEstate = '';
       state.realEstateAvatar = '';
+      state.realEstateAvatar = '';
+      state.realEstateName = '';
+      state.realEstateTelephone1 = '';
+      state.realEstateTelephone2 = '';
+      state.realEstateEmail1 = '';
+      state.realEstateEmail2 = '';
     },
   },
 });
 
-export const {saveEstateAction, saveRealEstateAvatarAction, logoutEstate} = estateReducer.actions;
+export const {
+  saveEstateAction,
+  saveRealEstateAction,
+  saveRealEstateAvatarAction,
+  logoutEstate,
+} = estateReducer.actions;
 export default estateReducer.reducer;

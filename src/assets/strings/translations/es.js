@@ -59,6 +59,10 @@ export default {
   noStatesFound_addFavEnd: 'a favoritos para verlas aqui!',
   noStatesFound_createStart: '¡Creá una propiedad ',
   noStatesFound_createEnd: 'para verla aqui!',
+  noQuestionsFound_start:
+    'No se encontro ninguna consulta... ¡Primero debe realizar alguna!',
+  noQuestionsFound_end:
+    'Vuelva a esta seccion una vez haya realizado preguntas en alguna propiedad',
   logout: 'Cerrar sesión',
   deleteAccount: 'Eliminar cuenta',
   seeOpinions: 'Ver opiniones',
@@ -179,7 +183,7 @@ export default {
   cardExpiry: 'Fecha de vencimiento',
   question_type: 'Tipo de consulta',
   cantBeChanged: 'No puede ser cambiado.',
-  date: 'Fecha y hora:',
+  date: 'Fecha y turno:',
   views: 'vistas',
   usd: 'USD',
   ars: 'ARS',

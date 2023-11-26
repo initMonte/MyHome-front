@@ -40,20 +40,6 @@ const LoginUI = ({showLandingUser, showLoginInmobiliaria}) => {
     }
   };
 
-  const getCurrentUser = async () => {
-    const currentUser = await GoogleSignin.getCurrentUser();
-    console.log(currentUser);
-  };
-
-  const signOut = async () => {
-    try {
-      await GoogleSignin.signOut();
-      console.log('Usuario deslogueado, comprobar con el boton de "Ver user"');
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -72,22 +58,6 @@ const LoginUI = ({showLandingUser, showLoginInmobiliaria}) => {
           image={<IMAGES.SVG.GOOGLE width={90} height={90} />}
           onPress={() => {
             handleSignInGoogle();
-          }}
-        />
-        <Button
-          text={'Ver user'}
-          size="XL"
-          image={<IMAGES.SVG.GOOGLE width={90} height={90} />}
-          onPress={() => {
-            getCurrentUser();
-          }}
-        />
-        <Button
-          text={'logout'}
-          size="XL"
-          image={<IMAGES.SVG.GOOGLE width={90} height={90} />}
-          onPress={() => {
-            signOut();
           }}
         />
         <Button

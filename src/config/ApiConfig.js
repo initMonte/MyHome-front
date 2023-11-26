@@ -41,9 +41,11 @@ export const urlApi = {
     pruebaEstate: 'estates/prueba-estate',
     createEstate: 'estates/',
     getEstate: 'estates/', // Pasarle despues el id
+    getNearEstates: 'estates/estatesNearBy/search',
     deleteEstate: 'estates/', // Pasarle despues el id
     getEstateByUser: 'estates/user/', // Pasarle despues el id
     getImage: 'estates/media/', // Pasarle despues el nombre de la imagen
     updateEstate: 'estates/', // Pasarle despues el id
+    bookEstate: 'estates/reservation/', // Pasarle despues el id del estate
   },
 };

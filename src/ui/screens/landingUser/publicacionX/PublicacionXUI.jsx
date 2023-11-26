@@ -18,7 +18,7 @@ import IMAGES from '../../../../assets/images/images';
 import PhotoViewer from '../../../components/photoViewer';
 import StarShow from '../../../components/starShow';
 
-import {saveRealEstateAvatarAction} from '../../../../redux/slices/EstateReducer';
+import {saveRealEstateAction} from '../../../../redux/slices/EstateReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 const PublicacionXUI = ({
@@ -65,13 +65,18 @@ const PublicacionXUI = ({
     videoUrl,
     realEstate,
     realEstateAvatar,
+    realEstateName,
+    realEstateTelephone1,
+    realEstateTelephone2,
+    realEstateEmail1,
+    realEstateEmail2,
   } = useSelector(state => state.estate);
 
   useEffect(() => {
     const fetchAvatar = async () => {
       try {
         const response = await userWS.getUser(realEstate);
-        dispatch(saveRealEstateAvatarAction(response));
+        dispatch(saveRealEstateAction(response));
       } catch (error) {
         if (error.response && error.response.status === 403) {
           console.error('Access denied. You are not authenticated.');
@@ -382,7 +387,7 @@ const PublicacionXUI = ({
                 />
               )}
               <>
-                <Text style={styles.realStateName}>INTEGRAR CON BACK</Text>
+                <Text style={styles.realStateName}>{realEstateName}</Text>
               </>
               <Pressable
                 style={styles.circleButton}
@@ -397,12 +402,32 @@ const PublicacionXUI = ({
                 </Pressable>
               ) : null}
             </View>
-            <Text style={styles.textBottom}>
-              {i18n.t('phone') + ' ' + 'INTEGRAR TELEFONO'}
-            </Text>
-            <Text style={styles.textBottom}>
-              {i18n.t('email') + ' ' + 'INTEGRAR EMAIL'}
-            </Text>
+            {realEstateTelephone2 ? (
+              <Text style={styles.textBottom}>
+                {i18n.t('phone') +
+                  ' ' +
+                  realEstateTelephone1 +
+                  ' / ' +
+                  realEstateTelephone2}
+              </Text>
+            ) : (
+              <Text style={styles.textBottom}>
+                {i18n.t('phone') + ' ' + realEstateTelephone1}
+              </Text>
+            )}
+            {realEstateEmail2 && realEstateEmail1 !== realEstateEmail2 ? (
+              <Text style={styles.textBottom}>
+                {i18n.t('email') +
+                  ' ' +
+                  realEstateEmail1 +
+                  ' / ' +
+                  realEstateEmail2}
+              </Text>
+            ) : (
+              <Text style={styles.textBottom}>
+                {i18n.t('email') + ' ' + realEstateEmail1}
+              </Text>
+            )}
           </View>
           <View style={styles.containerMargin}>
             <Text style={styles.textH3}>{i18n.t('reviewsAndComments')}</Text>
@@ -589,13 +614,13 @@ const styles = StyleSheet.create({
     rowGap: 8,
   },
   logoBottom: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     borderRadius: 45,
   },
   realStateName: {
     color: Theme.colors.PRIMARY,
-    fontSize: Theme.fonts.SM,
+    fontSize: Theme.fonts.M,
     fontWeight: Theme.fonts.BOLD,
   },
   circleButton: {

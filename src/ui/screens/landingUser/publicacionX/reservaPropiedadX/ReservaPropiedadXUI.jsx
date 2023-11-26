@@ -8,6 +8,7 @@ import {
   StatusBar,
   StyleSheet,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import Theme from '../../../../../styles/Theme';
@@ -17,8 +18,27 @@ import i18n from '../../../../../assets/strings/I18n';
 import Button from '../../../../components/button';
 import InputText from '../../../../components/inputText';
 import CardState from '../../../../components/cardState';
+import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
 
 const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
+  const {
+    id,
+    description,
+    street,
+    neighborhood,
+    state,
+    coveredSquareMeters,
+    semiUncoveredSquaremeters,
+    uncoveredSquareMeters,
+    roomsAmount,
+    bathroomsAmount,
+    bedroomsAmount,
+    price,
+    currency,
+    expenses,
+    images,
+    realEstate,
+  } = useSelector(state => state.estate);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [code, setCode] = useState('');
@@ -64,7 +84,37 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
   };
 
   const handleReserve = () => {
-    showCalificarInmobiliaria();
+    estatesWS
+      .bookEstate(id)
+      .then(response => {
+        // Patch exitoso
+        console.log(response.data);
+        showCalificarInmobiliaria();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
+  const prettifyCurrency = () => {
+    if (currency === 'peso') {
+      return 'ARS';
+    } else {
+      return 'USD';
+    }
   };
 
   return (
@@ -73,22 +123,26 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
         <Text style={styles.textH1}>{i18n.t('aboutToReserve')}</Text>
         <CardState
           size="L"
-          image={IMAGES.OTHERS.TEMPORAL_IMAGE}
-          tittle="Av. Gral. Las Heras 2100"
-          ubication="RECOLETA, CABA"
-          currency="USD"
-          amb={2}
-          dorm={1}
-          bath={3}
-          m2={23}
-          description="Blablaa blabalbal lablbal lorem ipsum"
-          price={72500}
-          expenses={24000}
+          image={{uri: images[0]}}
+          tittle={street}
+          ubication={neighborhood + ', ' + state}
+          currency={prettifyCurrency()}
+          amb={roomsAmount}
+          dorm={bedroomsAmount}
+          bath={bathroomsAmount}
+          m2={
+            coveredSquareMeters +
+            semiUncoveredSquaremeters +
+            uncoveredSquareMeters
+          }
+          description={description}
+          price={price}
+          expenses={expenses}
         />
         <Text style={styles.textDescription}>
           {i18n.t('toReserve_start')}
           <Text style={styles.textPrice}>
-            {'PRECIO'}
+            {prettifyCurrency() + ' ' + price / 2}
             <Text style={styles.textDescription}>
               {i18n.t('toReserve_end')}
             </Text>

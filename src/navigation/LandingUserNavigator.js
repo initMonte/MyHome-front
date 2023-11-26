@@ -49,6 +49,7 @@ function LandingUserStackNavigator() {
         name={NavigatorConstant.LANDING_USER_STACK.FAVORITOS}
         component={UserFavoritosNavigator}
         options={{
+          headerShown: false,
           tabBarLabel: i18n.t('tabs.favoritos'),
           tabBarIcon: ({color}) => (
             <VectorIcon name="heart-outline" color={color} size={30} />

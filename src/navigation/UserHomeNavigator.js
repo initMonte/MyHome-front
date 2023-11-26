@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Home from '../ui/screens/landingUser/home/Home';
 import FiltroBusqueda from '../ui/screens/landingUser/home/filtroBusqueda/FiltroBusqueda';
+import UserPublicacionXNavigator from './UserPublicacionXNavigator';
 
 import NavigatorConstant from './NavigatorConstant';
 
@@ -20,6 +21,10 @@ function UserReservasNavigator() {
         name={NavigatorConstant.USER_HOME_STACK.FILTROS_BUSQUEDA}
         component={FiltroBusqueda}
         options={{headerShown: true}}
+      />
+      <Stack.Screen
+        name={NavigatorConstant.USER_HOME_STACK.PUBLICACION_X}
+        component={UserPublicacionXNavigator}
       />
     </Stack.Navigator>
   );

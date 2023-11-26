@@ -28,6 +28,7 @@ const LANDING_INMOBILIARIA_STACK = {
 const USER_HOME_STACK = {
   HOME: 'Home',
   FILTROS_BUSQUEDA: 'Buscar Propiedades',
+  PUBLICACION_X: 'Publicacion X Nav',
 };
 const FAVORITOS_STACK = {
   ALQUILER: 'ALQUILER',

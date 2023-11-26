@@ -15,6 +15,11 @@ function UserFavoritosNavigator() {
       }
       screenOptions={{headerShown: false}}>
       <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTitle: 'Favoritos',
+          headerTitleAlign: 'center',
+        }}
         name={NavigatorConstant.USER_FAVORITOS_STACK.FAVORITOS_TOP_TAB}
         component={Favoritos}
       />

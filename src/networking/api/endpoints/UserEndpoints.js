@@ -90,4 +90,13 @@ export let userWS = {
       avatar,
     });
   },
+  addFavorite: async function (estateId) {
+    return await Api.post(urlApi.user.addFavorite + estateId);
+  },
+  deleteFavorite: async function (estateId) {
+    return await Api.delete(urlApi.user.unFavorite + estateId);
+  },
+  getFavorites: async function () {
+    return await Api.get(urlApi.user.viewFavorites);
+  },
 };

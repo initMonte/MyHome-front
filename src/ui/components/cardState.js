@@ -11,6 +11,7 @@ const CardState = ({
   size = 'S',
   image,
   favButton = false,
+  addedFav = false,
   tittle,
   description,
   ubication,
@@ -21,7 +22,8 @@ const CardState = ({
   bath,
   m2,
   logoRealState,
-  onPressFav,
+  onPressAddFav,
+  onPressUnFav,
   currency,
 }) => {
   const generalContainer = StyleSheet.create({
@@ -184,18 +186,31 @@ const CardState = ({
     },
   });
 
+  const manageFavButton = () => {
+    if (favButton) {
+      return addedFav ? (
+        <Pressable onPress={onPressUnFav} styles={favLocation[size]}>
+          <IMAGES.SVG.FAV_BUTTON_ADDED
+            style={[favStyle[size], favLocation[size]]}
+          />
+        </Pressable>
+      ) : (
+        <Pressable onPress={onPressAddFav} styles={favLocation[size]}>
+          <IMAGES.SVG.FAV_BUTTON_NOT_ADDED
+            style={[favStyle[size], favLocation[size]]}
+          />
+        </Pressable>
+      );
+    }
+    return null;
+  };
+
   if (size === 'L') {
     return (
       <View style={[generalContainer, containerSizes[size]]}>
         <Pressable onPress={onPress}>
           <Image source={image} style={[photoGeneral, photo[size]]} />
-          {favButton ? (
-            <Pressable onPress={onPressFav} styles={favLocation[size]}>
-              <IMAGES.SVG.FAV_BUTTON_NOT_ADDED
-                style={[favStyle[size], favLocation[size]]}
-              />
-            </Pressable>
-          ) : null}
+          {manageFavButton()}
           <View style={[containerCaracts, containerMargin]}>
             <View>
               <Text style={fontH1[size]}>{tittle + ', ' + ubication}</Text>
@@ -257,13 +272,7 @@ const CardState = ({
       <View style={[generalContainer, containerSizes[size]]}>
         <Pressable onPress={onPress}>
           <Image source={image} style={[photoGeneral, photo[size]]} />
-          {favButton ? (
-            <Pressable onPress={onPressFav} styles={favLocation[size]}>
-              <IMAGES.SVG.FAV_BUTTON_NOT_ADDED
-                style={[favStyle[size], favLocation[size]]}
-              />
-            </Pressable>
-          ) : null}
+          {manageFavButton()}
           <View style={containerCaracts}>
             <View style={containerCaractsColumn}>
               <Text style={fontH1[size]}>{ubication}</Text>

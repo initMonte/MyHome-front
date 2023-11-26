@@ -73,11 +73,16 @@ yarn start
 - Implementando creacion de Propiedades
 - Implementado Login y Logout de Google para usuarios
 - Implementada navegacion de User
-- Creadas ventanas **(no terminado)** de perfil en usuario y de favoritos
-- Creadas ventanas de PublicacionX **(No terminado)**
+- Creadas ventanas de perfil en usuario y de favoritos
+- Creadas ventanas de PublicacionX
 - Endpoint loginGoogle
 - Componentes starSelector y starShow
 - Modificaciones en ventanas varias de la parte de PublicacionX
 - Creada pantalla de Filtros de Busqueda **(No terminada)**
 - Modificada la navegacion levemente
-- Ahora se puede loguear, desloguear, eliminar cuenta, y hacer update de cuenta de usuarios normales **(Bug el loguear cuando crea la cuenta y luego intenta loguearse)**
+- Ahora se puede loguear, desloguear, eliminar cuenta, y hacer update de cuenta de usuarios normales
+- Creadas llamadas a endpoints de Contacto y el reducer de Contacto
+- Modificado Login a su version "final"
+- Creada logica para que automaticamente te lleve al landing correspondiente a tu tipo de usuario si estas logueado
+- Corregido bug de navegacion
+- Ventanas de Home, Favoritos, Consultas, ConsultaX **(no terminada)**, Consultar, Reservar hechas

@@ -21,6 +21,7 @@ export const authReducer = createSlice({
     user: {
       id: '',
       email: '',
+      role: '',
     },
     session: {
       appId: '',
@@ -36,12 +37,16 @@ export const authReducer = createSlice({
       state.user.id = token.payload.data.user._id;
       state.user.email = token.payload.data.user.email;
     },
+    saveRoleAction: (state, token) => {
+      state.user.role = token.payload.data.user.role;
+    },
     logoutAction: state => {
       setClientToken('');
       state.session.appId = '';
       state.session.jwt = '';
       state.user.id = '';
       state.user.email = '';
+      state.user.role = '';
     },
   },
   extraReducers: builder => {
@@ -64,5 +69,5 @@ export const authReducer = createSlice({
   },
 });
 
-export const {loginAction, logoutAction} = authReducer.actions;
+export const {loginAction, saveRoleAction, logoutAction} = authReducer.actions;
 export default authReducer.reducer;

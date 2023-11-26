@@ -1,12 +1,6 @@
 import React, {useState} from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Pressable,
-  StatusBar,
-  StyleSheet,
-} from 'react-native';
+import {ScrollView, View, Text, StatusBar, StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from 'react-native-date-picker';
 
@@ -17,24 +11,77 @@ import i18n from '../../../../../assets/strings/I18n';
 import Button from '../../../../components/button';
 import InputText from '../../../../components/inputText';
 import CardState from '../../../../components/cardState';
+import {contactWS} from '../../../../../networking/api/endpoints/ContactEndpoints';
 
 const ContactoPropiedadXUI = ({goBack}) => {
-  const [message, setMessage] = useState();
+  const {
+    id,
+    description,
+    street,
+    neighborhood,
+    state,
+    coveredSquareMeters,
+    semiUncoveredSquaremeters,
+    uncoveredSquareMeters,
+    roomsAmount,
+    bathroomsAmount,
+    bedroomsAmount,
+    price,
+    currency,
+    expenses,
+    images,
+    realEstate,
+  } = useSelector(state => state.estate);
+  const [comment, setMessage] = useState();
   const [openConsulta, setOpenConsulta] = useState(false);
-  const [consulta, setConsulta] = useState('Consulta');
+  const [type, setConsulta] = useState('question');
   const [itemsConsulta, setItemsConsulta] = useState([
-    {label: 'Consulta', value: 'Consulta'},
-    {label: 'Visita programada', value: 'Visita programada'},
+    {label: 'Consulta', value: 'question'},
+    {label: 'Visita programada', value: 'visit'},
   ]);
   const [date, setDate] = useState(new Date());
   const [openDate, setOpenDate] = useState(false);
+  const [openTurno, setOpenTurno] = useState(false);
+  const [turno, setTurno] = useState('morning');
+  const [itemsTurno, setItemsTurno] = useState([
+    {label: 'Mañana', value: 'morning'},
+    {label: 'Tarde', value: 'afternoon'},
+  ]);
 
   const handleMessage = value => {
     setMessage(value);
   };
 
   const handleSend = () => {
-    goBack();
+    if (type === 'question') {
+      let aux = new Date();
+      let aux2 = new Date(aux);
+      aux2.setDate(aux.getDate() + 1);
+      setDate(aux);
+    }
+    contactWS
+      .createContact(realEstate, type, date, comment, turno)
+      .then(response => {
+        // Post exitoso
+        console.log(response.data);
+        goBack();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
   };
 
   return (
@@ -48,43 +95,61 @@ const ContactoPropiedadXUI = ({goBack}) => {
         />
         <CardState
           size="L"
-          image={IMAGES.OTHERS.TEMPORAL_IMAGE}
-          tittle="Av. Gral. Las Heras 2100"
-          ubication="RECOLETA, CABA"
-          currency="USD"
-          amb={2}
-          dorm={1}
-          bath={3}
-          m2={23}
-          description="Blablaa blabalbal lablbal lorem ipsum"
-          price={72500}
-          expenses={24000}
+          image={{uri: images[0]}}
+          tittle={street}
+          ubication={neighborhood + ', ' + state}
+          currency={currency}
+          amb={roomsAmount}
+          dorm={bedroomsAmount}
+          bath={bathroomsAmount}
+          m2={
+            coveredSquareMeters +
+            semiUncoveredSquaremeters +
+            uncoveredSquareMeters
+          }
+          description={description}
+          price={price}
+          expenses={expenses}
         />
         <View style={styles.container2}>
           <Text style={styles.textH3}>{i18n.t('question_type')}</Text>
           <DropDownPicker
             open={openConsulta}
-            value={consulta}
+            value={type}
             items={itemsConsulta}
             setOpen={setOpenConsulta}
             setValue={setConsulta}
             setItems={setItemsConsulta}
           />
-          {consulta === 'Visita programada' ? (
+          {type === 'visit' ? (
             <>
               <Text style={styles.textH3}>{i18n.t('date')}</Text>
-              <Button
-                text={i18n.t('select')}
-                color={'primaryInverted'}
-                onPress={() => setOpenDate(true)}
-              />
+              <View style={styles.containerColumn}>
+                <Button
+                  text={i18n.t('select')}
+                  color={'primaryInverted'}
+                  onPress={() => setOpenDate(true)}
+                />
+                <DropDownPicker
+                  open={openTurno}
+                  value={turno}
+                  items={itemsTurno}
+                  setOpen={setOpenTurno}
+                  setValue={setTurno}
+                  setItems={setItemsTurno}
+                  containerStyle={{
+                    width: '40%',
+                  }}
+                />
+              </View>
             </>
           ) : null}
           <DatePicker
             modal
-            open={openDate}
-            date={date}
             minimumDate={new Date()}
+            open={openDate}
+            mode="date"
+            date={date}
             minuteInterval={30}
             onConfirm={date => {
               setOpenDate(false);

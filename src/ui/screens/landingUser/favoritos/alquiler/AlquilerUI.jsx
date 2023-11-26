@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {ScrollView, View, StatusBar, StyleSheet, Text} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {saveEstateAction} from '../../../../../redux/slices/EstateReducer';
-import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
 import Theme from '../../../../../styles/Theme';
 import CardState from '../../../../components/cardState';
 import IMAGES from '../../../../../assets/images/images';
 import i18n from '../../../../../assets/strings/I18n';
+import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
 
 const MapEstates = ({x, show}) => (
   <>
@@ -35,18 +35,17 @@ const MapEstates = ({x, show}) => (
   </>
 );
 
-const AlquilerUI = ({}) => {
-  const [estates, setEstates] = useState();
-  const id = useSelector(state => state.user.id);
+const AlquilerUI = ({showPublicacionX}) => {
+  const [estatesFavs, setEstatesFavs] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    estatesWS
-      .getEstatesByUserId(id)
+    userWS
+      .getFavorites()
       .then(response => {
         // Get exitoso
         //console.log(response.data.estates);
-        setEstates(response.data.estates);
+        setEstatesFavs(response.data.estates);
       })
       .catch(error => {
         if (error.response) {
@@ -64,7 +63,7 @@ const AlquilerUI = ({}) => {
           console.error('Error setting up the request:', error.message);
         }
       });
-  }, [id]);
+  }, []);
 
   const handleCardStateClick = estateItem => {
     console.log('--------____________------------');
@@ -83,8 +82,9 @@ const AlquilerUI = ({}) => {
           showHideTransition={'fade'}
           hidden={false}
         />
-        {estates && estates.some(item => item.rentOrSale === 'alquiler') ? (
-          <MapEstates x={estates} show={handleCardStateClick} />
+        {estatesFavs &&
+        estatesFavs.some(item => item.rentOrSale === 'alquiler') ? (
+          <MapEstates x={estatesFavs} show={handleCardStateClick} />
         ) : (
           <View style={styles.containerNoImage}>
             <IMAGES.SVG.LOGO_PLACEHOLDER width={380} height={230} />

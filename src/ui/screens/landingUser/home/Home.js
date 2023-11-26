@@ -12,7 +12,16 @@ function Home() {
     navigation.push(NavigatorConstant.USER_HOME_STACK.FILTROS_BUSQUEDA);
   };
 
-  return <HomeUI showFiltrosBusqueda={showFiltrosBusqueda} />;
+  const showPublicacionX = () => {
+    navigation.push(NavigatorConstant.USER_HOME_STACK.PUBLICACION_X);
+  };
+
+  return (
+    <HomeUI
+      showFiltrosBusqueda={showFiltrosBusqueda}
+      showPublicacionX={showPublicacionX}
+    />
+  );
 }
 
 export default Home;

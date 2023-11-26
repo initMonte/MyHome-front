@@ -7,11 +7,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import authReducer from './slices/AuthReducer';
 import userReducer from './slices/UserReducer';
 import estateReducer from './slices/EstateReducer';
+import contactReducer from './slices/ContactReducer';
 
 const reducers = combineReducers({
   auth: authReducer,
   user: userReducer,
   estate: estateReducer,
+  contact: contactReducer,
 });
 const persistConfig = {
   key: 'root',

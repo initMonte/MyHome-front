@@ -176,10 +176,23 @@ export let estatesWS = {
       },
     });
   },
+  getNearEstates: async function (latitude, longitude) {
+    console.log('ESTOY EN EL ENPOINT DE NEAR ESTATE');
+    console.log('LATITUDE: ' + latitude);
+    console.log('LONGITUDE: ' + longitude);
+    const url = `${urlApi.estate.getNearEstates}?latitude=${latitude}&longitude=${longitude}`;
+    return await Api.get(url);
+  },
+  getEstate: async function (id) {
+    return await Api.get(urlApi.estate.getEstate + id);
+  },
   getEstatesByUserId: async function (id) {
     return await Api.get(urlApi.estate.getEstateByUser + id);
   },
   deleteEstate: async function (id) {
     return await Api.delete(urlApi.estate.deleteEstate + id);
+  },
+  bookEstate: async function (id) {
+    return await Api.patch(urlApi.estate.bookEstate + id);
   },
 };

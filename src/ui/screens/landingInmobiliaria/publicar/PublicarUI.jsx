@@ -240,8 +240,8 @@ const PublicarUI = ({goHome}) => {
     const storage = selectedButtons.includes('storage');
     const status = 'alquiler - venta'; //Se asume este estado, luego se puede cambiar en "editar"
 
-    const latitude = 'String'; //Hardcodeado hasta entrega final
-    const longitude = 'String'; //Hardcodeado hasta entrega final
+    const latitude = -34.5057955; //Hardcodeado hasta entrega final
+    const longitude = -58.5060905; //Hardcodeado hasta entrega final
 
     if (title === '') {
       setErrorTitle(i18n.t('mandatoryField'));
