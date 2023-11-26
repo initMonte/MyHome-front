@@ -63,6 +63,16 @@ export default {
     'No se encontro ninguna consulta... ¡Primero debe realizar alguna!',
   noQuestionsFound_end:
     'Vuelva a esta seccion una vez haya realizado preguntas en alguna propiedad',
+  noQuestionsFound_start_realEstate: 'No se encontro ninguna consulta...',
+  noQuestionsFound_end_realEstate: 'Cuando le realicen alguna, aparecera aqui.',
+  noVisitsFound_start:
+    'No se encontro ninguna visita programada... ¡Primero debe realizar alguna!',
+  noVisitsFound_end:
+    'Vuelva a esta seccion una vez haya realizado algun pedido de visita en alguna propiedad',
+  noVisitsFound_start_realEstate: 'No se encontro ninguna visita programada...',
+  noVisitsFound_end_realEstate: 'Cuando le realicen alguna, aparecera aqui.',
+  shiftMorning: 'Mañana',
+  shiftAfternoon: 'Tarde',
   logout: 'Cerrar sesión',
   deleteAccount: 'Eliminar cuenta',
   seeOpinions: 'Ver opiniones',
@@ -184,6 +194,8 @@ export default {
   question_type: 'Tipo de consulta',
   cantBeChanged: 'No puede ser cambiado.',
   date: 'Fecha y turno:',
+  onlyDate: 'Fecha:',
+  turn: 'Turno:',
   views: 'vistas',
   usd: 'USD',
   ars: 'ARS',

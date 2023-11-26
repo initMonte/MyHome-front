@@ -16,7 +16,10 @@ import IMAGES from '../../../../../assets/images/images';
 import Button from '../../../../components/button';
 import CardState from '../../../../components/cardState';
 import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
-import {saveEstateAction, saveRealEstateAction} from '../../../../../redux/slices/EstateReducer';
+import {
+  saveEstateAction,
+  saveRealEstateAction,
+} from '../../../../../redux/slices/EstateReducer';
 import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
 
 const ConsultaXUI = ({goBack, showPublicacionX}) => {
@@ -71,12 +74,6 @@ const ConsultaXUI = ({goBack, showPublicacionX}) => {
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
-        <StatusBar
-          animated={true}
-          barStyle={'light-content'}
-          showHideTransition={'fade'}
-          hidden={false}
-        />
         <View style={styles.containerRow}>
           <View style={styles.AvatarContainer}>
             {avatarName && (

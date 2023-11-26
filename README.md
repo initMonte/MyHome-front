@@ -86,3 +86,7 @@ yarn start
 - Creada logica para que automaticamente te lleve al landing correspondiente a tu tipo de usuario si estas logueado
 - Corregido bug de navegacion
 - Ventanas de Home, Favoritos, Consultas, ConsultaX **(no terminada)**, Consultar, Reservar hechas
+- Ventana de Vistias Programadas y VisitaX **(no terminada)**
+- Ventanas del lado inmobiliaria de Consultas, Visitas **(no terminadas)**
+- Ventana de Reservas **(no termianda)**
+

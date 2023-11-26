@@ -4,7 +4,6 @@ import {
   View,
   Text,
   Pressable,
-  StatusBar,
   StyleSheet,
   Image,
 } from 'react-native';
@@ -29,8 +28,11 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
       .then(response => {
         // Get exitoso
         console.log(response.data.contacts);
-        setContacts(response.data.contacts);
-        setContactsLen(response.data.contacts.length);
+        let contactsFilter = response.data.contacts.filter(
+          contactItem => contactItem.type === 'question',
+        );
+        setContacts(contactsFilter);
+        setContactsLen(contactsFilter.length);
       })
       .catch(error => {
         if (error.response) {
@@ -85,12 +87,6 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
 
   return (
     <View style={styles.generalContainer}>
-      <StatusBar
-        animated={true}
-        barStyle={'light-content'}
-        showHideTransition={'fade'}
-        hidden={false}
-      />
       <View style={styles.containerRow}>
         <View style={styles.AvatarContainer}>
           {avatarName && (
@@ -109,7 +105,7 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
       <Text style={styles.textH1}>{i18n.t('questions')}</Text>
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
-          {contacts ? (
+          {contacts && contacts.some(item => item.type === 'question') ? (
             <MapContacts x={contacts} show={handleContactClick} />
           ) : (
             <>
@@ -205,7 +201,7 @@ const styles = StyleSheet.create({
   },
   textNoQuestions: {
     alignSelf: 'center',
-    marginTop: 16,
+    marginTop: 106,
     marginBottom: 8,
     color: Theme.colors.WHITE,
     fontSize: Theme.fonts.M,

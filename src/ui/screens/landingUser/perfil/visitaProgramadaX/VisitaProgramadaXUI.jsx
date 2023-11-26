@@ -1,32 +1,87 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   View,
   Text,
-  StatusBar,
   StyleSheet,
   Image,
   TextInput,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Theme from '../../../../../styles/Theme';
 import i18n from '../../../../../assets/strings/I18n';
 import IMAGES from '../../../../../assets/images/images';
 import Button from '../../../../components/button';
 import CardState from '../../../../components/cardState';
+import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
+import {
+  saveEstateAction,
+  saveRealEstateAction,
+} from '../../../../../redux/slices/EstateReducer';
+import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
 
 const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
+  const dispatch = useDispatch();
   const {name, avatarName} = useSelector(state => state.user);
+  const {id, comment, date, realEstate, visitShift} = useSelector(
+    state => state.contact,
+  );
+  const [estate, setEstate] = useState();
+  const [userRealEstate, setRealEstate] = useState();
+
+  useEffect(() => {
+    estatesWS
+      .getEstate(realEstate)
+      .then(response => {
+        // Get exitoso
+        console.log(response.data);
+        setEstate(response.data);
+        dispatch(saveEstateAction(response.data));
+        userWS.getUser(realEstate).then(response2 => {
+          // Get exitoso
+          console.log(response2.data);
+          setRealEstate(response2.data);
+          dispatch(saveRealEstateAction(response2.data));
+        });
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  }, [dispatch, realEstate]);
+
+  const handleDate = date => {
+    const dateAux = new Date(date);
+    const day = dateAux.getDate().toString().padStart(2, '0');
+    const month = (dateAux.getMonth() + 1).toString().padStart(2, '0');
+    const year = dateAux.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  };
+
+  const handleShift = shift => {
+    if (shift === 'afternoon') {
+      return i18n.t('shiftAfternoon');
+    }
+    return i18n.t('shiftMorning');
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
-        <StatusBar
-          animated={true}
-          barStyle={'light-content'}
-          showHideTransition={'fade'}
-          hidden={false}
-        />
         <View style={styles.containerRow}>
           <View style={styles.AvatarContainer}>
             {avatarName && (
@@ -35,14 +90,12 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
           </View>
           <View>
             <Text style={styles.textH1}>{name}</Text>
-            <Text style={styles.text}>{'3 ' + i18n.t('programmedViews')}</Text>
           </View>
         </View>
         <Text style={styles.textH1}>{i18n.t('programmedView')}</Text>
         <View style={styles.box}>
           <View style={styles.row}>
             <Text style={styles.tittleBox}>{i18n.t('askViewTo')}</Text>
-            <Text style={styles.date}>{'11/11/1111'}</Text>
           </View>
           <View style={styles.person}>
             <Image
@@ -71,10 +124,10 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
           />
           <View style={styles.row}>
             <View style={styles.dateTurnBox}>
-              <Text style={styles.textBox}>{i18n.t('date')}</Text>
+              <Text style={styles.textBox}>{i18n.t('onlyDate')}</Text>
               <TextInput
                 editable={false}
-                value="11/11/1111"
+                value={handleDate(date)}
                 style={styles.message}
               />
             </View>
@@ -82,7 +135,7 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
               <Text style={styles.textBox}>{i18n.t('turn')}</Text>
               <TextInput
                 editable={false}
-                value="Mañana"
+                value={handleShift(visitShift)}
                 style={styles.message}
               />
             </View>
@@ -95,7 +148,7 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
             editable={false}
             numberOfLines={7}
             maxLength={300}
-            value="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec."
+            value={comment}
             style={styles.message}
           />
         </View>
