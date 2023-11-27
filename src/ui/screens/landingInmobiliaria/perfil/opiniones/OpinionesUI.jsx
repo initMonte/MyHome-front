@@ -7,13 +7,48 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 
 import Theme from '../../../../../styles/Theme';
 import i18n from '../../../../../assets/strings/I18n';
 import IMAGES from '../../../../../assets/images/images';
+
+import StarShow from '../../../../components/starShow';
 import Button from '../../../../components/button';
 
+const MapCalifications = ({x}) => (
+  <>
+    {x.map(calificationItem => (
+      <View style={styles.card}>
+        <View style={styles.insideCard}>
+          <View style={styles.starAndDate}>
+            <StarShow stars={calificationItem.calification} />
+            <Text style={styles.textDate}>
+              {handleDate(calificationItem.created_at)}
+            </Text>
+          </View>
+          <Text style={styles.textDescription}>{calificationItem.comment}</Text>
+        </View>
+      </View>
+    ))}
+  </>
+);
+
+const handleDate = date => {
+  const dateAux = new Date(date);
+  const day = dateAux.getDate().toString().padStart(2, '0');
+  const month = (dateAux.getMonth() + 1).toString().padStart(2, '0');
+  const year = dateAux.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  return formattedDate;
+};
+
 const OpinionesUI = ({goBack}) => {
+  const {califications, calificacionsAmount, calificationStars} = useSelector(
+    state => state.calification,
+  );
+  const {avatarName, name} = useSelector(state => state.user);
+
   return (
     <View style={styles.generalContainer}>
       <StatusBar
@@ -23,109 +58,29 @@ const OpinionesUI = ({goBack}) => {
         hidden={false}
       />
       <View style={styles.containerRow}>
-        <Image
-          source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
-          style={styles.profilePhoto}
-        />
+        <Image source={{uri: avatarName}} style={styles.profilePhoto} />
         <View>
-          <Text style={styles.textH1}>{'Integrar con Back'}</Text>
-          <Text style={styles.textStars}>
-            {'0, 3' + ' '}
-            <IMAGES.SVG.STAR_FILL width={15} height={15} />
+          <Text style={styles.textH1}>{name}</Text>
+          <StarShow stars={calificationStars} />
+          <Text style={styles.text}>
+            {calificacionsAmount + ' ' + i18n.t('reviews')}
           </Text>
-          <Text style={styles.text}>{'3 ' + i18n.t('reviews')}</Text>
         </View>
       </View>
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
-          <View style={styles.card}>
-            <View style={styles.insideCard}>
-              <View style={styles.starAndDate}>
-                <IMAGES.SVG.STAR_FILL width={15} height={15} />
-                <Text style={styles.textDate}>{'11/11/1111'}</Text>
-              </View>
-              <Text style={styles.textDescription}>
-                {'Muy piola toma 1 estrella crack'}
+          {califications ? (
+            <MapCalifications x={califications} />
+          ) : (
+            <View style={styles.containerNoImage}>
+              <IMAGES.SVG.LOGO_PLACEHOLDER width={380} height={230} />
+              <Text style={styles.textNoImage}>
+                {i18n.t('noStatesFound_createStart') +
+                  i18n.t('noStatesFound_sale') +
+                  i18n.t('noStatesFound_createEnd')}
               </Text>
             </View>
-          </View>
-          <View style={styles.card}>
-            <View style={styles.insideCard}>
-              <View style={styles.starAndDate}>
-                <IMAGES.SVG.STAR_FILL width={15} height={15} />
-                <Text style={styles.textDate}>{'11/11/1111'}</Text>
-              </View>
-              <Text style={styles.textDescription}>
-                {'Muy piola toma 1 estrella crack'}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.card}>
-            <View style={styles.insideCard}>
-              <View style={styles.starAndDate}>
-                <IMAGES.SVG.STAR_FILL width={15} height={15} />
-                <Text style={styles.textDate}>{'11/11/1111'}</Text>
-              </View>
-              <Text style={styles.textDescription}>
-                {'Muy piola toma 1 estrella crack'}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.card}>
-            <View style={styles.insideCard}>
-              <View style={styles.starAndDate}>
-                <IMAGES.SVG.STAR_FILL width={15} height={15} />
-                <Text style={styles.textDate}>{'11/11/1111'}</Text>
-              </View>
-              <Text style={styles.textDescription}>
-                {'Muy piola toma 1 estrella crack'}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.card}>
-            <View style={styles.insideCard}>
-              <View style={styles.starAndDate}>
-                <IMAGES.SVG.STAR_FILL width={15} height={15} />
-                <Text style={styles.textDate}>{'11/11/1111'}</Text>
-              </View>
-              <Text style={styles.textDescription}>
-                {'Muy piola toma 1 estrella crack'}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.card}>
-            <View style={styles.insideCard}>
-              <View style={styles.starAndDate}>
-                <IMAGES.SVG.STAR_FILL width={15} height={15} />
-                <Text style={styles.textDate}>{'11/11/1111'}</Text>
-              </View>
-              <Text style={styles.textDescription}>
-                {'Muy piola toma 1 estrella crack'}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.card}>
-            <View style={styles.insideCard}>
-              <View style={styles.starAndDate}>
-                <IMAGES.SVG.STAR_FILL width={15} height={15} />
-                <Text style={styles.textDate}>{'11/11/1111'}</Text>
-              </View>
-              <Text style={styles.textDescription}>
-                {'Muy piola toma 1 estrella crack'}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.card}>
-            <View style={styles.insideCard}>
-              <View style={styles.starAndDate}>
-                <IMAGES.SVG.STAR_FILL width={15} height={15} />
-                <Text style={styles.textDate}>{'11/11/1111'}</Text>
-              </View>
-              <Text style={styles.textDescription}>
-                {'Muy piola toma 1 estrella crack'}
-              </Text>
-            </View>
-          </View>
+          )}
         </View>
       </ScrollView>
       <Button
@@ -162,7 +117,6 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '96%',
-    height: 68,
     marginTop: 16,
     padding: 12,
     backgroundColor: Theme.colors.WHITE,
@@ -209,6 +163,7 @@ const styles = StyleSheet.create({
     width: 77,
     height: 77,
     marginRight: 26,
+    borderRadius: 45,
   },
   questionsPhoto: {
     width: 47,

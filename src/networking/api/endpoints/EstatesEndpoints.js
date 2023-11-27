@@ -189,6 +189,9 @@ export let estatesWS = {
   getEstatesByUserId: async function (id) {
     return await Api.get(urlApi.estate.getEstateByUser + id);
   },
+  getReservations: async function () {
+    return await Api.get(urlApi.estate.getReservations);
+  },
   deleteEstate: async function (id) {
     return await Api.delete(urlApi.estate.deleteEstate + id);
   },

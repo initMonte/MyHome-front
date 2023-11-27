@@ -20,6 +20,12 @@ import StarShow from '../../../components/starShow';
 
 import {saveRealEstateAction} from '../../../../redux/slices/EstateReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
+import {calificationWS} from '../../../../networking/api/endpoints/CalificationEndpoints';
+import {
+  saveCalificationsAction,
+  saveCalificationsAmountAction,
+  saveCalificationsStarsAction,
+} from '../../../../redux/slices/CalificationReducer';
 
 const PublicacionXUI = ({
   goBack,
@@ -71,20 +77,87 @@ const PublicacionXUI = ({
     realEstateEmail1,
     realEstateEmail2,
   } = useSelector(state => state.estate);
+  const [calificacionsAmount, setCalificacionsAmount] = useState();
+  const [calificationStars, setCalificacionStars] = useState();
 
   useEffect(() => {
-    const fetchAvatar = async () => {
-      try {
-        const response = await userWS.getUser(realEstate);
+    handleGetRealEstate(realEstate);
+    handleGetCalifications(realEstate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [realEstate]);
+
+  const handleGetRealEstate = realEstateId => {
+    userWS
+      .getUser(realEstateId)
+      .then(response => {
+        // Get exitoso
+        console.log('USUARIOOOOOOO       : ' + response.data);
         dispatch(saveRealEstateAction(response));
-      } catch (error) {
-        if (error.response && error.response.status === 403) {
-          console.error('Access denied. You are not authenticated.');
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
         }
-      }
-    };
-    fetchAvatar();
-  }, [dispatch, realEstate, realEstateAvatar]);
+      });
+  };
+
+  const handleGetCalifications = realEstateId => {
+    calificationWS
+      .getCalifications(realEstateId)
+      .then(response => {
+        // Get exitoso
+        console.log(
+          'CALIFICACIONEEEEEEEES       : ' + response.data.califications,
+        );
+        dispatch(saveCalificationsAction(response.data));
+        setCalificacionsAmount(response.data.califications.length);
+        dispatch(
+          saveCalificationsAmountAction(response.data.califications.length),
+        );
+        handleStars(response.data.califications);
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
+  const handleStars = calificationsArray => {
+    const totalCalification = calificationsArray.reduce(
+      (a, obj) => a + obj.calification,
+      0,
+    );
+    setCalificacionStars(totalCalification / calificationsArray.length);
+    dispatch(
+      saveCalificationsStarsAction(
+        totalCalification / calificationsArray.length,
+      ),
+    );
+    return;
+  };
 
   let url;
   {
@@ -394,7 +467,7 @@ const PublicacionXUI = ({
                 onPress={showContactoPropiedadX}>
                 <IMAGES.SVG.MAIL_WHITE width={25} height={25} />
               </Pressable>
-              {onRent ? (
+              {onRent() === true ? (
                 <Pressable
                   style={styles.circleButton}
                   onPress={showReservaPropiedadX}>
@@ -432,10 +505,12 @@ const PublicacionXUI = ({
           <View style={styles.containerMargin}>
             <Text style={styles.textH3}>{i18n.t('reviewsAndComments')}</Text>
             <View style={styles.RowBottom}>
-              <Text style={styles.stars}>0,0</Text>
+              <Text style={styles.stars}>{calificationStars}</Text>
               <View style={styles.columnContainer}>
-                <StarShow stars={3.4} />
-                <Text style={styles.amountReviews}>0 calficaciones</Text>
+                <StarShow stars={calificationStars} />
+                <Text style={styles.amountReviews}>
+                  {calificacionsAmount + ' ' + i18n.t('reviews')}
+                </Text>
               </View>
               <Pressable style={styles.button} onPress={showVerCalificaciones}>
                 <Text style={styles.textButtonBottom}>{i18n.t('seeAll')}</Text>

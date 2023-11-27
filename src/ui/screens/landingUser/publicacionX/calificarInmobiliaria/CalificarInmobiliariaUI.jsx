@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {ScrollView, View, Text, StyleSheet, Image} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import Theme from '../../../../../styles/Theme';
 import IMAGES from '../../../../../assets/images/images';
@@ -10,8 +10,12 @@ import InputText from '../../../../components/inputText';
 import Button from '../../../../components/button';
 import StarSelector from '../../../../components/starSelector';
 
+import {calificationWS} from '../../../../../networking/api/endpoints/CalificationEndpoints';
+
 const CalificarInmobiliariaUI = ({goBack}) => {
-  const {realEstate, realEstateAvatar} = useSelector(state => state.estate);
+  const {realEstate, realEstateAvatar, realEstateName} = useSelector(
+    state => state.estate,
+  );
 
   const [comment, setComment] = useState('');
   const [stars, setStars] = useState('');
@@ -26,7 +30,13 @@ const CalificarInmobiliariaUI = ({goBack}) => {
   };
 
   const handleSend = () => {
-    goBack();
+    calificationWS
+      .createCalification(realEstate, stars, comment)
+      .then(response => {
+        // Post exitoso
+        console.log(response.data);
+        goBack();
+      });
   };
 
   return (
@@ -42,7 +52,7 @@ const CalificarInmobiliariaUI = ({goBack}) => {
               style={styles.logoRealEstate}
             />
             <View style={styles.ColumnRealEstate}>
-              <Text style={styles.realStateName}>INTEGRAR CON BACK</Text>
+              <Text style={styles.realStateName}>{realEstateName}</Text>
               <StarSelector changeValue={handleStars} />
             </View>
           </View>

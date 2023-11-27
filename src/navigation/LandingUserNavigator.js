@@ -18,6 +18,7 @@ function LandingUserStackNavigator() {
       initialRouteName={NavigatorConstant.LANDING_USER_STACK.HOME}
       screenOptions={{
         headerTitleAlign: 'center',
+        headerShown: false,
         tabBarLabelStyle: {
           fontSize: Theme.fonts.S,
         },
@@ -28,7 +29,6 @@ function LandingUserStackNavigator() {
         name={NavigatorConstant.LANDING_USER_STACK.HOME}
         component={UserHomeNavigator}
         options={{
-          headerShown: false,
           tabBarLabel: i18n.t('tabs.home'),
           tabBarIcon: ({color}) => (
             <VectorIcon name="home-outline" color={color} size={30} />
@@ -49,7 +49,6 @@ function LandingUserStackNavigator() {
         name={NavigatorConstant.LANDING_USER_STACK.FAVORITOS}
         component={UserFavoritosNavigator}
         options={{
-          headerShown: false,
           tabBarLabel: i18n.t('tabs.favoritos'),
           tabBarIcon: ({color}) => (
             <VectorIcon name="heart-outline" color={color} size={30} />
@@ -60,7 +59,6 @@ function LandingUserStackNavigator() {
         name={NavigatorConstant.LANDING_USER_STACK.PERFIL}
         component={UserPefilNavigator}
         options={{
-          headerShown: false,
           tabBarLabel: i18n.t('tabs.perfil'),
           tabBarIcon: ({color}) => (
             <VectorIcon name="account-outline" color={color} size={30} />

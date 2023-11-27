@@ -417,43 +417,7 @@ const PublicarUI = ({goHome}) => {
     } else {
       setErrorVideo(false);
     }
-    /*
-    console.log('---------------------------------');
-    console.log('---------------------------------');
-    console.log('PROBANDO BOTON PUBLICAR');
-    console.log(title);
-    console.log(description);
-    console.log(selectedButton);
-    console.log(status);
-    console.log(selectedTipoPropiedad);
-    console.log(street);
-    console.log(addressNumber);
-    console.log(floorDpto);
-    console.log(neighborhood);
-    console.log(state);
-    console.log(country);
-    console.log(coveredSquareMeters);
-    console.log(semiUncoveredSquaremeters);
-    console.log(uncoveredSquareMeters);
-    console.log(price);
-    console.log(selectedPrecio);
-    console.log(expenses);
-    console.log(selectedExpensa);
-    console.log(selectedAmbiente);
-    console.log(selectedDormitorio);
-    console.log(selectedBaño);
-    console.log(terrace);
-    console.log(balcony);
-    console.log(storage);
-    console.log(selectedAmenities);
-    console.log(parking);
-    console.log(selectedDisposicion);
-    console.log(antiquity);
-    console.log(selectedImagesUri);
-    console.log(urlVideo);
-    console.log('---------------------------------');
-    console.log('---------------------------------');
-    */
+
     estatesWS
       .createEstate(
         title,
@@ -492,7 +456,6 @@ const PublicarUI = ({goHome}) => {
       )
       .then(response => {
         // Post Publicacion exitoso
-        //console.log(response);
         goHome();
       })
       .catch(error => {

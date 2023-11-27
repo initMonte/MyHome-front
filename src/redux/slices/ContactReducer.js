@@ -6,6 +6,7 @@ export const contactReducer = createSlice({
     id: '',
     comment: '',
     date: '',
+    estate: '',
     realEstate: '',
     type: '',
     visitShift: '',
@@ -15,6 +16,7 @@ export const contactReducer = createSlice({
       state.id = responde.payload._id;
       state.comment = responde.payload.comment;
       state.date = responde.payload.date;
+      state.estate = responde.payload.estate;
       state.realEstate = responde.payload.realEstate;
       state.type = responde.payload.type;
       state.visitShift = responde.payload.visitShift;
@@ -23,6 +25,7 @@ export const contactReducer = createSlice({
       state.id = '';
       state.comment = '';
       state.date = '';
+      state.estate = '';
       state.realEstate = '';
       state.type = '';
       state.visitShift = '';

@@ -27,7 +27,8 @@ export const urlApi = {
   contact: {
     pruebaContact: 'contacts/prueba-contact',
     createContact: 'contacts/',
-    getContacts: 'contacts/me/visit',
+    getContactsVisits: 'contacts/me/visit',
+    getContactsQuestions: 'contacts/me/question',
     deleteContact: 'contacts/',
   },
   calification: {
@@ -42,6 +43,7 @@ export const urlApi = {
     createEstate: 'estates/',
     getEstate: 'estates/', // Pasarle despues el id
     getNearEstates: 'estates/estatesNearBy/search',
+    getReservations: 'estates/user/my-reservations',
     deleteEstate: 'estates/', // Pasarle despues el id
     getEstateByUser: 'estates/user/', // Pasarle despues el id
     getImage: 'estates/media/', // Pasarle despues el nombre de la imagen

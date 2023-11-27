@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   View,
@@ -17,6 +17,15 @@ import {logoutAction} from '../../../../redux/slices/AuthReducer';
 import {logoutEstate} from '../../../../redux/slices/EstateReducer';
 import {logoutUser} from '../../../../redux/slices/UserReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
+import {
+  logoutCalification,
+  saveCalificationsAction,
+  saveCalificationsAmountAction,
+  saveCalificationsStarsAction,
+} from '../../../../redux/slices/CalificationReducer';
+import {logoutContact} from '../../../../redux/slices/ContactReducer';
+import {calificationWS} from '../../../../networking/api/endpoints/CalificationEndpoints';
+import StarShow from '../../../components/starShow';
 
 const PerfilUI = ({
   showLogin,
@@ -28,6 +37,7 @@ const PerfilUI = ({
   const dispatch = useDispatch();
   const {id, email, email2, name, surname, telephone, telephone2, avatarName} =
     useSelector(state => state.user);
+  const [stars, setStars] = useState();
 
   console.log(' ');
   console.log('---------');
@@ -41,6 +51,47 @@ const PerfilUI = ({
   console.log('avatar: ' + avatarName);
   console.log('---------');
   console.log(' ');
+
+  useEffect(() => {
+    calificationWS
+      .getMyCalifications()
+      .then(response => {
+        // Get exitoso
+        console.log(
+          'CALIFICACIONEEEEEEEES       : ' + response.data.califications,
+        );
+        dispatch(saveCalificationsAction(response.data));
+        dispatch(
+          saveCalificationsAmountAction(response.data.califications.length),
+        );
+        const totalCalification = response.data.califications.reduce(
+          (a, obj) => a + obj.calification,
+          0,
+        );
+        setStars(totalCalification / response.data.califications.length);
+        dispatch(
+          saveCalificationsStarsAction(
+            totalCalification / response.data.califications.length,
+          ),
+        );
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  }, [dispatch]);
 
   const handleLogout = () => {
     dispatch(logoutAction());
@@ -57,6 +108,8 @@ const PerfilUI = ({
         dispatch(logoutAction());
         dispatch(logoutEstate());
         dispatch(logoutUser());
+        dispatch(logoutCalification());
+        dispatch(logoutContact());
         showLogin();
       })
       .catch(error => {
@@ -97,8 +150,7 @@ const PerfilUI = ({
             </Text>
             <Pressable onPress={() => showOpiniones()}>
               <Text style={styles.textStars}>
-                {'0, 3' + ' '}
-                <IMAGES.SVG.STAR_FILL width={15} height={15} />
+                <StarShow stars={stars} />
                 <Text style={styles.textOpinions}>
                   {'  ' + i18n.t('seeOpinions')}
                 </Text>

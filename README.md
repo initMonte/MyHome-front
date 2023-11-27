@@ -85,8 +85,10 @@ yarn start
 - Modificado Login a su version "final"
 - Creada logica para que automaticamente te lleve al landing correspondiente a tu tipo de usuario si estas logueado
 - Corregido bug de navegacion
-- Ventanas de Home, Favoritos, Consultas, ConsultaX **(no terminada)**, Consultar, Reservar hechas
-- Ventana de Vistias Programadas y VisitaX **(no terminada)**
-- Ventanas del lado inmobiliaria de Consultas, Visitas **(no terminadas)**
-- Ventana de Reservas **(no termianda)**
+- Ventanas de Home, Favoritos, Consultas, ConsultaX, Consultar, Reservar hechas
+- Ventana de Vistias Programadas y VisitaX
+- Ventanas del lado inmobiliaria de Consultas, Visitas, ConsultasX, VisitasX **(no terminadas)**
+- Ventana de Reservas
+- Calification endpoints y reducer
+- Ventanas ver calificaciones en usuario e inmobiliaria
 

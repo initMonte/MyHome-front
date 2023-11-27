@@ -1,66 +1,39 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   ScrollView,
   View,
   Text,
-  StatusBar,
   StyleSheet,
   Image,
   TextInput,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import Theme from '../../../../../styles/Theme';
 import i18n from '../../../../../assets/strings/I18n';
 import IMAGES from '../../../../../assets/images/images';
 import Button from '../../../../components/button';
 import CardState from '../../../../components/cardState';
-import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
-import {
-  saveEstateAction,
-  saveRealEstateAction,
-} from '../../../../../redux/slices/EstateReducer';
-import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
 
 const ConsultaXUI = ({goBack, showPublicacionX}) => {
-  const dispatch = useDispatch();
   const {name, avatarName} = useSelector(state => state.user);
-  const {id, comment, date, realEstate} = useSelector(state => state.contact);
-  const [estate, setEstate] = useState();
-  const [userRealEstate, setRealEstate] = useState();
-
-  useEffect(() => {
-    estatesWS
-      .getEstate(realEstate)
-      .then(response => {
-        // Get exitoso
-        console.log(response.data);
-        setEstate(response.data);
-        dispatch(saveEstateAction(response.data));
-        userWS.getUser(realEstate).then(response2 => {
-          // Get exitoso
-          console.log(response2.data);
-          setRealEstate(response2.data);
-          dispatch(saveRealEstateAction(response2.data));
-        });
-      })
-      .catch(error => {
-        if (error.response) {
-          // Handle error
-          console.error(
-            'Server responded with an error status:',
-            error.response.status,
-          );
-          console.error('Response data:', error.response.data);
-        } else if (error.request) {
-          // Handle error
-          console.error('No response received:', error.request);
-        } else {
-          // Handle error
-          console.error('Error setting up the request:', error.message);
-        }
-      });
-  }, [dispatch, realEstate]);
+  const {comment, date} = useSelector(state => state.contact);
+  const {
+    street,
+    neighborhood,
+    state,
+    price,
+    currency,
+    expenses,
+    expenseCurrency,
+    images,
+    realEstateAvatar,
+    realEstateName,
+    realEstateTelephone1,
+    realEstateTelephone2,
+    realEstateEmail1,
+    realEstateEmail2,
+  } = useSelector(state => state.estate);
 
   const handleDate = date => {
     const dateAux = new Date(date);
@@ -69,6 +42,13 @@ const ConsultaXUI = ({goBack, showPublicacionX}) => {
     const year = dateAux.getFullYear();
     const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
+  };
+
+  const handleCurrency = x => {
+    if (x === 'dolar') {
+      return i18n.t('usd');
+    }
+    return i18n.t('ars');
   };
 
   return (
@@ -92,28 +72,28 @@ const ConsultaXUI = ({goBack, showPublicacionX}) => {
           </View>
           <View style={styles.person}>
             <Image
-              source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
+              source={{uri: realEstateAvatar}}
               style={styles.questionsPhoto}
             />
-            <Text style={styles.tittleBox}>{'Alguna Inmobiliaria'}</Text>
+            <Text style={styles.tittleBox}>{realEstateName}</Text>
           </View>
           <View style={styles.flexStart}>
             <Text style={styles.textBox}>
-              {i18n.t('email') + ' ' + 'Integrar con back'}
+              {i18n.t('email') + ' ' + realEstateEmail1}
             </Text>
             <Text style={styles.textBox}>
-              {i18n.t('phone') + ' ' + 'Integrar con back'}
+              {i18n.t('phone') + ' ' + realEstateTelephone1}
             </Text>
           </View>
           <CardState
             onPress={() => showPublicacionX()}
             size="M"
-            image={IMAGES.OTHERS.TEMPORAL_IMAGE}
-            tittle="Av. Gral. Las Heras 2100"
-            ubication="RECOLETA, CABA"
-            currency="USD"
-            price={72500}
-            expenses={24000}
+            image={{uri: images[0]}}
+            tittle={street}
+            ubication={neighborhood + ', ' + state}
+            currency={handleCurrency(currency)}
+            price={price}
+            expenses={expenses}
           />
           <View style={styles.messageFlexStart}>
             <Text style={styles.textBox}>{i18n.t('message')}</Text>

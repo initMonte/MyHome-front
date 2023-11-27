@@ -15,6 +15,12 @@ import IMAGES from '../../../../../assets/images/images';
 import Button from '../../../../components/button';
 import {contactWS} from '../../../../../networking/api/endpoints/ContactEndpoints';
 import {saveContactAction} from '../../../../../redux/slices/ContactReducer';
+import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
+import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
+import {
+  saveEstateAction,
+  saveRealEstateAction,
+} from '../../../../../redux/slices/EstateReducer';
 
 const ConsultasUI = ({goBack, showConsultaX}) => {
   const dispatch = useDispatch();
@@ -24,15 +30,12 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
 
   useEffect(() => {
     contactWS
-      .getContacts()
+      .getContactsQuestions()
       .then(response => {
         // Get exitoso
         console.log(response.data.contacts);
-        let contactsFilter = response.data.contacts.filter(
-          contactItem => contactItem.type === 'question',
-        );
-        setContacts(contactsFilter);
-        setContactsLen(contactsFilter.length);
+        setContacts(response.data.contacts);
+        setContactsLen(response.data.contacts.length);
       })
       .catch(error => {
         if (error.response) {
@@ -52,11 +55,12 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
       });
   }, []);
 
-  const handleContactClick = contactItem => {
-    console.log('--------____________------------');
-    console.log(contactItem);
-    console.log('--------____________------------');
+  const handleContactClick = async contactItem => {
     dispatch(saveContactAction(contactItem));
+    const estateResponse = await estatesWS.getEstate(contactItem.estate);
+    dispatch(saveEstateAction(estateResponse.data.estate));
+    const realEstateResponse = await userWS.getUser(contactItem.realEstate);
+    dispatch(saveRealEstateAction(realEstateResponse));
     showConsultaX();
   };
 

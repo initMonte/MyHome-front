@@ -10,28 +10,107 @@ import {saveEstateAction} from '../../../../redux/slices/EstateReducer';
 import {estatesWS} from '../../../../networking/api/endpoints/EstatesEndpoints';
 
 import CardState from '../../../components/cardState';
-import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
-const ReservasUI = ({}) => {
+const ReservasUI = ({showPublicacionX}) => {
   const dispatch = useDispatch();
   const [estates, setEstates] = useState();
 
+  useEffect(() => {
+    estatesWS
+      .getReservations()
+      .then(response => {
+        // Get exitoso
+        console.log(response.data.estates);
+        setEstates(response.data.estates);
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  }, []);
+
+  const handleCardStateClick = estateItem => {
+    console.log('--------____________------------');
+    console.log(estateItem);
+    console.log('--------____________------------');
+    dispatch(saveEstateAction(estateItem));
+    showPublicacionX();
+  };
+
+  const MapEstates = ({x, show}) => (
+    <>
+      {x.map(estateItem => (
+        <CardState
+          key={estateItem._id}
+          onPress={() => show(estateItem)}
+          size="L"
+          image={{uri: estateItem.images[0]}}
+          tittle={estateItem.title}
+          ubication={estateItem.neighborhood + ', ' + estateItem.state}
+          bath={estateItem.bathroomsAmount}
+          dorm={estateItem.bedroomsAmount}
+          amb={estateItem.roomsAmount}
+          description={estateItem.description.slice(0, 50) + '...'}
+          m2={
+            estateItem.coveredSquareMeters +
+            estateItem.semiUncoveredSquaremeters +
+            estateItem.uncoveredSquareMeters
+          }
+          price={estateItem.price}
+          currency={
+            estateItem.currency === 'peso' ? i18n.t('ars') : i18n.t('usd')
+          }
+        />
+      ))}
+    </>
+  );
+
   return (
-    <View style={styles.container}>
-      <IMAGES.SVG.LOGO width={380} height={230} />
-      <Text style={styles.text}>{'Pagina en construccion'}</Text>
-      <Text style={styles.text}>{'Estoy en RESERVAS'}</Text>
-    </View>
+    <ScrollView style={styles.generalContainer}>
+      <View style={styles.container}>
+        <View style={styles.bodyContainer}>
+          {estates ? (
+            <MapEstates x={estates} show={handleCardStateClick} />
+          ) : (
+            <View style={styles.containerNoImage}>
+              <IMAGES.SVG.LOGO_PLACEHOLDER width={380} height={230} />
+              <Text style={styles.textNoImage}>
+                {i18n.t('noStatesFound_createStart') +
+                  i18n.t('noStatesFound_sale') +
+                  i18n.t('noStatesFound_createEnd')}
+              </Text>
+            </View>
+          )}
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  generalContainer: {
+    backgroundColor: Theme.colors.WHITE,
+  },
   container: {
-    width: '100%',
-    height: '100%',
+    paddingTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Theme.colors.WHITE,
+  },
+  bodyContainer: {
+    marginBottom: 24,
+    rowGap: 16,
   },
   text: {
     color: Theme.colors.BLACK,

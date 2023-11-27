@@ -8,7 +8,7 @@ import {
   StatusBar,
   StyleSheet,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import Theme from '../../../../../styles/Theme';
@@ -19,8 +19,10 @@ import Button from '../../../../components/button';
 import InputText from '../../../../components/inputText';
 import CardState from '../../../../components/cardState';
 import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
+import {changeRealEstateToReserved} from '../../../../../redux/slices/EstateReducer';
 
 const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
+  const dispatch = useDispatch();
   const {
     id,
     description,
@@ -89,6 +91,7 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
       .then(response => {
         // Patch exitoso
         console.log(response.data);
+        dispatch(changeRealEstateToReserved('reservada'));
         showCalificarInmobiliaria();
       })
       .catch(error => {
@@ -135,7 +138,7 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
             semiUncoveredSquaremeters +
             uncoveredSquareMeters
           }
-          description={description}
+          description={description.slice(0, 50) + '...'}
           price={price}
           expenses={expenses}
         />

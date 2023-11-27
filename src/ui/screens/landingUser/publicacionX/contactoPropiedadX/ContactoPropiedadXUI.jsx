@@ -60,7 +60,7 @@ const ContactoPropiedadXUI = ({goBack}) => {
       setDate(aux);
     }
     contactWS
-      .createContact(realEstate, type, date, comment, turno)
+      .createContact(realEstate, id, type, date, comment, turno)
       .then(response => {
         // Post exitoso
         console.log(response.data);
@@ -107,7 +107,7 @@ const ContactoPropiedadXUI = ({goBack}) => {
             semiUncoveredSquaremeters +
             uncoveredSquareMeters
           }
-          description={description}
+          description={description.slice(0, 50) + '...'}
           price={price}
           expenses={expenses}
         />

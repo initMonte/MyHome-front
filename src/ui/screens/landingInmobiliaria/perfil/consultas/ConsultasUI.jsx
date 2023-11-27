@@ -24,15 +24,12 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
 
   useEffect(() => {
     contactWS
-      .getContacts()
+      .getContactsQuestions()
       .then(response => {
         // Get exitoso
         console.log(response.data.contacts);
-        let contactsFilter = response.data.contacts.filter(
-          contactItem => contactItem.type === 'question',
-        );
-        setContacts(contactsFilter);
-        setContactsLen(contactsFilter.length);
+        setContacts(response.data.contacts);
+        setContactsLen(response.data.contacts.length);
       })
       .catch(error => {
         if (error.response) {

@@ -8,12 +8,14 @@ import authReducer from './slices/AuthReducer';
 import userReducer from './slices/UserReducer';
 import estateReducer from './slices/EstateReducer';
 import contactReducer from './slices/ContactReducer';
+import calificationReducer from './slices/CalificationReducer';
 
 const reducers = combineReducers({
   auth: authReducer,
   user: userReducer,
   estate: estateReducer,
   contact: contactReducer,
+  calification: calificationReducer,
 });
 const persistConfig = {
   key: 'root',

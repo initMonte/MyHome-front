@@ -60,7 +60,8 @@ export const estateReducer = createSlice({
       state.country = response.payload.country;
       state.estateType = response.payload.estateType;
       state.coveredSquareMeters = response.payload.coveredSquareMeters;
-      state.semiUncoveredSquaremeters = response.payload.semiUncoveredSquaremeters;
+      state.semiUncoveredSquaremeters =
+        response.payload.semiUncoveredSquaremeters;
       state.uncoveredSquareMeters = response.payload.uncoveredSquareMeters;
       state.roomsAmount = response.payload.roomsAmount;
       state.bathroomsAmount = response.payload.bathroomsAmount;
@@ -95,6 +96,9 @@ export const estateReducer = createSlice({
     saveRealEstateAvatarAction: (state, response) => {
       console.log('SAVE REAL ESTATE AVATAR');
       state.realEstateAvatar = response.payload.data.user.avatar;
+    },
+    changeRealEstateToReserved: (state, response) => {
+      state.status = response.payload;
     },
     logoutEstate: state => {
       state.id = '';
@@ -131,7 +135,6 @@ export const estateReducer = createSlice({
       state.images = [];
       state.realEstate = '';
       state.realEstateAvatar = '';
-      state.realEstateAvatar = '';
       state.realEstateName = '';
       state.realEstateTelephone1 = '';
       state.realEstateTelephone2 = '';
@@ -145,6 +148,7 @@ export const {
   saveEstateAction,
   saveRealEstateAction,
   saveRealEstateAvatarAction,
+  changeRealEstateToReserved,
   logoutEstate,
 } = estateReducer.actions;
 export default estateReducer.reducer;

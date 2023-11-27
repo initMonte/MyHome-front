@@ -1,13 +1,17 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-//import i18n from '../../../../assets/strings/I18n';
+import NavigatorConstant from '../../../../navigation/NavigatorConstant';
 
 import ReservasUI from './ReservasUI';
 
 function Reservas() {
   const navigation = useNavigation();
 
-  return <ReservasUI />;
+  const showPublicacionX = () => {
+    navigation.push(NavigatorConstant.USER_RESERVAS_STACK.PUBLICACION_X);
+  };
+
+  return <ReservasUI showPublicacionX={showPublicacionX} />;
 }
 
 export default Reservas;

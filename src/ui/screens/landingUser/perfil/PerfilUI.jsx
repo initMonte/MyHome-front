@@ -18,6 +18,8 @@ import {logoutAction} from '../../../../redux/slices/AuthReducer';
 import {logoutEstate} from '../../../../redux/slices/EstateReducer';
 import {logoutUser} from '../../../../redux/slices/UserReducer';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
+import {logoutCalification} from '../../../../redux/slices/CalificationReducer';
+import {logoutContact} from '../../../../redux/slices/ContactReducer';
 
 const PerfilUI = ({
   showLogin,
@@ -48,6 +50,8 @@ const PerfilUI = ({
       dispatch(logoutAction());
       dispatch(logoutEstate());
       dispatch(logoutUser());
+      dispatch(logoutCalification());
+      dispatch(logoutContact());
       showLogin();
     } catch (error) {
       console.error(error);
