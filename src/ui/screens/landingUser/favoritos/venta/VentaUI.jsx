@@ -8,6 +8,7 @@ import CardState from '../../../../components/cardState';
 import IMAGES from '../../../../../assets/images/images';
 import i18n from '../../../../../assets/strings/I18n';
 import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
+import { useFocusEffect } from '@react-navigation/native';
 
 const MapEstates = ({x, show}) => (
   <>
@@ -46,7 +47,7 @@ const VentaUI = ({showPublicacionX}) => {
   const [estatesFavs, setEstatesFavs] = useState();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useFocusEffect(React.useCallback(() => {
     userWS
       .getFavorites()
       .then(response => {
@@ -70,7 +71,8 @@ const VentaUI = ({showPublicacionX}) => {
           console.error('Error setting up the request:', error.message);
         }
       });
-  }, []);
+    }, [])
+  );
 
   const handleCardStateClick = estateItem => {
     console.log('--------____________------------');

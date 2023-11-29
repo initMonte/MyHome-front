@@ -4,7 +4,6 @@ import {
   View,
   Text,
   Pressable,
-  StatusBar,
   StyleSheet,
   Image,
 } from 'react-native';
@@ -36,6 +35,7 @@ const PublicacionXUI = ({
 }) => {
   const dispatch = useDispatch();
   const {
+    id,
     title,
     description,
     rentOrSale,
@@ -79,6 +79,7 @@ const PublicacionXUI = ({
   useEffect(() => {
     handleGetRealEstate(realEstate);
     handleGetCalifications(realEstate);
+    handleGetFavorites();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [realEstate]);
 
@@ -245,24 +246,105 @@ const PublicacionXUI = ({
     return false;
   };
 
+  const [favorite, setFavorite] = useState(false);
+
+  const handleAddFavorite = () => {
+    userWS
+      .addFavorite(id)
+      .then(response => {
+        // Post exitoso
+        console.log(response.data);
+        setFavorite(true);
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
+  const handleDeleteFavorite = () => {
+    userWS
+      .deleteFavorite(id)
+      .then(response => {
+        // Delete exitoso
+        console.log(response.data);
+        setFavorite(false);
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
+  const handleGetFavorites = () => {
+    userWS
+      .getFavorites()
+      .then(response => {
+        // Get exitoso
+        console.log('FAAAAAAAAAVS       : ' + response.data);
+        const favoritos = response.data.estates;
+        setFavorite(favoritos.some(elemento => elemento._id === id));
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
+
   return (
     <ScrollView style={styles.generalContainer} nestedScrollEnabled={true}>
       <View style={styles.container}>
-        <StatusBar
-          animated={true}
-          barStyle={'light-content'}
-          showHideTransition={'fade'}
-          hidden={false}
-        />
         <View style={styles.containerImage}>
           <Image source={{uri: images[0]}} style={styles.bigImage} />
           <View style={styles.rowBetween}>
             <Pressable onPress={() => goBack()}>
               <IMAGES.SVG.BUTTON_BACK width={45} height={45} />
             </Pressable>
-            <Pressable>
-              <IMAGES.SVG.FAV_BUTTON_NOT_ADDED width={45} height={45} />
-            </Pressable>
+            {favorite ? (
+              <Pressable onPress={handleDeleteFavorite}>
+                <IMAGES.SVG.FAV_BUTTON_ADDED width={45} height={45} />
+              </Pressable>
+            ) : (
+              <Pressable onPress={handleAddFavorite}>
+                <IMAGES.SVG.FAV_BUTTON_NOT_ADDED width={45} height={45} />
+              </Pressable>
+            )}
           </View>
           <View style={styles.flexEnd}>
             <Pressable

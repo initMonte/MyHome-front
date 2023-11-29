@@ -12,12 +12,15 @@ import {estatesWS} from '../../../../networking/api/endpoints/EstatesEndpoints';
 
 import CardState from '../../../components/cardState';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
+import {useFocusEffect} from '@react-navigation/native';
 
 const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
   const dispatch = useDispatch();
   const [estates, setEstates] = useState();
   const [lat, setLat] = useState();
   const [long, setLong] = useState();
+
+  const [favorites, setFavorites] = useState();
 
   useEffect(() => {
     handleLocation().then(
@@ -87,6 +90,12 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
       });
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      handleGetFavorites();
+    }, [])
+  );
+
   const handleCardStateClick = estateItem => {
     console.log('--------____________------------');
     console.log(estateItem);
@@ -101,6 +110,13 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
         <CardState
           key={estateItem._id}
           onPress={() => show(estateItem)}
+          favButton={true}
+          addedFav={
+            favorites &&
+            favorites.some(elemento => elemento._id === estateItem._id)
+          }
+          onPressAddFav={() => handleAddFavorite(estateItem._id)}
+          onPressUnFav={() => handleDeleteFavorite(estateItem._id)}
           size="L"
           image={{uri: estateItem.images[0]}}
           tittle={estateItem.title}
@@ -197,6 +213,9 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
       .then(response => {
         // Get exitoso
         console.log('FAAAAAAAAAVS       : ' + response.data);
+        const favoritos = response.data.estates;
+        setFavorites(favoritos);
+        console.log(favorites);
       })
       .catch(error => {
         if (error.response) {
