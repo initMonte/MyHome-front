@@ -12,6 +12,7 @@ import {estatesWS} from '../../../../networking/api/endpoints/EstatesEndpoints';
 
 import CardState from '../../../components/cardState';
 import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
+import { useFocusEffect } from '@react-navigation/native';
 
 const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
   const dispatch = useDispatch();
@@ -20,8 +21,9 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
   const lat = '-34.5057';
   const long = '-58.5060';
 
+  const [favorites, setFavorites] = useState();
+
   useEffect(() => {
-    handleGetFavorites();
     estatesWS
       .getNearEstates(lat, long)
       .then(response => {
@@ -47,6 +49,11 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
       });
   }, [lat, long]);
 
+  useFocusEffect(React.useCallback(() => {
+    handleGetFavorites();
+    }, [])
+  );
+
   const handleCardStateClick = estateItem => {
     console.log('--------____________------------');
     console.log(estateItem);
@@ -62,7 +69,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
           key={estateItem._id}
           onPress={() => show(estateItem)}
           favButton={true}
-          addedFav={false}
+          addedFav={favorites && favorites.some((elemento) => elemento._id === estateItem._id)}
           onPressAddFav={() => handleAddFavorite(estateItem._id)}
           onPressUnFav={() => handleDeleteFavorite(estateItem._id)}
           size="L"
@@ -145,6 +152,9 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
       .then(response => {
         // Get exitoso
         console.log('FAAAAAAAAAVS       : ' + response.data);
+        const favoritos = response.data.estates;
+        setFavorites(favoritos);
+        console.log(favorites);
       })
       .catch(error => {
         if (error.response) {
