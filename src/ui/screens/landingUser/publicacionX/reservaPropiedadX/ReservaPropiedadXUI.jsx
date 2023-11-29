@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  FlatList,
-  ScrollView,
-  View,
-  Text,
-  Pressable,
-  StatusBar,
-  StyleSheet,
-} from 'react-native';
+import {ScrollView, View, Text, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -120,6 +112,20 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
     }
   };
 
+  const handleUbication = ubication => {
+    if (ubication.length > 40) {
+      return ubication.slice(0, 40) + '...';
+    }
+    return ubication;
+  };
+
+  const handleDescription = desc => {
+    if (desc.length > 50) {
+      return desc.slice(0, 50) + '...';
+    }
+    return desc;
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -128,7 +134,7 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
           size="L"
           image={{uri: images[0]}}
           tittle={street}
-          ubication={neighborhood + ', ' + state}
+          ubication={handleUbication(neighborhood + ', ' + state)}
           currency={prettifyCurrency()}
           amb={roomsAmount}
           dorm={bedroomsAmount}
@@ -138,7 +144,7 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
             semiUncoveredSquaremeters +
             uncoveredSquareMeters
           }
-          description={description.slice(0, 50) + '...'}
+          description={handleDescription(description)}
           price={price}
           expenses={expenses}
         />

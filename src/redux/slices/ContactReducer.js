@@ -10,12 +10,14 @@ export const contactReducer = createSlice({
     realEstate: '',
     type: '',
     visitShift: '',
+    created_at: '',
   },
   reducers: {
     saveContactAction: (state, responde) => {
       state.id = responde.payload._id;
       state.comment = responde.payload.comment;
       state.date = responde.payload.date;
+      state.created_at = responde.payload.created_at;
       state.estate = responde.payload.estate;
       state.realEstate = responde.payload.realEstate;
       state.type = responde.payload.type;
@@ -29,6 +31,7 @@ export const contactReducer = createSlice({
       state.realEstate = '';
       state.type = '';
       state.visitShift = '';
+      state.created_at = '';
     },
   },
 });

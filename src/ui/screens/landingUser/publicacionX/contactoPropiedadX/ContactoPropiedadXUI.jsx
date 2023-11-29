@@ -54,34 +54,68 @@ const ContactoPropiedadXUI = ({goBack}) => {
 
   const handleSend = () => {
     if (type === 'question') {
-      let aux = new Date();
-      let aux2 = new Date(aux);
-      aux2.setDate(aux.getDate() + 1);
-      setDate(aux);
+      contactWS
+        .createContact(realEstate, id, type, comment)
+        .then(response => {
+          // Post exitoso
+          console.log(response.data);
+          goBack();
+        })
+        .catch(error => {
+          if (error.response) {
+            // Handle error
+            console.error(
+              'Server responded with an error status:',
+              error.response.status,
+            );
+            console.error('Response data:', error.response.data);
+          } else if (error.request) {
+            // Handle error
+            console.error('No response received:', error.request);
+          } else {
+            // Handle error
+            console.error('Error setting up the request:', error.message);
+          }
+        });
+    } else {
+      contactWS
+        .createContact(realEstate, id, type, date, comment, turno)
+        .then(response => {
+          // Post exitoso
+          console.log(response.data);
+          goBack();
+        })
+        .catch(error => {
+          if (error.response) {
+            // Handle error
+            console.error(
+              'Server responded with an error status:',
+              error.response.status,
+            );
+            console.error('Response data:', error.response.data);
+          } else if (error.request) {
+            // Handle error
+            console.error('No response received:', error.request);
+          } else {
+            // Handle error
+            console.error('Error setting up the request:', error.message);
+          }
+        });
     }
-    contactWS
-      .createContact(realEstate, id, type, date, comment, turno)
-      .then(response => {
-        // Post exitoso
-        console.log(response.data);
-        goBack();
-      })
-      .catch(error => {
-        if (error.response) {
-          // Handle error
-          console.error(
-            'Server responded with an error status:',
-            error.response.status,
-          );
-          console.error('Response data:', error.response.data);
-        } else if (error.request) {
-          // Handle error
-          console.error('No response received:', error.request);
-        } else {
-          // Handle error
-          console.error('Error setting up the request:', error.message);
-        }
-      });
+  };
+
+  const handleUbication = ubication => {
+    if (ubication.length > 40) {
+      return ubication.slice(0, 40) + '...';
+    }
+    return ubication;
+  };
+
+  const handleDescription = desc => {
+    if (desc.length > 50) {
+      return desc.slice(0, 50) + '...';
+    }
+    return desc;
   };
 
   return (
@@ -97,7 +131,7 @@ const ContactoPropiedadXUI = ({goBack}) => {
           size="L"
           image={{uri: images[0]}}
           tittle={street}
-          ubication={neighborhood + ', ' + state}
+          ubication={handleUbication(neighborhood + ', ' + state)}
           currency={currency}
           amb={roomsAmount}
           dorm={bedroomsAmount}
@@ -107,7 +141,7 @@ const ContactoPropiedadXUI = ({goBack}) => {
             semiUncoveredSquaremeters +
             uncoveredSquareMeters
           }
-          description={description.slice(0, 50) + '...'}
+          description={handleDescription(description)}
           price={price}
           expenses={expenses}
         />

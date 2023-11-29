@@ -48,7 +48,6 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
         <View style={styles.box}>
           <View style={styles.row}>
             <Text style={styles.tittleBox}>{i18n.t('askViewFrom')}</Text>
-            <Text style={styles.date}>{'11/11/1111'}</Text>
           </View>
           <View style={styles.person}>
             <Image

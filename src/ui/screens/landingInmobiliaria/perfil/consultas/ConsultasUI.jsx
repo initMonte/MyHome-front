@@ -74,7 +74,7 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
           <View>
             <Text style={styles.textButton}>{name}</Text>
             <Text style={styles.textDescription}>
-              {handleDate(contactItem.date)}
+              {handleDate(contactItem.created_at)}
             </Text>
           </View>
         </Pressable>

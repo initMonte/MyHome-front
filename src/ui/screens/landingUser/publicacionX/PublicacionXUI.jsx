@@ -36,7 +36,6 @@ const PublicacionXUI = ({
 }) => {
   const dispatch = useDispatch();
   const {
-    id,
     title,
     description,
     rentOrSale,
@@ -44,7 +43,6 @@ const PublicacionXUI = ({
     addressNumber,
     neighborhood,
     state,
-    country,
     estateType,
     coveredSquareMeters,
     semiUncoveredSquaremeters,
@@ -65,8 +63,6 @@ const PublicacionXUI = ({
     currency,
     expenses,
     expenseCurrency,
-    latitude,
-    longitude,
     images,
     videoUrl,
     realEstate,
@@ -150,12 +146,10 @@ const PublicacionXUI = ({
       (a, obj) => a + obj.calification,
       0,
     );
-    setCalificacionStars(totalCalification / calificationsArray.length);
-    dispatch(
-      saveCalificationsStarsAction(
-        totalCalification / calificationsArray.length,
-      ),
-    );
+    const averageCalification = totalCalification / calificationsArray.length;
+    const trimmedAverage = parseFloat(averageCalification.toFixed(2));
+    setCalificacionStars(trimmedAverage);
+    dispatch(saveCalificationsStarsAction(trimmedAverage));
     return;
   };
 

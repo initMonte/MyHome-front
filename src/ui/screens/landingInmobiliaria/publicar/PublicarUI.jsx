@@ -1,7 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef, useState} from 'react';
-import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
+import React, {useRef, useState, useEffect} from 'react';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {Image} from 'react-native-svg';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 import Theme from '../../../../styles/Theme';
 import i18n from '../../../../assets/strings/I18n';
@@ -11,17 +12,67 @@ import InputText from '../../../components/inputText';
 import ButtonSelect from '../../../components/buttonSelect';
 import PhotoUploader from '../../../components/photoUploader';
 
+import {apiGooglePlaces} from '../../../../config/ApiConfig';
 import {estatesWS} from '../../../../networking/api/endpoints/EstatesEndpoints';
 
 const PublicarUI = ({goHome}) => {
+  const refGoogle = useRef();
+  useEffect(() => {
+    refGoogle.current?.setAddressText(refGoogle.current?.getAddressText());
+  }, []);
+
+  const handleGoogleAddress = details => {
+    console.log('DETAIIIIILS: ' + JSON.stringify(details));
+    setaddressNumber('0');
+    setStreet('');
+    setNeighborhood('');
+    setState('');
+    setCountry('');
+    let varSublocality = '';
+    let varLocality = '';
+    details.address_components.forEach(component => {
+      switch (true) {
+        case component.types.includes('street_number'):
+          setaddressNumber(component.short_name);
+          break;
+        case component.types.includes('route'):
+          setStreet(component.short_name);
+          break;
+        case component.types.includes('sublocality_level_1'):
+          varSublocality = component.short_name;
+          break;
+        case component.types.includes('locality'):
+          varLocality = component.short_name;
+          break;
+        case component.types.includes('administrative_area_level_1'):
+          setState(component.short_name);
+          break;
+        case component.types.includes('country'):
+          setCountry(component.long_name);
+          break;
+        default:
+          break;
+      }
+      setLatitude(details.geometry.location.lat);
+      setLongitude(details.geometry.location.lng);
+      if (varSublocality !== '') {
+        setNeighborhood(varSublocality);
+      } else {
+        setNeighborhood(varLocality);
+      }
+    });
+  };
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [street, setStreet] = useState('');
-  const [addressNumber, setaddressNumber] = useState('');
+  const [addressNumber, setaddressNumber] = useState('0');
   const [floorDpto, setFloorDpto] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
   const [coveredSquareMeters, setCoveredSquareMeters] = useState('');
   const [semiUncoveredSquaremeters, setSemiUncoveredSquaremeters] =
     useState('');
@@ -66,6 +117,7 @@ const PublicarUI = ({goHome}) => {
   const [errorDescription, setErrorDescription] = useState(false);
   const inputRefDescription = useRef();
 
+  /*
   const [errorStreet, setErrorStreet] = useState(false);
   const inputRefStreet = useRef();
 
@@ -77,6 +129,7 @@ const PublicarUI = ({goHome}) => {
 
   const [errorCountry, setErrorCountry] = useState(false);
   const inputRefCountry = useRef();
+  */
 
   const [errorImages, setErrorImages] = useState(false);
   const [sizeErrorImage, setSizeErrorImage] = useState(false);
@@ -98,20 +151,8 @@ const PublicarUI = ({goHome}) => {
     setDescription(value);
   };
 
-  const handleStreet = value => {
-    setStreet(value);
-  };
-
-  const handleAddressNumber = value => {
-    setaddressNumber(value);
-  };
-
   const handleFloorDpto = value => {
     setFloorDpto(value);
-  };
-
-  const handleNeighborhood = value => {
-    setNeighborhood(value);
   };
 
   const handleCoveredSquareMeters = value => {
@@ -136,14 +177,6 @@ const PublicarUI = ({goHome}) => {
 
   const handleExpenses = value => {
     setExpenses(value);
-  };
-
-  const handleState = value => {
-    setState(value);
-  };
-
-  const handleCountry = value => {
-    setCountry(value);
   };
 
   const handleParking = value => {
@@ -240,9 +273,6 @@ const PublicarUI = ({goHome}) => {
     const storage = selectedButtons.includes('storage');
     const status = 'alquiler - venta'; //Se asume este estado, luego se puede cambiar en "editar"
 
-    const latitude = -34.5057955; //Hardcodeado hasta entrega final
-    const longitude = -58.5060905; //Hardcodeado hasta entrega final
-
     if (title === '') {
       setErrorTitle(i18n.t('mandatoryField'));
       handleFocus(inputRefTitle);
@@ -259,6 +289,7 @@ const PublicarUI = ({goHome}) => {
       setErrorDescription(false);
     }
 
+    /*
     if (street === '') {
       setErrorStreet(i18n.t('mandatoryField'));
       handleFocus(inputRefStreet);
@@ -266,15 +297,14 @@ const PublicarUI = ({goHome}) => {
     } else {
       setErrorStreet(false);
     }
+    */
 
     if (addressNumber === '') {
-      setErrorAddressNumber(i18n.t('mandatoryField'));
-      handleFocus(inputRefAdressNumber);
+      setaddressNumber(0);
       return false;
-    } else {
-      setErrorAddressNumber(false);
     }
 
+    /*
     if (neighborhood === '') {
       setErrorNeighborhood(i18n.t('mandatoryField'));
       handleFocus(inputRefNeighborhood);
@@ -298,6 +328,7 @@ const PublicarUI = ({goHome}) => {
     } else {
       setErrorCountry(false);
     }
+    */
 
     if (coveredSquareMeters === '') {
       setErrorCoveredSquareMeters(i18n.t('mandatoryField'));
@@ -346,6 +377,7 @@ const PublicarUI = ({goHome}) => {
       setErrorImages(false);
     }
 
+    /*
     if (isNaN(addressNumber)) {
       setErrorAddressNumber(i18n.t('invalidNumber'));
       handleFocus(inputRefAdressNumber);
@@ -353,6 +385,7 @@ const PublicarUI = ({goHome}) => {
     } else {
       setErrorAddressNumber(false);
     }
+    */
 
     if (isNaN(coveredSquareMeters)) {
       setErrorCoveredSquareMeters(i18n.t('invalidNumber'));
@@ -479,12 +512,6 @@ const PublicarUI = ({goHome}) => {
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
-        <StatusBar
-          animated={true}
-          barStyle={'light-content'}
-          showHideTransition={'fade'}
-          hidden={false}
-        />
         <View style={styles.container2}>
           <Text style={styles.text3}>{i18n.t('stateTitle')}</Text>
           <InputText
@@ -529,8 +556,7 @@ const PublicarUI = ({goHome}) => {
               justifyContent: 'space-evenly',
               flexWrap: 'wrap',
               marginTop: 10,
-              marginHorizontal: 5,
-              marginBottom: -35,
+              marginBottom: -25,
             }}>
             <ButtonSelect
               text={i18n.t('house')}
@@ -619,59 +645,58 @@ const PublicarUI = ({goHome}) => {
             />
           </View>
           <Text style={styles.text3}>{i18n.t('address')}</Text>
-          <InputText
-            placeholder={i18n.t('placeholder_street')}
-            changeValue={handleStreet}
-            error={errorStreet}
-            innerRef={inputRefStreet}
+          <GooglePlacesAutocomplete
+            ref={refGoogle}
+            fetchDetails={true}
+            onPress={(data, details) => {
+              handleGoogleAddress(details);
+            }}
+            onFail={error => console.error(error)}
+            query={{
+              key: apiGooglePlaces,
+              language: 'es',
+              components: 'country:arg',
+            }}
+            disableScroll={true}
+            minLength={6}
+            keepResultsAfterBlur={true}
+            enablePoweredByContainer={false}
+            styles={{
+              textInputContainer: {
+                borderBottomWidth: 1,
+              },
+              textInput: {
+                height: 38,
+                color: Theme.colors.BLACK,
+              },
+              separator: {
+                backgroundColor: Theme.colors.PLACEHOLDER,
+              },
+              description: {
+                color: Theme.colors.BLACK,
+              },
+            }}
           />
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-evenly',
+              justifyContent: 'start',
               alignItems: 'center',
               flexWrap: 'wrap',
             }}>
-            <InputText
-              size="S"
-              keyboard="phone-pad"
-              placeholder={i18n.t('placeholder_strNumber')}
-              changeValue={handleAddressNumber}
-              error={errorAddressNumber}
-              innerRef={inputRefAdressNumber}
-            />
+            <Text style={styles.text3}>{i18n.t('floorDpto') + ' '}</Text>
             <InputText
               size="S"
               placeholder={i18n.t('placeholder_floorDpto')}
               changeValue={handleFloorDpto}
             />
-            <Text style={styles.textOptional2}>{i18n.t('optional')}</Text>
+            <Text style={styles.textOptional}>{i18n.t('optional')}</Text>
           </View>
-          <InputText
-            placeholder={i18n.t('placeholder_barrio')}
-            changeValue={handleNeighborhood}
-            error={errorNeighborhood}
-            innerRef={inputRefNeighborhood}
-          />
-          <InputText
-            placeholder={i18n.t('placeholder_province')}
-            changeValue={handleState}
-            error={errorState}
-            innerRef={inputRefState}
-          />
-          <InputText
-            placeholder={i18n.t('placeholder_country')}
-            changeValue={handleCountry}
-            error={errorCountry}
-            innerRef={inputRefCountry}
-          />
-
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginBottom: -5,
               marginTop: 10,
             }}>
             <Text style={styles.text3}>{i18n.t('surfaceCover') + ' '}</Text>
@@ -690,7 +715,6 @@ const PublicarUI = ({goHome}) => {
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginBottom: -50,
             }}>
             <Text style={styles.text3}>{i18n.t('surfaceSemicover') + ' '}</Text>
             <InputText
@@ -708,7 +732,6 @@ const PublicarUI = ({goHome}) => {
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginBottom: -45,
             }}>
             <Text style={styles.text3}>{i18n.t('surfaceUncover') + ' '}</Text>
             <InputText
@@ -1155,6 +1178,7 @@ const PublicarUI = ({goHome}) => {
             <Text style={styles.textOptional}>{i18n.t('optional')}</Text>
           </Text>
           <InputText
+            keyboard="email-address"
             placeholder={i18n.t('placeholder_URL')}
             changeValue={handleUrlVideo}
             error={errorVideo}
@@ -1184,7 +1208,8 @@ const styles = StyleSheet.create({
   container1: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    paddingTop: 50,
+    paddingBottom: 70,
   },
   container2: {
     marginLeft: 25,
@@ -1253,6 +1278,22 @@ const styles = StyleSheet.create({
     borderColor: Theme.colors.PLACEHOLDER,
     borderWidth: 1,
     borderRadius: 10,
+  },
+  message: {
+    width: '100%',
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: Theme.colors.PLACEHOLDER,
+    color: Theme.colors.BLACK,
+  },
+  prueba: {
+    width: 300,
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: Theme.colors.PLACEHOLDER,
+    color: Theme.colors.BLACK,
   },
 });
 

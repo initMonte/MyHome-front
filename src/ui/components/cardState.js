@@ -5,7 +5,6 @@ import Theme from '../../styles/Theme';
 import IMAGES from '../../assets/images/images';
 import i18n from '../../assets/strings/I18n';
 
-// Muchos de los parametros que se pasan aca probablemente los cambie cuando se haga la integracion con el back, para pasar todo junto y que se procese en una funcion
 const CardState = ({
   onPress,
   size = 'S',
@@ -213,7 +212,7 @@ const CardState = ({
           {manageFavButton()}
           <View style={[containerCaracts, containerMargin]}>
             <View>
-              <Text style={fontH1[size]}>{tittle + ', ' + ubication}</Text>
+              <Text style={fontH1[size]}>{ubication}</Text>
               <View style={containerCaracts}>
                 <View style={containerCaracts}>
                   <IMAGES.SVG.DOOR style={icons[size]} />

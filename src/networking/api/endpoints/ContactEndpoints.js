@@ -6,16 +6,16 @@ export let contactWS = {
     realEstate,
     estate,
     type,
-    date,
     comment,
+    date,
     visitShift,
   ) {
     return await Api.post(urlApi.contact.createContact, {
       realEstate,
       estate,
       type,
-      date,
       comment,
+      date,
       visitShift,
     });
   },

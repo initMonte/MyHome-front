@@ -68,12 +68,11 @@ const PerfilUI = ({
           (a, obj) => a + obj.calification,
           0,
         );
-        setStars(totalCalification / response.data.califications.length);
-        dispatch(
-          saveCalificationsStarsAction(
-            totalCalification / response.data.califications.length,
-          ),
-        );
+        const averageCalification =
+          totalCalification / response.data.califications.length;
+        const trimmedAverage = parseFloat(averageCalification.toFixed(2));
+        setStars(trimmedAverage);
+        dispatch(saveCalificationsStarsAction(trimmedAverage));
       })
       .catch(error => {
         if (error.response) {

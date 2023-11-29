@@ -19,7 +19,7 @@ const MapEstates = ({x, show}) => (
           onPress={() => show(estateItem)}
           size="S"
           image={{uri: estateItem.images[0]}}
-          ubication={estateItem.neighborhood}
+          ubication={handleUbication(estateItem.neighborhood)}
           amb={estateItem.roomsAmount}
           m2={
             estateItem.coveredSquareMeters +
@@ -34,6 +34,13 @@ const MapEstates = ({x, show}) => (
       ))}
   </>
 );
+
+const handleUbication = ubicationString => {
+  if (ubicationString.length > 10) {
+    return ubicationString.slice(0, 10) + '...';
+  }
+  return ubicationString;
+};
 
 const AlquilerUI = ({showPublicacionX}) => {
   const [estates, setEstates] = useState();
@@ -109,7 +116,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginRight: 16,
     rowGap: 16,
-    width: '100%',
+    width: '92%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',

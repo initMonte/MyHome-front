@@ -91,4 +91,8 @@ yarn start
 - Ventana de Reservas
 - Calification endpoints y reducer
 - Ventanas ver calificaciones en usuario e inmobiliaria
-
+- Implementado autocomplete en Publicar **(falta implementar en editar)**
+- Implementada ubicacion en Home de usuario + get de propiedades cercanas
+- Corregido bug de n° periodico en calificaciones
+- Corregido bug al crear contacto de tipo question
+- Corregido bug de "nombre largo" en las cardStates en varios sitios

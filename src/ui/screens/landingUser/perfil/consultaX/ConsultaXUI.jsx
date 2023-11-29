@@ -17,7 +17,7 @@ import CardState from '../../../../components/cardState';
 
 const ConsultaXUI = ({goBack, showPublicacionX}) => {
   const {name, avatarName} = useSelector(state => state.user);
-  const {comment, date} = useSelector(state => state.contact);
+  const {comment, created_at} = useSelector(state => state.contact);
   const {
     street,
     neighborhood,
@@ -68,7 +68,7 @@ const ConsultaXUI = ({goBack, showPublicacionX}) => {
         <View style={styles.box}>
           <View style={styles.row}>
             <Text style={styles.tittleBox}>{i18n.t('questionTo')}</Text>
-            <Text style={styles.date}>{handleDate(date)}</Text>
+            <Text style={styles.date}>{handleDate(created_at)}</Text>
           </View>
           <View style={styles.person}>
             <Image

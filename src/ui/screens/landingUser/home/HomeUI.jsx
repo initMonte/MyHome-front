@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {ScrollView, View, Text, Pressable, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
+import Geolocation from '@react-native-community/geolocation';
 
-import {styleUrl} from '../../../../config/ApiConfig';
 import Theme from '../../../../styles/Theme';
 import IMAGES from '../../../../assets/images/images';
 import i18n from '../../../../assets/strings/I18n';
@@ -15,14 +15,54 @@ import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
   const dispatch = useDispatch();
-  const [favs, setFavs] = useState();
   const [estates, setEstates] = useState();
-  const lat = '-34.5057';
-  const long = '-58.5060';
+  const [lat, setLat] = useState();
+  const [long, setLong] = useState();
 
   useEffect(() => {
-    handleGetFavorites();
-    estatesWS
+    handleLocation().then(
+      estatesWS
+        .getNearEstates(lat, long)
+        .then(response => {
+          // Get exitoso
+          console.log(response.data.estates);
+          setEstates(response.data.estates);
+        })
+        .catch(error => {
+          if (error.response) {
+            // Handle error
+            console.error(
+              'Server responded with an error status:',
+              error.response.status,
+            );
+            console.error('Response data:', error.response.data);
+          } else if (error.request) {
+            // Handle error
+            console.error('No response received:', error.request);
+          } else {
+            // Handle error
+            console.error('Error setting up the request:', error.message);
+          }
+        }),
+    );
+  }, [lat, long]);
+
+  const handleLocation = async () => {
+    await Geolocation.getCurrentPosition(
+      pos => {
+        console.log(pos);
+        setLat(pos.coords.latitude);
+        setLong(pos.coords.longitude);
+      },
+      error => {
+        console.log('GetCurrentPosition Error', JSON.stringify(error));
+      },
+      {enableHighAccuracy: true},
+    );
+  };
+
+  const handleGetNearStates = async () => {
+    await estatesWS
       .getNearEstates(lat, long)
       .then(response => {
         // Get exitoso
@@ -45,7 +85,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
           console.error('Error setting up the request:', error.message);
         }
       });
-  }, [lat, long]);
+  };
 
   const handleCardStateClick = estateItem => {
     console.log('--------____________------------');
@@ -61,18 +101,16 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
         <CardState
           key={estateItem._id}
           onPress={() => show(estateItem)}
-          favButton={true}
-          addedFav={false}
-          onPressAddFav={() => handleAddFavorite(estateItem._id)}
-          onPressUnFav={() => handleDeleteFavorite(estateItem._id)}
           size="L"
           image={{uri: estateItem.images[0]}}
           tittle={estateItem.title}
-          ubication={estateItem.neighborhood + ', ' + estateItem.state}
+          ubication={handleUbication(
+            estateItem.neighborhood + ', ' + estateItem.state,
+          )}
           bath={estateItem.bathroomsAmount}
           dorm={estateItem.bedroomsAmount}
           amb={estateItem.roomsAmount}
-          description={estateItem.description.slice(0, 50) + '...'}
+          description={handleDescription(estateItem.description)}
           m2={
             estateItem.coveredSquareMeters +
             estateItem.semiUncoveredSquaremeters +
@@ -86,6 +124,20 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
       ))}
     </>
   );
+
+  const handleUbication = ubication => {
+    if (ubication.length > 40) {
+      return ubication.slice(0, 40) + '...';
+    }
+    return ubication;
+  };
+
+  const handleDescription = desc => {
+    if (desc.length > 50) {
+      return desc.slice(0, 50) + '...';
+    }
+    return desc;
+  };
 
   const handleAddFavorite = estateId => {
     userWS
@@ -164,14 +216,23 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
       });
   };
 
+  const handleRefresh = async () => {
+    await handleLocation();
+    handleGetNearStates();
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <View style={styles.smallContainer}>
-            <IMAGES.SVG.UBICATION width={20} height={20} />
-            <Text style={styles.textHeader}>{i18n.t('ubication')}</Text>
-          </View>
+          <Pressable onPress={handleRefresh}>
+            <View style={styles.smallContainer}>
+              <IMAGES.SVG.UBICATION width={20} height={20} />
+              <Text style={styles.textHeader}>
+                {i18n.t('refreshUbication')}
+              </Text>
+            </View>
+          </Pressable>
           <Pressable onPress={showFiltrosBusqueda}>
             <IMAGES.SVG.FILTER width={28} height={28} />
           </Pressable>
@@ -200,13 +261,14 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.WHITE,
   },
   container: {
-    paddingTop: 20,
+    paddingTop: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },
   header: {
-    width: '80%',
+    width: '88%',
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
   textHeader: {
@@ -219,6 +281,11 @@ const styles = StyleSheet.create({
     columnGap: 4,
     flexWrap: 'nowrap',
     alignItems: 'center',
+    padding: 4,
+    paddingHorizontal: 8,
+    borderWidth: 2,
+    borderRadius: 15,
+    borderColor: Theme.colors.PRIMARY,
   },
   bodyContainer: {
     marginTop: 14,
