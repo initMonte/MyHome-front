@@ -87,7 +87,7 @@ yarn start
 - Corregido bug de navegacion
 - Ventanas de Home, Favoritos, Consultas, ConsultaX, Consultar, Reservar hechas
 - Ventana de Vistias Programadas y VisitaX
-- Ventanas del lado inmobiliaria de Consultas, Visitas, ConsultasX, VisitasX **(no terminadas)**
+- Ventanas del lado inmobiliaria de Consultas **(no terminada)**, Visitas **(no terminadas)**, ConsultasX, VisitasX
 - Ventana de Reservas
 - Calification endpoints y reducer
 - Ventanas ver calificaciones en usuario e inmobiliaria
@@ -96,3 +96,4 @@ yarn start
 - Corregido bug de n° periodico en calificaciones
 - Corregido bug al crear contacto de tipo question
 - Corregido bug de "nombre largo" en las cardStates en varios sitios
+- Creada llamada de getEstatesFiltered e implementada en pantalla de Filtrar

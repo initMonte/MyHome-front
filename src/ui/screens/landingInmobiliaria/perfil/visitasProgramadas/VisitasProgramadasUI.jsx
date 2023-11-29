@@ -15,6 +15,12 @@ import IMAGES from '../../../../../assets/images/images';
 import Button from '../../../../components/button';
 import {contactWS} from '../../../../../networking/api/endpoints/ContactEndpoints';
 import {saveContactAction} from '../../../../../redux/slices/ContactReducer';
+import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
+import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
+import {
+  saveEstateAction,
+  saveUserEstateAction,
+} from '../../../../../redux/slices/EstateReducer';
 
 const VisitasProgramadasUI = ({goBack, showVisitaProgramadaX}) => {
   const dispatch = useDispatch();
@@ -49,11 +55,12 @@ const VisitasProgramadasUI = ({goBack, showVisitaProgramadaX}) => {
       });
   }, []);
 
-  const handleContactClick = contactItem => {
-    console.log('--------____________------------');
-    console.log(contactItem);
-    console.log('--------____________------------');
+  const handleContactClick = async contactItem => {
     dispatch(saveContactAction(contactItem));
+    const estateResponse = await estatesWS.getEstate(contactItem.estate);
+    dispatch(saveEstateAction(estateResponse.data.estate));
+    const realEstateResponse = await userWS.getUser(contactItem.user);
+    dispatch(saveUserEstateAction(realEstateResponse));
     showVisitaProgramadaX();
   };
 

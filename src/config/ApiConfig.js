@@ -45,6 +45,7 @@ export const urlApi = {
     getReservations: 'estates/user/my-reservations',
     deleteEstate: 'estates/', // Pasarle despues el id
     getEstateByUser: 'estates/user/', // Pasarle despues el id
+    getEstatesFiltered: 'estates/filter',
     getImage: 'estates/media/', // Pasarle despues el nombre de la imagen
     updateEstate: 'estates/', // Pasarle despues el id
     bookEstate: 'estates/reservation/', // Pasarle despues el id del estate

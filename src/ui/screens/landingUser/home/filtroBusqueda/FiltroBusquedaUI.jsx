@@ -8,6 +8,7 @@ import IMAGES from '../../../../../assets/images/images';
 
 import Button from '../../../../components/button';
 import ButtonSelect from '../../../../components/buttonSelect';
+import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
 
 const FiltroBusquedaUI = ({goHome}) => {
   const [selectedButton, setSelectedButton] = useState('venta');
@@ -45,8 +46,55 @@ const FiltroBusquedaUI = ({goHome}) => {
   };
 
   const handleFilter = () => {
-    goHome();
+    let rentOrSale = 'alquiler';
+    let estateType = 'oficina';
+    let neighborhood = 'San Nicolas';
+    let currency = 'peso';
+    let priceMin = '200000';
+    let priceMax = '200700';
+    let roomsAmount = 3;
+    let bedroomsAmount = 1;
+    let bathroomsAmount = 1;
+    let state = 'CABA';
+    let amenities = '';
+    estatesWS
+      .getEstatesFiltered(
+        rentOrSale,
+        estateType,
+        neighborhood,
+        currency,
+        +priceMin,
+        +priceMax,
+        +roomsAmount,
+        +bedroomsAmount,
+        +bathroomsAmount,
+        state,
+        amenities,
+      )
+      .then(response => {
+        // Get exitoso
+        console.log(response.data.estates);
+        //setEstates(response.data.estates);
+        //goHome();
+      })
+      .catch(error => {
+        if (error.response) {
+          // Handle error
+          console.error(
+            'Server responded with an error status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // Handle error
+          console.error('No response received:', error.request);
+        } else {
+          // Handle error
+          console.error('Error setting up the request:', error.message);
+        }
+      });
   };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>

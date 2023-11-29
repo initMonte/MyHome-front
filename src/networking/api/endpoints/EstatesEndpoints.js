@@ -189,6 +189,35 @@ export let estatesWS = {
   getEstatesByUserId: async function (id) {
     return await Api.get(urlApi.estate.getEstateByUser + id);
   },
+  getEstatesFiltered: async function (
+    rentOrSale,
+    estateType,
+    neighborhood,
+    currency,
+    priceMin,
+    priceMax,
+    roomsAmount,
+    bedroomsAmount,
+    bathroomsAmount,
+    state,
+    amenities,
+  ) {
+    return await Api.get(urlApi.estate.getEstatesFiltered, {
+      params: {
+        rentOrSale,
+        estateType,
+        neighborhood,
+        currency,
+        priceMin,
+        priceMax,
+        roomsAmount,
+        bedroomsAmount,
+        bathroomsAmount,
+        state,
+        amenities,
+      },
+    });
+  },
   getReservations: async function () {
     return await Api.get(urlApi.estate.getReservations);
   },

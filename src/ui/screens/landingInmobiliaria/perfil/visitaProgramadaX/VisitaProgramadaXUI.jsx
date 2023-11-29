@@ -3,7 +3,6 @@ import {
   ScrollView,
   View,
   Text,
-  StatusBar,
   StyleSheet,
   Image,
   TextInput,
@@ -18,31 +17,57 @@ import CardState from '../../../../components/cardState';
 
 const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
   const {name, avatarName} = useSelector(state => state.user);
+  const {comment, date, visitShift} = useSelector(state => state.contact);
+  const {
+    street,
+    neighborhood,
+    state,
+    price,
+    currency,
+    expenses,
+    expenseCurrency,
+    images,
+    userEstateAvatar,
+    userEstateName,
+    userEstateTelephone1,
+    userEstateTelephone2,
+    userEstateEmail1,
+    userEstateEmail2,
+  } = useSelector(state => state.estate);
 
-  const handleShowPublicacion = () => {
-    // INCLUIR LOGICA DEL ESTATE
-    showPublicacionX();
+  const handleDate = date => {
+    const dateAux = new Date(date);
+    const day = dateAux.getDate().toString().padStart(2, '0');
+    const month = (dateAux.getMonth() + 1).toString().padStart(2, '0');
+    const year = dateAux.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  };
+
+  const handleCurrency = x => {
+    if (x === 'dolar') {
+      return i18n.t('usd');
+    }
+    return i18n.t('ars');
+  };
+
+  const handleShift = x => {
+    if (x === 'morning') {
+      return i18n.t('shiftMorning');
+    }
+    return i18n.t('shiftAfternoon');
   };
 
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
-        <StatusBar
-          animated={true}
-          barStyle={'light-content'}
-          showHideTransition={'fade'}
-          hidden={false}
-        />
         <View style={styles.containerRow}>
           <View style={styles.AvatarContainer}>
             {avatarName && (
               <Image source={{uri: avatarName}} style={styles.profilePhoto} />
             )}
           </View>
-          <View>
-            <Text style={styles.textH1}>{name}</Text>
-            <Text style={styles.text}>{'3 ' + i18n.t('programmedViews')}</Text>
-          </View>
+          <Text style={styles.textH1}>{name}</Text>
         </View>
         <Text style={styles.textH1}>{i18n.t('programmedView')}</Text>
         <View style={styles.box}>
@@ -51,35 +76,37 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
           </View>
           <View style={styles.person}>
             <Image
-              source={IMAGES.OTHERS.TEMPORAL_IMAGE_LOGO}
+              source={{uri: userEstateAvatar}}
               style={styles.questionsPhoto}
             />
-            <Text style={styles.tittleBox}>{'Alguien Lopez'}</Text>
+            <Text style={styles.tittleBox}>{userEstateName}</Text>
           </View>
           <View style={styles.flexStart}>
             <Text style={styles.textBox}>
-              {i18n.t('email') + ' ' + 'Integrar con back'}
+              {i18n.t('email') + ' ' + userEstateEmail1}
             </Text>
-            <Text style={styles.textBox}>
-              {i18n.t('phone') + ' ' + 'Integrar con back'}
-            </Text>
+            {userEstateTelephone1 ? (
+              <Text style={styles.textBox}>
+                {i18n.t('phone') + ' ' + userEstateTelephone1}
+              </Text>
+            ) : null}
           </View>
           <CardState
-            onPress={() => handleShowPublicacion()}
+            onPress={() => showPublicacionX()}
             size="M"
-            image={IMAGES.OTHERS.TEMPORAL_IMAGE}
-            tittle="Av. Gral. Las Heras 2100"
-            ubication="RECOLETA, CABA"
-            currency="USD"
-            price={72500}
-            expenses={24000}
+            image={{uri: images[0]}}
+            tittle={street}
+            ubication={neighborhood + ', ' + state}
+            currency={handleCurrency(currency)}
+            price={price}
+            expenses={expenses}
           />
           <View style={styles.row}>
             <View style={styles.dateTurnBox}>
               <Text style={styles.textBox}>{i18n.t('date')}</Text>
               <TextInput
                 editable={false}
-                value="11/11/1111"
+                value={handleDate(date)}
                 style={styles.message}
               />
             </View>
@@ -87,7 +114,7 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
               <Text style={styles.textBox}>{i18n.t('turn')}</Text>
               <TextInput
                 editable={false}
-                value="Mañana"
+                value={handleShift(visitShift)}
                 style={styles.message}
               />
             </View>
@@ -100,7 +127,7 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
             editable={false}
             numberOfLines={7}
             maxLength={300}
-            value="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec."
+            value={comment}
             style={styles.message}
           />
         </View>
