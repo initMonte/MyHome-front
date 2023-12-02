@@ -97,3 +97,7 @@ yarn start
 - Corregido bug al crear contacto de tipo question
 - Corregido bug de "nombre largo" en las cardStates en varios sitios
 - Creada llamada de getEstatesFiltered e implementada en pantalla de Filtrar
+- Arreglado bug en PublicacionX de usuario cuando la inmobiliaria no tenia ninguna calificacion
+- Corregidas varias pantallas el texto que mostraban cuando no se encontraba una propiedad o calificaciones
+- Corregida llamada a endpoint de filtrar propiedades
+

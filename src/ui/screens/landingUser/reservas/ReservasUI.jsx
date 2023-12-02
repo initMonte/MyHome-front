@@ -87,9 +87,7 @@ const ReservasUI = ({showPublicacionX}) => {
             <View style={styles.containerNoImage}>
               <IMAGES.SVG.LOGO_PLACEHOLDER width={380} height={230} />
               <Text style={styles.textNoImage}>
-                {i18n.t('noStatesFound_createStart') +
-                  i18n.t('noStatesFound_sale') +
-                  i18n.t('noStatesFound_createEnd')}
+                {i18n.t('noStatesFound_reserves')}
               </Text>
             </View>
           )}
@@ -115,6 +113,17 @@ const styles = StyleSheet.create({
   text: {
     color: Theme.colors.BLACK,
     fontSize: Theme.fonts.L,
+  },
+  containerNoImage: {
+    marginTop: 16,
+    alignItems: 'center',
+    width: '95%',
+  },
+  textNoImage: {
+    margin: 12,
+    color: Theme.colors.DISABLED,
+    fontSize: Theme.fonts.L,
+    fontWeight: Theme.fonts.BOLD,
   },
 });
 

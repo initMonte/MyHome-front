@@ -125,20 +125,15 @@ const PublicacionXUI = ({
         handleStars(response.data.califications);
       })
       .catch(error => {
-        if (error.response) {
-          // Handle error
-          console.error(
-            'Server responded with an error status:',
-            error.response.status,
-          );
-          console.error('Response data:', error.response.data);
-        } else if (error.request) {
-          // Handle error
-          console.error('No response received:', error.request);
-        } else {
-          // Handle error
-          console.error('Error setting up the request:', error.message);
-        }
+        // Handle error
+        let aux = [];
+        setCalificacionsAmount(0);
+        handleStars(aux);
+        console.error(
+          'Server responded with an error status:',
+          error.response.status,
+        );
+        console.error('Response data:', error.response.data);
       });
   };
 
@@ -147,8 +142,11 @@ const PublicacionXUI = ({
       (a, obj) => a + obj.calification,
       0,
     );
-    const averageCalification = totalCalification / calificationsArray.length;
-    const trimmedAverage = parseFloat(averageCalification.toFixed(2));
+    let trimmedAverage = 0;
+    if (totalCalification.length > 0) {
+      const averageCalification = totalCalification / calificationsArray.length;
+      trimmedAverage = parseFloat(averageCalification.toFixed(2));
+    }
     setCalificacionStars(trimmedAverage);
     dispatch(saveCalificationsStarsAction(trimmedAverage));
     return;

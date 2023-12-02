@@ -59,6 +59,8 @@ export default {
   noStatesFound_addFavEnd: 'a favoritos para verlas aqui!',
   noStatesFound_createStart: '¡Creá una propiedad ',
   noStatesFound_createEnd: 'para verla aqui!',
+  noStatesFound_reserves: 'No se ha encontrado ninguna propiedad reservada...',
+  noStatesFound: 'No se ha encontrado ninguna propiedad en la zona...',
   noQuestionsFound_start:
     'No se encontro ninguna consulta... ¡Primero debe realizar alguna!',
   noQuestionsFound_end:
@@ -71,6 +73,7 @@ export default {
     'Vuelva a esta seccion una vez haya realizado algun pedido de visita en alguna propiedad',
   noVisitsFound_start_realEstate: 'No se encontro ninguna visita programada...',
   noVisitsFound_end_realEstate: 'Cuando le realicen alguna, aparecera aqui.',
+  noReviewFound: 'Todavia no ha recibido ninguna calificación...',
   shiftMorning: 'Mañana',
   shiftAfternoon: 'Tarde',
   logout: 'Cerrar sesión',

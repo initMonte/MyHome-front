@@ -46,17 +46,17 @@ const FiltroBusquedaUI = ({goHome}) => {
   };
 
   const handleFilter = () => {
-    let rentOrSale = 'alquiler';
-    let estateType = 'oficina';
-    let neighborhood = 'San Nicolas';
-    let currency = 'peso';
-    let priceMin = '200000';
-    let priceMax = '200700';
+    let rentOrSale = 'venta';
+    let estateType = 'departamento';
+    let neighborhood = 'San Antonio de Padua';
+    let currency = 'dolar';
+    let priceMin = '60000';
+    let priceMax = '60500';
     let roomsAmount = 3;
-    let bedroomsAmount = 1;
+    let bedroomsAmount = 2;
     let bathroomsAmount = 1;
-    let state = 'CABA';
-    let amenities = '';
+    let state = 'Provincia de Buenos Aires';
+    let amenites = 'sum,quincho';
     estatesWS
       .getEstatesFiltered(
         rentOrSale,
@@ -69,7 +69,7 @@ const FiltroBusquedaUI = ({goHome}) => {
         +bedroomsAmount,
         +bathroomsAmount,
         state,
-        amenities,
+        amenites,
       )
       .then(response => {
         // Get exitoso

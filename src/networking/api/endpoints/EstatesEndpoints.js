@@ -200,7 +200,7 @@ export let estatesWS = {
     bedroomsAmount,
     bathroomsAmount,
     state,
-    amenities,
+    amenites,
   ) {
     return await Api.get(urlApi.estate.getEstatesFiltered, {
       params: {
@@ -214,7 +214,7 @@ export let estatesWS = {
         bedroomsAmount,
         bathroomsAmount,
         state,
-        amenities,
+        amenites,
       },
     });
   },
