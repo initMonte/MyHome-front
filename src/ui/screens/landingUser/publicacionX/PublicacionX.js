@@ -23,12 +23,6 @@ function PublicacionX() {
     );
   };
 
-  const showCalificarInmobiliaria = () => {
-    navigation.push(
-      NavigatorConstant.USER_PUBLICACION_X_STACK.CALIFICAR_INMOBILIARIA,
-    );
-  };
-
   const showVerCalificaciones = () => {
     navigation.push(
       NavigatorConstant.USER_PUBLICACION_X_STACK.VER_CALIFICACIONES,
@@ -40,7 +34,6 @@ function PublicacionX() {
       goBack={goBack}
       showContactoPropiedadX={showContactoPropiedadX}
       showReservaPropiedadX={showReservaPropiedadX}
-      showCalificarInmobiliaria={showCalificarInmobiliaria}
       showVerCalificaciones={showVerCalificaciones}
     />
   );

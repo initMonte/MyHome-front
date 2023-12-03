@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {ScrollView, View, Text, StyleSheet, Image} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Theme from '../../../../../styles/Theme';
 import IMAGES from '../../../../../assets/images/images';
@@ -11,8 +11,14 @@ import Button from '../../../../components/button';
 import StarSelector from '../../../../components/starSelector';
 
 import {calificationWS} from '../../../../../networking/api/endpoints/CalificationEndpoints';
+import {
+  saveCalificationsAction,
+  saveCalificationsAmountAction,
+  saveCalificationsStarsAction,
+} from '../../../../../redux/slices/CalificationReducer';
 
 const CalificarInmobiliariaUI = ({goBack}) => {
+  const dispatch = useDispatch();
   const {realEstate, realEstateAvatar, realEstateName} = useSelector(
     state => state.estate,
   );
@@ -29,14 +35,53 @@ const CalificarInmobiliariaUI = ({goBack}) => {
     console.log(value);
   };
 
-  const handleSend = () => {
-    calificationWS
+  const handlePromStars = calificationsArray => {
+    console.log('AAAAAAAAAAAAAAAAAA' + JSON.stringify(calificationsArray));
+    const totalCalification = calificationsArray.reduce(
+      (a, obj) => a + obj.calification,
+      0,
+    );
+    console.log('AAAAAAAAAAAAAAAAAA' + totalCalification);
+    let trimmedAverage = 0;
+    if (totalCalification > 0) {
+      const averageCalification = totalCalification / calificationsArray.length;
+      trimmedAverage = parseFloat(averageCalification.toFixed(2));
+    }
+    dispatch(saveCalificationsStarsAction(trimmedAverage));
+    return;
+  };
+
+  const handleSend = async () => {
+    await calificationWS
       .createCalification(realEstate, stars, comment)
       .then(response => {
         // Post exitoso
         console.log(response.data);
-        goBack();
+        calificationWS
+          .getCalifications(realEstate)
+          .then(response2 => {
+            // Get exitoso
+            console.log(
+              'CALIFICACIONEEEEEEEES       : ' + response2.data.califications,
+            );
+            dispatch(saveCalificationsAction(response2.data));
+            handlePromStars(response2.data.califications);
+            dispatch(
+              saveCalificationsAmountAction(
+                response2.data.califications.length,
+              ),
+            );
+          })
+          .catch(error => {
+            // Handle error
+            console.error(
+              'Server responded with an error status:',
+              error.response2.status,
+            );
+            console.error('Response data:', error.response2.data);
+          });
       });
+    goBack();
   };
 
   return (

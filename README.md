@@ -106,3 +106,7 @@ yarn start
 - Implementada logica para controlar home desde getNear o getFiltered
 - Cambiada la card de Consultas y VisitasProgramadas en usuario e inmobiliaria para facilitar el flujo
 - Implementado modal en Home que aparece cuando esta la ubicacion apagada
+- Corregido bug cuando el nombre es muy largo en Reservas
+- Corregido bug del Home que no aparecia la imagen de que no hay propiedades cercanas en ciertas ocasiones
+- Corregida posicion de "extras" en publicar y editar cuando hacen "wrap"
+- Corregido bug de que no se actualizaban las estrellas de la inmobiliaria despues de hacer una reserva

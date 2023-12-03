@@ -58,11 +58,13 @@ const ReservasUI = ({showPublicacionX}) => {
           size="L"
           image={{uri: estateItem.images[0]}}
           tittle={estateItem.title}
-          ubication={estateItem.neighborhood + ', ' + estateItem.state}
+          ubication={handleUbication(
+            estateItem.neighborhood + ', ' + estateItem.state,
+          )}
           bath={estateItem.bathroomsAmount}
           dorm={estateItem.bedroomsAmount}
           amb={estateItem.roomsAmount}
-          description={estateItem.description.slice(0, 50) + '...'}
+          description={handleDescription(estateItem.description)}
           m2={
             estateItem.coveredSquareMeters +
             estateItem.semiUncoveredSquaremeters +
@@ -76,6 +78,20 @@ const ReservasUI = ({showPublicacionX}) => {
       ))}
     </>
   );
+
+  const handleUbication = ubication => {
+    if (ubication.length > 40) {
+      return ubication.slice(0, 40) + '...';
+    }
+    return ubication;
+  };
+
+  const handleDescription = desc => {
+    if (desc.length > 50) {
+      return desc.slice(0, 50) + '...';
+    }
+    return desc;
+  };
 
   return (
     <ScrollView style={styles.generalContainer}>

@@ -933,7 +933,7 @@ const PublicarUI = ({goHome}) => {
             style={{
               flexDirection: 'row',
               width: '102%',
-              justifyContent: 'space-between',
+              justifyContent: 'space-evenly',
               flexWrap: 'wrap',
               marginTop: 10,
             }}>

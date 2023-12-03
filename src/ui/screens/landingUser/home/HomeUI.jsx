@@ -6,7 +6,6 @@ import {
   Pressable,
   StyleSheet,
   Button,
-  Linking,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Geolocation from '@react-native-community/geolocation';
@@ -296,7 +295,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
           </Pressable>
         </View>
         <View style={styles.bodyContainer}>
-          {estates ? (
+          {estates && estates.length > 0 ? (
             <MapEstates x={estates} show={handleCardStateClick} />
           ) : (
             <View style={styles.containerNoImage}>

@@ -30,7 +30,6 @@ const PublicacionXUI = ({
   goBack,
   showContactoPropiedadX,
   showReservaPropiedadX,
-  showCalificarInmobiliaria,
   showVerCalificaciones,
 }) => {
   const dispatch = useDispatch();
@@ -73,8 +72,9 @@ const PublicacionXUI = ({
     realEstateEmail1,
     realEstateEmail2,
   } = useSelector(state => state.estate);
-  const [calificacionsAmount, setCalificacionsAmount] = useState();
-  const [calificationStars, setCalificacionStars] = useState();
+  const {calificacionsAmount, calificationStars} = useSelector(
+    state => state.calification,
+  );
 
   useEffect(() => {
     handleGetRealEstate(realEstate);
@@ -118,7 +118,6 @@ const PublicacionXUI = ({
           'CALIFICACIONEEEEEEEES       : ' + response.data.califications,
         );
         dispatch(saveCalificationsAction(response.data));
-        setCalificacionsAmount(response.data.califications.length);
         dispatch(
           saveCalificationsAmountAction(response.data.califications.length),
         );
@@ -127,7 +126,7 @@ const PublicacionXUI = ({
       .catch(error => {
         // Handle error
         let aux = [];
-        setCalificacionsAmount(0);
+        dispatch(saveCalificationsAmountAction(0));
         handleStars(aux);
         console.error(
           'Server responded with an error status:',
@@ -138,16 +137,17 @@ const PublicacionXUI = ({
   };
 
   const handleStars = calificationsArray => {
+    console.log('AAAAAAAAAAAAAAAAAA' + JSON.stringify(calificationsArray));
     const totalCalification = calificationsArray.reduce(
       (a, obj) => a + obj.calification,
       0,
     );
+    console.log('AAAAAAAAAAAAAAAAAA' + totalCalification);
     let trimmedAverage = 0;
-    if (totalCalification.length > 0) {
+    if (totalCalification > 0) {
       const averageCalification = totalCalification / calificationsArray.length;
       trimmedAverage = parseFloat(averageCalification.toFixed(2));
     }
-    setCalificacionStars(trimmedAverage);
     dispatch(saveCalificationsStarsAction(trimmedAverage));
     return;
   };
