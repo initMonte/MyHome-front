@@ -105,3 +105,4 @@ yarn start
 - Creadas actions para guardar "el filtro" en estate slice
 - Implementada logica para controlar home desde getNear o getFiltered
 - Cambiada la card de Consultas y VisitasProgramadas en usuario e inmobiliaria para facilitar el flujo
+- Implementado modal en Home que aparece cuando esta la ubicacion apagada

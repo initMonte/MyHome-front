@@ -1,7 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, Text, Pressable, StyleSheet} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  Button,
+  Linking,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Geolocation from '@react-native-community/geolocation';
+import Modal from 'react-native-modal';
 
 import Theme from '../../../../styles/Theme';
 import IMAGES from '../../../../assets/images/images';
@@ -19,6 +28,7 @@ import {useFocusEffect} from '@react-navigation/native';
 
 const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
   const dispatch = useDispatch();
+  const [isModalUbicationVisible, setIsModalUbicationVisible] = useState(false);
   const {estatesArray, useFilter} = useSelector(state => state.estate);
   const [estates, setEstates] = useState();
   const [lat, setLat] = useState();
@@ -59,6 +69,10 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
     }
   }, [estatesArray, lat, long, useFilter]);
 
+  const handleModalUbicationClose = () => {
+    setIsModalUbicationVisible(false);
+  };
+
   const handleLocation = async () => {
     await Geolocation.getCurrentPosition(
       pos => {
@@ -68,6 +82,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
       },
       error => {
         console.log('GetCurrentPosition Error', JSON.stringify(error));
+        setIsModalUbicationVisible(true);
       },
       {enableHighAccuracy: true},
     );
@@ -253,6 +268,20 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
+        <Modal isVisible={isModalUbicationVisible}>
+          <View style={styles.container}>
+            <Text style={styles.modalH1}>
+              {i18n.t('locationServicesUnavailable_H1')}
+            </Text>
+            <Text style={styles.modalText}>
+              {i18n.t('locationServicesUnavailable_text')}
+            </Text>
+            <Button
+              title={i18n.t('close')}
+              onPress={handleModalUbicationClose}
+            />
+          </View>
+        </Modal>
         <View style={styles.header}>
           <Pressable onPress={handleRefresh}>
             <View style={styles.smallContainer}>
@@ -327,6 +356,17 @@ const styles = StyleSheet.create({
     color: Theme.colors.DISABLED,
     fontSize: Theme.fonts.L,
     fontWeight: Theme.fonts.BOLD,
+  },
+  modalH1: {
+    color: Theme.colors.WHITE,
+    fontSize: Theme.fonts.M,
+    fontWeight: Theme.fonts.BOLD,
+    marginBottom: 6,
+  },
+  modalText: {
+    color: Theme.colors.WHITE,
+    fontSize: Theme.fonts.SM,
+    marginBottom: 16,
   },
 });
 

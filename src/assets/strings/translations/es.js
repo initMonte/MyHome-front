@@ -161,6 +161,10 @@ export default {
   publish: 'Publicar',
   refreshUbication: 'Refrescar ubicación',
   minimun2: '(Mínimo 2)',
+  locationServicesUnavailable_H1: 'Servicio de Ubicacion no dispoible:',
+  locationServicesUnavailable_text:
+    'Si quiere encontrar propiedades cerca suyo, por favor verifique que la ubicacion activada y la app tenga permisos para acceder a la misma',
+  close: 'Cerrar',
   selected_streetAndAdressNumber: 'Calle y direccion seleccionadas',
   selected_neighborhood: 'Barrio/Localidad seleccionado/a',
   selected_state: 'Provincia seleccionada',
