@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
-import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, Text, StyleSheet, ScrollView, TextInput} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {Image} from 'react-native-svg';
 
 import Theme from '../../../../../styles/Theme';
@@ -8,55 +10,192 @@ import IMAGES from '../../../../../assets/images/images';
 
 import Button from '../../../../components/button';
 import ButtonSelect from '../../../../components/buttonSelect';
+import InputText from '../../../../components/inputText';
+
+import {apiGooglePlaces} from '../../../../../config/ApiConfig';
 import {estatesWS} from '../../../../../networking/api/endpoints/EstatesEndpoints';
+import {saveFilterAction} from '../../../../../redux/slices/EstateReducer';
 
 const FiltroBusquedaUI = ({goHome}) => {
-  const [selectedButton, setSelectedButton] = useState('venta');
-  const handleButtonClick = buttonName => {
-    setSelectedButton(buttonName);
-  };
+  const dispatch = useDispatch();
+  const refGoogle = useRef();
 
-  const [selectedTipoPropiedad, setSelectedTipoPropiedad] = useState('casa');
-  const handleButtonClick2 = buttonName => {
-    setSelectedTipoPropiedad(buttonName);
-  };
-
-  const [selectedAmbiente, setSelectedAmbiente] = useState('1');
-  const handleButtonClick5 = buttonName => {
-    setSelectedAmbiente(buttonName);
-  };
-
-  const [selectedDormitorio, setSelectedDormitorio] = useState('1');
-  const handleButtonClick6 = buttonName => {
-    setSelectedDormitorio(buttonName);
-  };
-
-  const [selectedBaño, setSelectedBaño] = useState('1');
-  const handleButtonClick7 = buttonName => {
-    setSelectedBaño(buttonName);
-  };
-
-  const [selectedAmenities, setSelectedAmenities] = useState([]);
-  const handleButtonClick11 = buttonName => {
-    if (selectedAmenities.includes(buttonName)) {
-      setSelectedAmenities(selectedAmenities.filter(btn => btn !== buttonName));
-    } else {
-      setSelectedAmenities([...selectedAmenities, buttonName]);
+  const handleFocus = ref => {
+    if (ref.current) {
+      ref.current.focus();
     }
   };
 
+  const [rentOrSale, setSelectedButton] = useState('');
+  const handleButtonClick = buttonName => {
+    if (rentOrSale === '') {
+      setSelectedButton(buttonName);
+    } else if (rentOrSale !== buttonName) {
+      setSelectedButton(buttonName);
+    } else {
+      setSelectedButton('');
+    }
+  };
+
+  const [estateType, setSelectedTipoPropiedad] = useState('');
+  const handleButtonClick2 = buttonName => {
+    if (estateType === '') {
+      setSelectedTipoPropiedad(buttonName);
+    } else if (estateType !== buttonName) {
+      setSelectedTipoPropiedad(buttonName);
+    } else {
+      setSelectedTipoPropiedad('');
+    }
+  };
+
+  const [currency, setSelectedPrecio] = useState('peso');
+  const handleButtonClick3 = buttonName => {
+    setSelectedPrecio(buttonName);
+  };
+
+  const [priceMinInput, setPriceMin] = useState('');
+  const handlePriceMin = value => {
+    setPriceMin(value);
+  };
+
+  const [priceMaxInput, setPriceMax] = useState('');
+  const handlePriceMax = value => {
+    setPriceMax(value);
+  };
+
+  const [errorPriceMin, setErrorPriceMin] = useState(false);
+  const inputRefPriceMin = useRef();
+
+  const [errorPriceMax, setErrorPriceMax] = useState(false);
+  const inputRefPriceMax = useRef();
+
+  const [roomsAmount, setSelectedAmbiente] = useState('0');
+  const handleButtonClick5 = buttonName => {
+    if (roomsAmount === '0') {
+      setSelectedAmbiente(buttonName);
+    } else if (roomsAmount !== buttonName) {
+      setSelectedAmbiente(buttonName);
+    } else {
+      setSelectedAmbiente('0');
+    }
+  };
+
+  const [bedroomsAmount, setSelectedDormitorio] = useState('0');
+  const handleButtonClick6 = buttonName => {
+    if (bedroomsAmount === '0') {
+      setSelectedDormitorio(buttonName);
+    } else if (bedroomsAmount !== buttonName) {
+      setSelectedDormitorio(buttonName);
+    } else {
+      setSelectedDormitorio('0');
+    }
+  };
+
+  const [bathroomsAmount, setSelectedBaño] = useState('0');
+  const handleButtonClick7 = buttonName => {
+    if (bathroomsAmount === '0') {
+      setSelectedBaño(buttonName);
+    } else if (bathroomsAmount !== buttonName) {
+      setSelectedBaño(buttonName);
+    } else {
+      setSelectedBaño('0');
+    }
+  };
+
+  const [amenitesArray, setSelectedAmenities] = useState([]);
+  const handleButtonClick11 = buttonName => {
+    if (amenitesArray.includes(buttonName)) {
+      setSelectedAmenities(amenitesArray.filter(btn => btn !== buttonName));
+    } else {
+      setSelectedAmenities([...amenitesArray, buttonName]);
+    }
+  };
+
+  const [neighborhood, setNeighborhood] = useState('');
+  const [state, setState] = useState('');
+  const handleGoogleAddress = details => {
+    console.log('DETAIIIIILS: ' + JSON.stringify(details));
+    setNeighborhood('');
+    setState('');
+    let varSublocality = '';
+    let varLocality = '';
+    details.address_components.forEach(component => {
+      switch (true) {
+        case component.types.includes('sublocality_level_1'):
+          varSublocality = component.short_name;
+          break;
+        case component.types.includes('locality'):
+          varLocality = component.short_name;
+          break;
+        case component.types.includes('administrative_area_level_1'):
+          setState(component.short_name);
+          break;
+        default:
+          break;
+      }
+      if (varSublocality !== '') {
+        setNeighborhood(varSublocality);
+      } else {
+        setNeighborhood(varLocality);
+      }
+    });
+    refGoogle.current?.setAddressText('');
+  };
+
   const handleFilter = () => {
-    let rentOrSale = 'venta';
-    let estateType = 'departamento';
-    let neighborhood = 'San Antonio de Padua';
-    let currency = 'dolar';
-    let priceMin = '60000';
-    let priceMax = '60500';
-    let roomsAmount = 3;
-    let bedroomsAmount = 2;
-    let bathroomsAmount = 1;
-    let state = 'Provincia de Buenos Aires';
-    let amenites = 'sum,quincho';
+    const amenites = amenitesArray.join(',');
+
+    if (isNaN(priceMinInput)) {
+      setErrorPriceMin(i18n.t('invalidNumber'));
+      handleFocus(inputRefPriceMin);
+      return false;
+    } else {
+      setErrorPriceMin(false);
+    }
+
+    if (isNaN(priceMaxInput)) {
+      setErrorPriceMax(i18n.t('invalidNumber'));
+      handleFocus(inputRefPriceMax);
+      return false;
+    } else {
+      setErrorPriceMax(false);
+    }
+
+    let priceMinAux;
+    if (priceMinInput === '') {
+      priceMinAux = 0;
+    } else {
+      priceMinAux = +priceMinInput;
+    }
+    let priceMaxAux;
+    if (priceMaxInput === '') {
+      priceMaxAux = 999999999;
+    } else {
+      priceMaxAux = +priceMaxInput;
+    }
+
+    let priceMin;
+    let priceMax;
+    if (priceMinAux > priceMaxAux) {
+      priceMin = priceMaxAux;
+      priceMax = priceMinAux;
+    } else {
+      priceMin = priceMinAux;
+      priceMax = priceMaxAux;
+    }
+
+    console.log(rentOrSale);
+    console.log(estateType);
+    console.log(neighborhood);
+    console.log(currency);
+    console.log(priceMin);
+    console.log(priceMax);
+    console.log(roomsAmount);
+    console.log(bedroomsAmount);
+    console.log(bathroomsAmount);
+    console.log(state);
+    console.log(amenites);
+
     estatesWS
       .getEstatesFiltered(
         rentOrSale,
@@ -75,7 +214,8 @@ const FiltroBusquedaUI = ({goHome}) => {
         // Get exitoso
         console.log(response.data.estates);
         //setEstates(response.data.estates);
-        //goHome();
+        dispatch(saveFilterAction(response.data.estates));
+        goHome();
       })
       .catch(error => {
         if (error.response) {
@@ -108,12 +248,12 @@ const FiltroBusquedaUI = ({goHome}) => {
           <ButtonSelect
             text={i18n.t('tabs.venta')}
             onPress={() => handleButtonClick('venta')}
-            selected={selectedButton !== 'venta'}
+            selected={rentOrSale !== 'venta'}
           />
           <ButtonSelect
             text={i18n.t('tabs.alquiler')}
             onPress={() => handleButtonClick('alquiler')}
-            selected={selectedButton !== 'alquiler'}
+            selected={rentOrSale !== 'alquiler'}
           />
         </View>
         <Text style={styles.text3}>{i18n.t('stateType')}</Text>
@@ -128,88 +268,173 @@ const FiltroBusquedaUI = ({goHome}) => {
           <ButtonSelect
             text={i18n.t('house')}
             image={
-              selectedTipoPropiedad !== 'casa' ? (
+              estateType !== 'casa' ? (
                 <IMAGES.SVG.HOME width={25} height={25} />
               ) : (
                 <IMAGES.SVG.HOME_WHITE width={25} height={25} />
               )
             }
             onPress={() => handleButtonClick2('casa')}
-            selected={selectedTipoPropiedad !== 'casa'}
+            selected={estateType !== 'casa'}
           />
           <ButtonSelect
             text={i18n.t('department')}
             size="L"
             image={
-              selectedTipoPropiedad !== 'departamento' ? (
+              estateType !== 'departamento' ? (
                 <IMAGES.SVG.DEPARTMENT width={25} height={25} />
               ) : (
                 <IMAGES.SVG.DEPARTMENT_WHITE width={25} height={25} />
               )
             }
             onPress={() => handleButtonClick2('departamento')}
-            selected={selectedTipoPropiedad !== 'departamento'}
+            selected={estateType !== 'departamento'}
           />
           <ButtonSelect
             text={i18n.t('local')}
             image={
-              selectedTipoPropiedad !== 'local' ? (
+              estateType !== 'local' ? (
                 <IMAGES.SVG.HOME width={25} height={25} />
               ) : (
                 <IMAGES.SVG.HOME_WHITE width={25} height={25} />
               )
             }
             onPress={() => handleButtonClick2('local')}
-            selected={selectedTipoPropiedad !== 'local'}
+            selected={estateType !== 'local'}
           />
           <ButtonSelect
             text={i18n.t('ph')}
             image={
-              selectedTipoPropiedad !== 'ph' ? (
+              estateType !== 'ph' ? (
                 <IMAGES.SVG.HOME width={25} height={25} />
               ) : (
                 <IMAGES.SVG.HOME_WHITE width={25} height={25} />
               )
             }
             onPress={() => handleButtonClick2('ph')}
-            selected={selectedTipoPropiedad !== 'ph'}
+            selected={estateType !== 'ph'}
           />
           <ButtonSelect
             text={i18n.t('office')}
             image={
-              selectedTipoPropiedad !== 'oficina' ? (
+              estateType !== 'oficina' ? (
                 <IMAGES.SVG.OFFICE width={25} height={25} />
               ) : (
                 <IMAGES.SVG.OFFICE_WHITE width={25} height={25} />
               )
             }
             onPress={() => handleButtonClick2('oficina')}
-            selected={selectedTipoPropiedad !== 'oficina'}
+            selected={estateType !== 'oficina'}
           />
           <ButtonSelect
             text={i18n.t('galpon')}
             image={
-              selectedTipoPropiedad !== 'galpon' ? (
+              estateType !== 'galpon' ? (
                 <IMAGES.SVG.HOME width={25} height={25} />
               ) : (
                 <IMAGES.SVG.HOME_WHITE width={25} height={25} />
               )
             }
             onPress={() => handleButtonClick2('galpon')}
-            selected={selectedTipoPropiedad !== 'galpon'}
+            selected={estateType !== 'galpon'}
           />
           <ButtonSelect
             text={i18n.t('terreno')}
             image={
-              selectedTipoPropiedad !== 'terreno' ? (
+              estateType !== 'terreno' ? (
                 <IMAGES.SVG.TERRAIN width={25} height={25} />
               ) : (
                 <IMAGES.SVG.TERRAIN_WHITE width={25} height={25} />
               )
             }
             onPress={() => handleButtonClick2('terreno')}
-            selected={selectedTipoPropiedad !== 'terreno'}
+            selected={estateType !== 'terreno'}
           />
+        </View>
+        <Text style={styles.text3}>{i18n.t('priceRange')}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'start',
+            flexWrap: 'wrap',
+            marginTop: 10,
+          }}>
+          <ButtonSelect
+            text={'$'}
+            size="XS"
+            borderRadius={50}
+            onPress={() => handleButtonClick3('peso')}
+            selected={currency !== 'peso'}
+          />
+          <ButtonSelect
+            text={'U$S'}
+            size="XS"
+            borderRadius={50}
+            onPress={() => handleButtonClick3('dolar')}
+            selected={currency !== 'dolar'}
+          />
+          <InputText
+            keyboard="phone-pad"
+            size="S"
+            placeholder={i18n.t('placeholder_min')}
+            changeValue={handlePriceMin}
+            error={errorPriceMin}
+            innerRef={inputRefPriceMin}
+          />
+          <InputText
+            keyboard="phone-pad"
+            size="S"
+            placeholder={i18n.t('placeholder_max')}
+            changeValue={handlePriceMax}
+            error={errorPriceMax}
+            innerRef={inputRefPriceMax}
+          />
+        </View>
+        <Text style={styles.text3}>{i18n.t('address')}</Text>
+        <GooglePlacesAutocomplete
+          ref={refGoogle}
+          fetchDetails={true}
+          onPress={(data, details) => {
+            handleGoogleAddress(details);
+          }}
+          onFail={error => console.error(error)}
+          query={{
+            key: apiGooglePlaces,
+            language: 'es',
+            components: 'country:arg',
+          }}
+          disableScroll={true}
+          minLength={6}
+          keepResultsAfterBlur={true}
+          enablePoweredByContainer={false}
+          styles={{
+            textInputContainer: {
+              borderBottomWidth: 1,
+              width: '80%',
+            },
+            textInput: {
+              height: 38,
+              color: Theme.colors.BLACK,
+            },
+            separator: {
+              backgroundColor: Theme.colors.PLACEHOLDER,
+            },
+            description: {
+              color: Theme.colors.BLACK,
+            },
+          }}
+        />
+        <View style={styles.dateTurnBox}>
+          <Text style={styles.textBox}>{i18n.t('selected_neighborhood')}</Text>
+          <TextInput
+            editable={false}
+            value={neighborhood}
+            style={styles.message}
+          />
+        </View>
+        <View style={styles.dateTurnBox}>
+          <Text style={styles.textBox}>{i18n.t('selected_state')}</Text>
+          <TextInput editable={false} value={state} style={styles.message} />
         </View>
         <Text style={styles.text3}>{i18n.t('rooms')}</Text>
         <View
@@ -224,42 +449,42 @@ const FiltroBusquedaUI = ({goHome}) => {
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick5('1')}
-            selected={selectedAmbiente !== '1'}
+            selected={roomsAmount !== '1'}
           />
           <ButtonSelect
             text={'2'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick5('2')}
-            selected={selectedAmbiente !== '2'}
+            selected={roomsAmount !== '2'}
           />
           <ButtonSelect
             text={'3'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick5('3')}
-            selected={selectedAmbiente !== '3'}
+            selected={roomsAmount !== '3'}
           />
           <ButtonSelect
             text={'4'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick5('4')}
-            selected={selectedAmbiente !== '4'}
+            selected={roomsAmount !== '4'}
           />
           <ButtonSelect
             text={'5'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick5('5')}
-            selected={selectedAmbiente !== '5'}
+            selected={roomsAmount !== '5'}
           />
           <ButtonSelect
             text={'6+'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick5('6')}
-            selected={selectedAmbiente !== '6'}
+            selected={roomsAmount !== '6'}
           />
         </View>
 
@@ -274,42 +499,42 @@ const FiltroBusquedaUI = ({goHome}) => {
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick6('1')}
-            selected={selectedDormitorio !== '1'}
+            selected={bedroomsAmount !== '1'}
           />
           <ButtonSelect
             text={'2'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick6('2')}
-            selected={selectedDormitorio !== '2'}
+            selected={bedroomsAmount !== '2'}
           />
           <ButtonSelect
             text={'3'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick6('3')}
-            selected={selectedDormitorio !== '3'}
+            selected={bedroomsAmount !== '3'}
           />
           <ButtonSelect
             text={'4'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick6('4')}
-            selected={selectedDormitorio !== '4'}
+            selected={bedroomsAmount !== '4'}
           />
           <ButtonSelect
             text={'5'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick6('5')}
-            selected={selectedDormitorio !== '5'}
+            selected={bedroomsAmount !== '5'}
           />
           <ButtonSelect
             text={'6+'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick6('6')}
-            selected={selectedDormitorio !== '6'}
+            selected={bedroomsAmount !== '6'}
           />
         </View>
 
@@ -325,42 +550,42 @@ const FiltroBusquedaUI = ({goHome}) => {
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick7('1')}
-            selected={selectedBaño !== '1'}
+            selected={bathroomsAmount !== '1'}
           />
           <ButtonSelect
             text={'2'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick7('2')}
-            selected={selectedBaño !== '2'}
+            selected={bathroomsAmount !== '2'}
           />
           <ButtonSelect
             text={'3'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick7('3')}
-            selected={selectedBaño !== '3'}
+            selected={bathroomsAmount !== '3'}
           />
           <ButtonSelect
             text={'4'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick7('4')}
-            selected={selectedBaño !== '4'}
+            selected={bathroomsAmount !== '4'}
           />
           <ButtonSelect
             text={'5'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick7('5')}
-            selected={selectedBaño !== '5'}
+            selected={bathroomsAmount !== '5'}
           />
           <ButtonSelect
             text={'6+'}
             size="XS"
             borderRadius={50}
             onPress={() => handleButtonClick7('6')}
-            selected={selectedBaño !== '6'}
+            selected={bathroomsAmount !== '6'}
           />
         </View>
         <Text style={styles.text3}>{i18n.t('amenities')}</Text>
@@ -375,76 +600,76 @@ const FiltroBusquedaUI = ({goHome}) => {
           <ButtonSelect
             text={i18n.t('pool')}
             image={
-              !selectedAmenities.includes(' pool') ? (
+              !amenitesArray.includes('pool') ? (
                 <IMAGES.SVG.PILETA width={25} height={25} />
               ) : (
                 <IMAGES.SVG.PILETA_WHITE width={25} height={25} />
               )
             }
-            onPress={() => handleButtonClick11(' pool')}
-            selected={!selectedAmenities.includes(' pool')}
+            onPress={() => handleButtonClick11('pool')}
+            selected={!amenitesArray.includes('pool')}
           />
           <ButtonSelect
             text={i18n.t('sauna')}
             image={
-              !selectedAmenities.includes(' sauna') ? (
+              !amenitesArray.includes('sauna') ? (
                 <IMAGES.SVG.SAUNA width={25} height={25} />
               ) : (
                 <IMAGES.SVG.SAUNA_WHITE width={25} height={25} />
               )
             }
-            onPress={() => handleButtonClick11(' sauna')}
-            selected={!selectedAmenities.includes(' sauna')}
+            onPress={() => handleButtonClick11('sauna')}
+            selected={!amenitesArray.includes('sauna')}
           />
           <ButtonSelect
             text={i18n.t('sum')}
             image={
-              !selectedAmenities.includes(' sum') ? (
+              !amenitesArray.includes('sum') ? (
                 <IMAGES.SVG.HOME width={25} height={25} />
               ) : (
                 <IMAGES.SVG.HOME_WHITE width={25} height={25} />
               )
             }
-            onPress={() => handleButtonClick11(' sum')}
-            selected={!selectedAmenities.includes(' sum')}
+            onPress={() => handleButtonClick11('sum')}
+            selected={!amenitesArray.includes('sum')}
           />
           <ButtonSelect
             text={i18n.t('quincho')}
             size="L"
             image={
-              !selectedAmenities.includes(' quincho') ? (
+              !amenitesArray.includes('quincho') ? (
                 <IMAGES.SVG.QUINCHO width={25} height={25} />
               ) : (
                 <IMAGES.SVG.QUINCHO_WHITE width={25} height={25} />
               )
             }
-            onPress={() => handleButtonClick11(' quincho')}
-            selected={!selectedAmenities.includes(' quincho')}
+            onPress={() => handleButtonClick11('quincho')}
+            selected={!amenitesArray.includes('quincho')}
           />
           <ButtonSelect
             text={i18n.t('gameRoom')}
             image={
-              !selectedAmenities.includes(' gameRoom') ? (
+              !amenitesArray.includes('gameRoom') ? (
                 <IMAGES.SVG.JUEGO width={25} height={25} />
               ) : (
                 <IMAGES.SVG.JUEGO_WHITE width={25} height={25} />
               )
             }
-            onPress={() => handleButtonClick11(' gameRoom')}
-            selected={!selectedAmenities.includes(' gameRoom')}
+            onPress={() => handleButtonClick11('gameRoom')}
+            selected={!amenitesArray.includes('gameRoom')}
             size="L"
           />
           <ButtonSelect
             text={i18n.t('jacuzzi')}
             image={
-              !selectedAmenities.includes(' jacuzzi') ? (
+              !amenitesArray.includes('jacuzzi') ? (
                 <IMAGES.SVG.JACUZZI width={25} height={25} />
               ) : (
                 <IMAGES.SVG.JACUZZI_WHITE width={25} height={25} />
               )
             }
-            onPress={() => handleButtonClick11(' jacuzzi')}
-            selected={!selectedAmenities.includes(' jacuzzi')}
+            onPress={() => handleButtonClick11('jacuzzi')}
+            selected={!amenitesArray.includes('jacuzzi')}
           />
         </View>
         <Button
@@ -475,6 +700,30 @@ const styles = StyleSheet.create({
     color: Theme.colors.BLACK,
     fontSize: Theme.fonts.M,
     fontWeight: Theme.fonts.BOLD,
+  },
+  row: {
+    width: '85%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  dateTurnBox: {
+    marginTop: 20,
+    width: '80%',
+    justifyContent: 'flex-start',
+  },
+  textBox: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
+    marginBottom: 10,
+  },
+  message: {
+    width: '100%',
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: Theme.colors.PLACEHOLDER,
+    color: Theme.colors.BLACK,
   },
 });
 

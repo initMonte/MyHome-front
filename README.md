@@ -78,7 +78,7 @@ yarn start
 - Endpoint loginGoogle
 - Componentes starSelector y starShow
 - Modificaciones en ventanas varias de la parte de PublicacionX
-- Creada pantalla de Filtros de Busqueda **(No terminada)**
+- Creada pantalla de Filtros de Busqueda
 - Modificada la navegacion levemente
 - Ahora se puede loguear, desloguear, eliminar cuenta, y hacer update de cuenta de usuarios normales
 - Creadas llamadas a endpoints de Contacto y el reducer de Contacto
@@ -100,4 +100,7 @@ yarn start
 - Arreglado bug en PublicacionX de usuario cuando la inmobiliaria no tenia ninguna calificacion
 - Corregidas varias pantallas el texto que mostraban cuando no se encontraba una propiedad o calificaciones
 - Corregida llamada a endpoint de filtrar propiedades
-
+- Corregido bug del input de Google Autocomplete
+- Modificaciones leves en Publicar y en Filtros en la seccion de "direccion"
+- Creadas actions para guardar "el filtro" en estate slice
+- Implementada logica para controlar home desde getNear o getFiltered

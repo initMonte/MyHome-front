@@ -1,13 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {ScrollView, View, Text, Pressable, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Geolocation from '@react-native-community/geolocation';
 
 import Theme from '../../../../styles/Theme';
 import IMAGES from '../../../../assets/images/images';
 import i18n from '../../../../assets/strings/I18n';
 
-import {saveEstateAction} from '../../../../redux/slices/EstateReducer';
+import {
+  resetFilterAction,
+  saveEstateAction,
+} from '../../../../redux/slices/EstateReducer';
 import {estatesWS} from '../../../../networking/api/endpoints/EstatesEndpoints';
 
 import CardState from '../../../components/cardState';
@@ -16,6 +19,7 @@ import {useFocusEffect} from '@react-navigation/native';
 
 const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
   const dispatch = useDispatch();
+  const {estatesArray, useFilter} = useSelector(state => state.estate);
   const [estates, setEstates] = useState();
   const [lat, setLat] = useState();
   const [long, setLong] = useState();
@@ -23,32 +27,37 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
   const [favorites, setFavorites] = useState();
 
   useEffect(() => {
-    handleLocation().then(
-      estatesWS
-        .getNearEstates(lat, long)
-        .then(response => {
-          // Get exitoso
-          console.log(response.data.estates);
-          setEstates(response.data.estates);
-        })
-        .catch(error => {
-          if (error.response) {
-            // Handle error
-            console.error(
-              'Server responded with an error status:',
-              error.response.status,
-            );
-            console.error('Response data:', error.response.data);
-          } else if (error.request) {
-            // Handle error
-            console.error('No response received:', error.request);
-          } else {
-            // Handle error
-            console.error('Error setting up the request:', error.message);
-          }
-        }),
-    );
-  }, [lat, long]);
+    console.log('useFilter: ' + useFilter);
+    if (!useFilter) {
+      handleLocation().then(
+        estatesWS
+          .getNearEstates(lat, long)
+          .then(response => {
+            // Get exitoso
+            console.log(response.data.estates);
+            setEstates(response.data.estates);
+          })
+          .catch(error => {
+            if (error.response) {
+              // Handle error
+              console.error(
+                'Server responded with an error status:',
+                error.response.status,
+              );
+              console.error('Response data:', error.response.data);
+            } else if (error.request) {
+              // Handle error
+              console.error('No response received:', error.request);
+            } else {
+              // Handle error
+              console.error('Error setting up the request:', error.message);
+            }
+          }),
+      );
+    } else {
+      setEstates(estatesArray);
+    }
+  }, [estatesArray, lat, long, useFilter]);
 
   const handleLocation = async () => {
     await Geolocation.getCurrentPosition(
@@ -93,7 +102,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
   useFocusEffect(
     React.useCallback(() => {
       handleGetFavorites();
-    }, [])
+    }, []),
   );
 
   const handleCardStateClick = estateItem => {
@@ -236,6 +245,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
   };
 
   const handleRefresh = async () => {
+    dispatch(resetFilterAction());
     await handleLocation();
     handleGetNearStates();
   };

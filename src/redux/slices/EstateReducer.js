@@ -50,6 +50,8 @@ export const estateReducer = createSlice({
     userEstateTelephone2: '',
     userEstateEmail1: '',
     userEstateEmail2: '',
+    useFilter: false,
+    estatesArray: [],
   },
   reducers: {
     saveEstateAction: (state, response) => {
@@ -114,6 +116,14 @@ export const estateReducer = createSlice({
     changeRealEstateToReserved: (state, response) => {
       state.status = response.payload;
     },
+    saveFilterAction: (state, response) => {
+      state.useFilter = true;
+      state.estatesArray = response.payload;
+    },
+    resetFilterAction: state => {
+      state.useFilter = false;
+      state.estatesArray = [];
+    },
     logoutEstate: state => {
       state.id = '';
       state.title = '';
@@ -160,6 +170,8 @@ export const estateReducer = createSlice({
       state.userEstateTelephone2 = '';
       state.userEstateEmail1 = '';
       state.userEstateEmail2 = '';
+      state.useFilter = false;
+      state.estatesArray = [];
     },
   },
 });
@@ -170,6 +182,8 @@ export const {
   saveUserEstateAction,
   saveRealEstateAvatarAction,
   changeRealEstateToReserved,
+  saveFilterAction,
+  resetFilterAction,
   logoutEstate,
 } = estateReducer.actions;
 export default estateReducer.reducer;

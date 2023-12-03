@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef, useState, useEffect} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, Text, StyleSheet, ScrollView, TextInput} from 'react-native';
 import {Image} from 'react-native-svg';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
@@ -17,9 +17,6 @@ import {estatesWS} from '../../../../networking/api/endpoints/EstatesEndpoints';
 
 const PublicarUI = ({goHome}) => {
   const refGoogle = useRef();
-  useEffect(() => {
-    refGoogle.current?.setAddressText(refGoogle.current?.getAddressText());
-  }, []);
 
   const handleGoogleAddress = details => {
     console.log('DETAIIIIILS: ' + JSON.stringify(details));
@@ -61,6 +58,7 @@ const PublicarUI = ({goHome}) => {
         setNeighborhood(varLocality);
       }
     });
+    refGoogle.current?.setAddressText('');
   };
 
   const [title, setTitle] = useState('');
@@ -553,10 +551,10 @@ const PublicarUI = ({goHome}) => {
           <View
             style={{
               flexDirection: 'row',
+              width: '102%',
               justifyContent: 'space-evenly',
               flexWrap: 'wrap',
               marginTop: 10,
-              marginBottom: -25,
             }}>
             <ButtonSelect
               text={i18n.t('house')}
@@ -677,6 +675,34 @@ const PublicarUI = ({goHome}) => {
               },
             }}
           />
+          <View style={styles.dateTurnBox}>
+            <Text style={styles.textBox}>
+              {i18n.t('selected_streetAndAdressNumber')}
+            </Text>
+            <TextInput
+              editable={false}
+              value={
+                street && addressNumber !== '0'
+                  ? street + ', ' + addressNumber
+                  : street
+              }
+              style={styles.message}
+            />
+          </View>
+          <View style={styles.dateTurnBox}>
+            <Text style={styles.textBox}>
+              {i18n.t('selected_neighborhood')}
+            </Text>
+            <TextInput
+              editable={false}
+              value={neighborhood}
+              style={styles.message}
+            />
+          </View>
+          <View style={styles.dateTurnBox}>
+            <Text style={styles.textBox}>{i18n.t('selected_state')}</Text>
+            <TextInput editable={false} value={state} style={styles.message} />
+          </View>
           <View
             style={{
               flexDirection: 'row',
@@ -819,7 +845,6 @@ const PublicarUI = ({goHome}) => {
               justifyContent: 'start',
               flexWrap: 'wrap',
               marginTop: 10,
-              marginBottom: -50,
             }}>
             <ButtonSelect
               text={'1'}
@@ -871,7 +896,6 @@ const PublicarUI = ({goHome}) => {
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginBottom: -50,
             }}>
             <ButtonSelect
               text={'1'}
@@ -923,7 +947,6 @@ const PublicarUI = ({goHome}) => {
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginBottom: -40,
             }}>
             <ButtonSelect
               text={'1'}
@@ -973,11 +996,10 @@ const PublicarUI = ({goHome}) => {
           <View
             style={{
               flexDirection: 'row',
+              width: '102%',
               justifyContent: 'space-between',
               flexWrap: 'wrap',
               marginTop: 10,
-              marginHorizontal: 5,
-              marginBottom: -40,
             }}>
             <ButtonSelect
               text={i18n.t('terraza')}
@@ -1000,6 +1022,7 @@ const PublicarUI = ({goHome}) => {
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
+              marginTop: 10,
             }}>
             <Text style={styles.text3}>
               {i18n.t('parking')}
@@ -1053,7 +1076,6 @@ const PublicarUI = ({goHome}) => {
               justifyContent: 'center',
               flexWrap: 'wrap',
               marginTop: 10,
-              marginBottom: -30,
             }}>
             <ButtonSelect
               text={i18n.t('north')}
@@ -1085,6 +1107,7 @@ const PublicarUI = ({goHome}) => {
           <View
             style={{
               flexDirection: 'row',
+              width: '102%',
               justifyContent: 'space-evenly',
               flexWrap: 'wrap',
               marginTop: 10,
@@ -1186,7 +1209,7 @@ const PublicarUI = ({goHome}) => {
           />
         </View>
 
-        <View style={{marginBottom: 30}}>
+        <View>
           <Button
             text={i18n.t('publish')}
             size="M"
@@ -1208,12 +1231,13 @@ const styles = StyleSheet.create({
   container1: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 50,
-    paddingBottom: 70,
+    paddingTop: 10,
+    paddingBottom: 20,
   },
   container2: {
     marginLeft: 25,
     marginRight: 25,
+    width: '90%',
   },
   text: {
     marginLeft: 20,
@@ -1294,6 +1318,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: Theme.colors.PLACEHOLDER,
     color: Theme.colors.BLACK,
+  },
+  dateTurnBox: {
+    marginTop: 20,
+    width: '80%',
+    justifyContent: 'flex-start',
+  },
+  textBox: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
+    marginBottom: 10,
   },
 });
 
