@@ -48,9 +48,15 @@ const FiltroBusquedaUI = ({goHome}) => {
     }
   };
 
-  const [currency, setSelectedPrecio] = useState('peso');
+  const [currency, setSelectedPrecio] = useState('');
   const handleButtonClick3 = buttonName => {
-    setSelectedPrecio(buttonName);
+    if (currency === '') {
+      setSelectedPrecio(buttonName);
+    } else if (currency !== buttonName) {
+      setSelectedPrecio(buttonName);
+    } else {
+      setSelectedPrecio('');
+    }
   };
 
   const [priceMinInput, setPriceMin] = useState('');
@@ -69,36 +75,36 @@ const FiltroBusquedaUI = ({goHome}) => {
   const [errorPriceMax, setErrorPriceMax] = useState(false);
   const inputRefPriceMax = useRef();
 
-  const [roomsAmount, setSelectedAmbiente] = useState('0');
+  const [roomsAmount, setSelectedAmbiente] = useState('-1');
   const handleButtonClick5 = buttonName => {
-    if (roomsAmount === '0') {
+    if (roomsAmount === '-1') {
       setSelectedAmbiente(buttonName);
     } else if (roomsAmount !== buttonName) {
       setSelectedAmbiente(buttonName);
     } else {
-      setSelectedAmbiente('0');
+      setSelectedAmbiente('-1');
     }
   };
 
-  const [bedroomsAmount, setSelectedDormitorio] = useState('0');
+  const [bedroomsAmount, setSelectedDormitorio] = useState('-1');
   const handleButtonClick6 = buttonName => {
-    if (bedroomsAmount === '0') {
+    if (bedroomsAmount === '-1') {
       setSelectedDormitorio(buttonName);
     } else if (bedroomsAmount !== buttonName) {
       setSelectedDormitorio(buttonName);
     } else {
-      setSelectedDormitorio('0');
+      setSelectedDormitorio('-1');
     }
   };
 
-  const [bathroomsAmount, setSelectedBaño] = useState('0');
+  const [bathroomsAmount, setSelectedBaño] = useState('-1');
   const handleButtonClick7 = buttonName => {
-    if (bathroomsAmount === '0') {
+    if (bathroomsAmount === '-1') {
       setSelectedBaño(buttonName);
     } else if (bathroomsAmount !== buttonName) {
       setSelectedBaño(buttonName);
     } else {
-      setSelectedBaño('0');
+      setSelectedBaño('-1');
     }
   };
 
@@ -440,10 +446,17 @@ const FiltroBusquedaUI = ({goHome}) => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'start',
+            justifyContent: 'space-evenly',
             flexWrap: 'wrap',
             marginTop: 10,
           }}>
+          <ButtonSelect
+            text={'0'}
+            size="XS"
+            borderRadius={50}
+            onPress={() => handleButtonClick5('0')}
+            selected={roomsAmount !== '0'}
+          />
           <ButtonSelect
             text={'1'}
             size="XS"
@@ -492,8 +505,16 @@ const FiltroBusquedaUI = ({goHome}) => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'start',
+            justifyContent: 'space-evenly',
+            flexWrap: 'wrap',
           }}>
+          <ButtonSelect
+            text={'0'}
+            size="XS"
+            borderRadius={50}
+            onPress={() => handleButtonClick6('0')}
+            selected={bedroomsAmount !== '0'}
+          />
           <ButtonSelect
             text={'1'}
             size="XS"
@@ -542,9 +563,16 @@ const FiltroBusquedaUI = ({goHome}) => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'start',
+            justifyContent: 'space-evenly',
             flexWrap: 'wrap',
           }}>
+          <ButtonSelect
+            text={'0'}
+            size="XS"
+            borderRadius={50}
+            onPress={() => handleButtonClick7('0')}
+            selected={bathroomsAmount !== '0'}
+          />
           <ButtonSelect
             text={'1'}
             size="XS"

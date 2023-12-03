@@ -114,3 +114,5 @@ yarn start
 - Corregido texto de peso y dolar en Contactar
 - Corregido texto de expensas peso/dolar en Contactar y Reservar
 - Agregado manejo en front de la info ficticia "enviada" en reservar
+- Agregado boton de 0 ambientes, dormitorios y baños en Publicar, Editar y Filtro
+- Ahora se puede no seleccionar nada en filtros en ambientes, dormitorios, bañor y currency para no filtrar por esos

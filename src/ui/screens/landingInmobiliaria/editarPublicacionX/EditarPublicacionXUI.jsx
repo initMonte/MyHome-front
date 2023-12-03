@@ -882,10 +882,17 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'start',
+              justifyContent: 'space-evenly',
               flexWrap: 'wrap',
               marginTop: 10,
             }}>
+            <ButtonSelect
+              text={'0'}
+              size="XS"
+              borderRadius={50}
+              onPress={() => handleButtonClick5('0')}
+              selected={selectedAmbiente !== '0'}
+            />
             <ButtonSelect
               text={'1'}
               size="XS"
@@ -934,9 +941,16 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'start',
+              justifyContent: 'space-evenly',
               flexWrap: 'wrap',
             }}>
+            <ButtonSelect
+              text={'0'}
+              size="XS"
+              borderRadius={50}
+              onPress={() => handleButtonClick6('0')}
+              selected={selectedDormitorio !== '0'}
+            />
             <ButtonSelect
               text={'1'}
               size="XS"
@@ -985,9 +999,16 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'start',
+              justifyContent: 'space-evenly',
               flexWrap: 'wrap',
             }}>
+            <ButtonSelect
+              text={'0'}
+              size="XS"
+              borderRadius={50}
+              onPress={() => handleButtonClick7('0')}
+              selected={selectedBaño !== '0'}
+            />
             <ButtonSelect
               text={'1'}
               size="XS"
