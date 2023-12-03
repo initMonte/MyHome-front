@@ -26,6 +26,8 @@ const MapEstates = ({x, show}) => (
             estateItem.semiUncoveredSquaremeters +
             estateItem.uncoveredSquareMeters
           }
+          rentOrSale={estateItem.rentOrSale}
+          status={estateItem.status}
           price={estateItem.price}
           currency={
             estateItem.currency === 'peso' ? i18n.t('ars') : i18n.t('usd')

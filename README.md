@@ -116,3 +116,4 @@ yarn start
 - Agregado manejo en front de la info ficticia "enviada" en reservar
 - Agregado boton de 0 ambientes, dormitorios y baños en Publicar, Editar y Filtro
 - Ahora se puede no seleccionar nada en filtros en ambientes, dormitorios, bañor y currency para no filtrar por esos
+- Agregado cartel de "alquilado", "vendido", "reservado" en Publicaciones de inmobiliaria cuando corresponde

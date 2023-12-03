@@ -55,6 +55,9 @@ import EYE_OPEN from './icons/eye-open.svg';
 import EYE_CLOSE from './icons/eye-close.svg';
 import FILTER from './icons/filter.svg';
 import UBICATION from './icons/ubication.svg';
+import ALQUILADO from './icons/alquilado.svg';
+import VENDIDO from './icons/vendido.svg';
+import RESERVADO from './icons/reservado.svg';
 
 const IMAGES = {
   SVG: {
@@ -115,11 +118,12 @@ const IMAGES = {
     ADD_IMAGE_WHITE,
     FILTER,
     UBICATION,
+    ALQUILADO,
+    VENDIDO,
+    RESERVADO,
   },
   OTHERS: {
     //IMAGEN_CUALQUIERA_EXCEPTO_SVG : require ('./backgrounds/imagen.webp') <-- asi se importa cualquier tipo de imagen que no sea SVG
-    TEMPORAL_IMAGE: require('./icons/temporal_image.png'),
-    TEMPORAL_IMAGE_LOGO: require('./icons/temporal_image_logo.png'),
   },
 };
 export default IMAGES;

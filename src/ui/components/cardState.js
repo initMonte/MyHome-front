@@ -25,6 +25,8 @@ const CardState = ({
   onPressUnFav,
   currency,
   expenseCurrency,
+  rentOrSale,
+  status,
 }) => {
   const generalContainer = StyleSheet.create({
     borderRadius: 5,
@@ -213,6 +215,31 @@ const CardState = ({
     return null;
   };
 
+  const manageStatus = () => {
+    if (status === 'reservada') {
+      return (
+        <View styles={favLocation[size]}>
+          <IMAGES.SVG.RESERVADO style={[favStyle[size], favLocation[size]]} />
+        </View>
+      );
+    } else if (status === 'alquilada - vendida') {
+      if (rentOrSale === 'alquiler') {
+        return (
+          <View styles={favLocation[size]}>
+            <IMAGES.SVG.ALQUILADO style={[favStyle[size], favLocation[size]]} />
+          </View>
+        );
+      } else {
+        return (
+          <View styles={favLocation[size]}>
+            <IMAGES.SVG.VENDIDO style={[favStyle[size], favLocation[size]]} />
+          </View>
+        );
+      }
+    }
+    return null;
+  };
+
   if (size === 'L') {
     return (
       <View style={[generalContainer, containerSizes[size]]}>
@@ -285,6 +312,7 @@ const CardState = ({
         <Pressable onPress={onPress}>
           <Image source={image} style={[photoGeneral, photo[size]]} />
           {manageFavButton()}
+          {manageStatus()}
           <View style={containerCaracts}>
             <View style={containerCaractsColumn}>
               <Text style={fontH1[size]}>{ubication}</Text>
