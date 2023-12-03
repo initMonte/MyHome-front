@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {ScrollView, View, Text, StatusBar, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -53,7 +53,28 @@ const ContactoPropiedadXUI = ({goBack}) => {
     setMessage(value);
   };
 
+  const [error, setError] = useState(false);
+  const inputRefErrorValue = useRef();
+
+  const [errorDate, setErrorDate] = useState(false);
+  const inputRefErrorDateValue = useRef();
+
+  const handleFocus = ref => {
+    if (ref.current) {
+      ref.current.focus();
+    }
+  };
+
   const handleSend = () => {
+
+    if (!comment || comment == "") {
+      setError('Debe ingresar un mensaje.');
+      handleFocus(inputRefErrorValue);
+      return false;
+    } else {
+      setError(false);
+    }
+
     if (type === 'question') {
       contactWS
         .createContact(realEstate, id, type, comment)
@@ -95,6 +116,13 @@ const ContactoPropiedadXUI = ({goBack}) => {
               error.response.status,
             );
             console.error('Response data:', error.response.data);
+
+            if (error.response.data.mensaje == 'Invalid date') {
+              setErrorDate('La fecha ingresada debe ser mayor a la actual.');
+            } else if (error.response.data.mensaje == 'Visit already booked for the selected day and shift') {
+              setErrorDate('Ya existe una visita para la fecha y turno seleccionados.');
+            }
+
           } else if (error.request) {
             // Handle error
             console.error('No response received:', error.request);
@@ -165,6 +193,7 @@ const ContactoPropiedadXUI = ({goBack}) => {
             setOpen={setOpenConsulta}
             setValue={setConsulta}
             setItems={setItemsConsulta}
+            onChangeValue={() => setError(false)}
           />
           {type === 'visit' ? (
             <>
@@ -187,6 +216,9 @@ const ContactoPropiedadXUI = ({goBack}) => {
                   }}
                 />
               </View>
+              {errorDate ?
+                <Text style={{color: 'red', marginTop: 10, marginLeft: 10}}>{errorDate}</Text>
+              : null}
             </>
           ) : null}
           <DatePicker
@@ -211,6 +243,8 @@ const ContactoPropiedadXUI = ({goBack}) => {
             borderWidth={1}
             borderRadius={8}
             height={120}
+            error={error}
+            innerRef={inputRefErrorValue}
           />
         </View>
         <Button text={i18n.t('send')} onPress={() => handleSend()} />
