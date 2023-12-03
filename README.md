@@ -87,7 +87,7 @@ yarn start
 - Corregido bug de navegacion
 - Ventanas de Home, Favoritos, Consultas, ConsultaX, Consultar, Reservar hechas
 - Ventana de Vistias Programadas y VisitaX
-- Ventanas del lado inmobiliaria de Consultas **(no terminada)**, Visitas **(no terminadas)**, ConsultasX, VisitasX
+- Ventanas del lado inmobiliaria de Consultas, Visitas, ConsultasX, VisitasX
 - Ventana de Reservas
 - Calification endpoints y reducer
 - Ventanas ver calificaciones en usuario e inmobiliaria
@@ -104,3 +104,4 @@ yarn start
 - Modificaciones leves en Publicar y en Filtros en la seccion de "direccion"
 - Creadas actions para guardar "el filtro" en estate slice
 - Implementada logica para controlar home desde getNear o getFiltered
+- Cambiada la card de Consultas y VisitasProgramadas en usuario e inmobiliaria para facilitar el flujo

@@ -77,9 +77,10 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
     <>
       {x.map(contactItem => (
         <Pressable onPress={() => show(contactItem)} style={styles.button}>
-          <Image source={{uri: avatarName}} style={styles.questionsPhoto} />
           <View>
-            <Text style={styles.textButton}>{name}</Text>
+            <Text style={styles.textButton}>
+              {contactItem.comment.slice(0, 35) + '...'}
+            </Text>
             <Text style={styles.textDescription}>
               {handleDate(contactItem.created_at)}
             </Text>
@@ -159,6 +160,7 @@ const styles = StyleSheet.create({
     width: '96%',
     height: 68,
     marginTop: 16,
+    paddingHorizontal: 16,
     backgroundColor: Theme.colors.WHITE,
     borderRadius: 10,
     flexDirection: 'row',
@@ -167,8 +169,7 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: Theme.colors.BLACK,
-    fontSize: Theme.fonts.M,
-    fontWeight: Theme.fonts.BOLD,
+    fontSize: Theme.fonts.SM,
     marginTop: 5,
     marginBottom: 5,
   },

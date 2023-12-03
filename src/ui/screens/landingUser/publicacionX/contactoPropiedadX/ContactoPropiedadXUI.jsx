@@ -78,8 +78,9 @@ const ContactoPropiedadXUI = ({goBack}) => {
           }
         });
     } else {
+      console.log(date);
       contactWS
-        .createContact(realEstate, id, type, date, comment, turno)
+        .createContact(realEstate, id, type, comment, date, turno)
         .then(response => {
           // Post exitoso
           console.log(response.data);
