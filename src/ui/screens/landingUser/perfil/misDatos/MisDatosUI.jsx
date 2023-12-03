@@ -6,8 +6,6 @@ import {
   StatusBar,
   StyleSheet,
   Image,
-  Pressable,
-  ToastAndroid,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -33,6 +31,12 @@ const MisDatosUI = ({goBack}) => {
   const [telephone2Value, setTelephone2Value] = useState(telephone2);
   const [email2Value, setEmail2Value] = useState(email2);
   const [selectedImageUri, setSelectedImageUri] = useState(null);
+
+  const [errorNameValue, setErrorNameValue] = useState(false);
+  const inputRefNameValue = useRef();
+
+  const [errorSurnameValue, setErrorSurnameValue] = useState(false);
+  const inputRefSurnameValue = useRef();
 
   const [errorTelephoneValue, setErrorTelephoneValue] = useState(false);
   const inputRefTelephoneValue = useRef();
@@ -71,11 +75,30 @@ const MisDatosUI = ({goBack}) => {
   };
 
   const handleSubmit = () => {
+    if (nameValue === '') {
+      setErrorNameValue(i18n.t('cantBeEmpty'));
+      handleFocus(inputRefNameValue);
+      return false;
+    } else {
+      setErrorNameValue(false);
+    }
+
+    if (surnameValue === '') {
+      setErrorSurnameValue(i18n.t('cantBeEmpty'));
+      handleFocus(inputRefSurnameValue);
+      return false;
+    } else {
+      setErrorSurnameValue(false);
+    }
+
     if (telephoneValue && isNaN(telephoneValue)) {
       setErrorTelephoneValue(i18n.t('invalidNumber'));
       handleFocus(inputRefTelephoneValue);
       return false;
     } else {
+      if (!telephoneValue) {
+        setTelephoneValue('');
+      }
       setErrorTelephoneValue(false);
     }
 
@@ -84,8 +107,18 @@ const MisDatosUI = ({goBack}) => {
       handleFocus(inputRefTelephone2Value);
       return false;
     } else {
+      if (!telephone2Value) {
+        setTelephone2Value('');
+      }
       setErrorTelephone2Value(false);
     }
+    console.log(email);
+    console.log(email2Value);
+    console.log(nameValue);
+    console.log(surnameValue);
+    console.log(telephoneValue);
+    console.log(telephone2Value);
+    console.log(selectedImageUri);
 
     userWS
       .update(
@@ -155,6 +188,8 @@ const MisDatosUI = ({goBack}) => {
               size="L"
               changeValue={handleNameChange}
               ogValue={name}
+              error={errorNameValue}
+              innerRef={inputRefNameValue}
             />
           </View>
           <View style={styles.littleBox}>
@@ -164,10 +199,15 @@ const MisDatosUI = ({goBack}) => {
               size="L"
               changeValue={handleSurnameChange}
               ogValue={surname}
+              error={errorSurnameValue}
+              innerRef={inputRefSurnameValue}
             />
           </View>
           <View style={styles.littleBox}>
-            <Text style={styles.text}>{i18n.t('phone1')}</Text>
+            <Text style={styles.text}>
+              {i18n.t('phone1')}
+              <Text style={styles.opcional}>{'  ' + i18n.t('optional')}</Text>
+            </Text>
             <InputText
               placeholder={i18n.t('placeholder_phone')}
               keyboard="phone-pad"

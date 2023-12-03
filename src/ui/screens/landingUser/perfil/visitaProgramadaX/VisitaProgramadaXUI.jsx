@@ -100,6 +100,7 @@ const VisitaProgramadaXUI = ({goBack, showPublicacionX}) => {
             currency={handleCurrency(currency)}
             price={price}
             expenses={expenses}
+            expenseCurrency={expenseCurrency}
           />
           <View style={styles.row}>
             <View style={styles.dateTurnBox}>

@@ -9,6 +9,7 @@ export default {
   newPassWrong: 'Las contraseñas no coinciden',
   codeWrong: 'El código ingresado es incorrecto',
   invalidNumber: 'N° inválido',
+  cantBeEmpty: 'Este campo no puede dejarse vacío',
   invalidVideo: 'Ingrese un video de Youtube válido o deje este campo vacío.',
   mandatoryField: 'Campo obligatorio',
   mandatoryImages: 'Debe adjuntar al menos 2 imágenes',

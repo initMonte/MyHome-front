@@ -24,6 +24,7 @@ const CardState = ({
   onPressAddFav,
   onPressUnFav,
   currency,
+  expenseCurrency,
 }) => {
   const generalContainer = StyleSheet.create({
     borderRadius: 5,
@@ -185,6 +186,14 @@ const CardState = ({
     },
   });
 
+  const prettifyCurrency = () => {
+    if (currency === 'peso') {
+      return 'ARS';
+    } else {
+      return 'USD';
+    }
+  };
+
   const manageFavButton = () => {
     if (favButton) {
       return addedFav ? (
@@ -242,7 +251,9 @@ const CardState = ({
           <Text style={fontPrice[size]}>
             {currency} {price}
             {expenses ? (
-              <Text style={fontExpenses}>{' +' + expenses}</Text>
+              <Text style={fontExpenses}>
+                {' + ' + prettifyCurrency(expenseCurrency) + ' ' + expenses}
+              </Text>
             ) : null}
           </Text>
         </Pressable>
@@ -259,7 +270,9 @@ const CardState = ({
           <Text style={fontPrice[size]}>
             {currency} {price}
             {expenses ? (
-              <Text style={fontExpenses}>{' +' + expenses}</Text>
+              <Text style={fontExpenses}>
+                {' + ' + prettifyCurrency(expenseCurrency) + ' ' + expenses}
+              </Text>
             ) : null}
           </Text>
         </Pressable>

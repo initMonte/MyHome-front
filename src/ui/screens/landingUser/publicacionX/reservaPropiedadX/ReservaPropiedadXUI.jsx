@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {ScrollView, View, Text, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -30,6 +30,7 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
     price,
     currency,
     expenses,
+    expenseCurrency,
     images,
     realEstate,
   } = useSelector(state => state.estate);
@@ -65,6 +66,21 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
     {label: '2030', value: '2030'},
   ]);
 
+  const [errorNameValue, setErrorNameValue] = useState(false);
+  const inputRefNameValue = useRef();
+
+  const [errorNumberValue, setErrorNumberValue] = useState(false);
+  const inputRefNumberValue = useRef();
+
+  const [errorCodeValue, setErrorCodeValue] = useState(false);
+  const inputRefCodeValue = useRef();
+
+  const handleFocus = ref => {
+    if (ref.current) {
+      ref.current.focus();
+    }
+  };
+
   const handleName = value => {
     setName(value);
   };
@@ -78,6 +94,38 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
   };
 
   const handleReserve = () => {
+    if (name === '') {
+      setErrorNameValue(i18n.t('cantBeEmpty'));
+      handleFocus(inputRefNameValue);
+      return false;
+    } else {
+      setErrorNameValue(false);
+    }
+
+    if (number === '') {
+      setErrorNumberValue(i18n.t('cantBeEmpty'));
+      handleFocus(inputRefNumberValue);
+      return false;
+    } else if (isNaN(number)) {
+      setErrorNumberValue(i18n.t('invalidNumber'));
+      handleFocus(inputRefNumberValue);
+      return false;
+    } else {
+      setErrorNumberValue(false);
+    }
+
+    if (code === '') {
+      setErrorCodeValue(i18n.t('cantBeEmpty'));
+      handleFocus(inputRefCodeValue);
+      return false;
+    } else if (isNaN(code)) {
+      setErrorCodeValue(i18n.t('invalidNumber'));
+      handleFocus(inputRefCodeValue);
+      return false;
+    } else {
+      setErrorCodeValue(false);
+    }
+
     estatesWS
       .bookEstate(id)
       .then(response => {
@@ -147,6 +195,7 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
           description={handleDescription(description)}
           price={price}
           expenses={expenses}
+          expenseCurrency={expenseCurrency}
         />
         <Text style={styles.textDescription}>
           {i18n.t('toReserve_start')}
@@ -163,18 +212,24 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
           <InputText
             placeholder={i18n.t('placeholder_name')}
             changeValue={handleName}
+            error={errorNameValue}
+            innerRef={inputRefNameValue}
           />
           <Text style={styles.textH3}>{i18n.t('cardNumber')}</Text>
           <InputText
             placeholder={i18n.t('placeholder_number')}
             keyboard="phone-pad"
             changeValue={handleNumber}
+            error={errorNumberValue}
+            innerRef={inputRefNumberValue}
           />
           <Text style={styles.textH3}>{i18n.t('cardCode')}</Text>
           <InputText
             placeholder={i18n.t('placeholder_code')}
             keyboard="phone-pad"
             changeValue={handleCode}
+            error={errorCodeValue}
+            innerRef={inputRefCodeValue}
           />
           <Text style={styles.textH3}>{i18n.t('cardExpiry')}</Text>
           <View style={styles.containerDate}>

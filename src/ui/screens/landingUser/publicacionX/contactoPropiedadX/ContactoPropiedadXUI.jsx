@@ -29,6 +29,7 @@ const ContactoPropiedadXUI = ({goBack}) => {
     price,
     currency,
     expenses,
+    expenseCurrency,
     images,
     realEstate,
   } = useSelector(state => state.estate);
@@ -119,6 +120,14 @@ const ContactoPropiedadXUI = ({goBack}) => {
     return desc;
   };
 
+  const prettifyCurrency = () => {
+    if (currency === 'peso') {
+      return 'ARS';
+    } else {
+      return 'USD';
+    }
+  };
+
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container}>
@@ -133,7 +142,7 @@ const ContactoPropiedadXUI = ({goBack}) => {
           image={{uri: images[0]}}
           tittle={street}
           ubication={handleUbication(neighborhood + ', ' + state)}
-          currency={currency}
+          currency={prettifyCurrency()}
           amb={roomsAmount}
           dorm={bedroomsAmount}
           bath={bathroomsAmount}
@@ -145,6 +154,7 @@ const ContactoPropiedadXUI = ({goBack}) => {
           description={handleDescription(description)}
           price={price}
           expenses={expenses}
+          expenseCurrency={expenseCurrency}
         />
         <View style={styles.container2}>
           <Text style={styles.textH3}>{i18n.t('question_type')}</Text>

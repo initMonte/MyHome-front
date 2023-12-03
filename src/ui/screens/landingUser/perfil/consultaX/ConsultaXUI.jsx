@@ -94,6 +94,7 @@ const ConsultaXUI = ({goBack, showPublicacionX}) => {
             currency={handleCurrency(currency)}
             price={price}
             expenses={expenses}
+            expenseCurrency={expenseCurrency}
           />
           <View style={styles.messageFlexStart}>
             <Text style={styles.textBox}>{i18n.t('message')}</Text>

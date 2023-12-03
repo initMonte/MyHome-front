@@ -110,3 +110,7 @@ yarn start
 - Corregido bug del Home que no aparecia la imagen de que no hay propiedades cercanas en ciertas ocasiones
 - Corregida posicion de "extras" en publicar y editar cuando hacen "wrap"
 - Corregido bug de que no se actualizaban las estrellas de la inmobiliaria despues de hacer una reserva
+- Corregido bug de update perfil en usuario
+- Corregido texto de peso y dolar en Contactar
+- Corregido texto de expensas peso/dolar en Contactar y Reservar
+- Agregado manejo en front de la info ficticia "enviada" en reservar
