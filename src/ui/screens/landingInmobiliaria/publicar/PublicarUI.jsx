@@ -82,9 +82,6 @@ const PublicarUI = ({goHome}) => {
   const [selectedImagesUri, setSelectedImagesUri] = useState([]);
   const [urlVideo, setUrlVideo] = useState('');
 
-  const [errorAddressNumber, setErrorAddressNumber] = useState(false);
-  const inputRefAdressNumber = useRef();
-
   const [errorCoveredSquareMeters, setErrorCoveredSquareMeters] =
     useState(false);
   const inputRefCoveredSquareMeters = useRef();
@@ -114,20 +111,6 @@ const PublicarUI = ({goHome}) => {
 
   const [errorDescription, setErrorDescription] = useState(false);
   const inputRefDescription = useRef();
-
-  /*
-  const [errorStreet, setErrorStreet] = useState(false);
-  const inputRefStreet = useRef();
-
-  const [errorNeighborhood, setErrorNeighborhood] = useState(false);
-  const inputRefNeighborhood = useRef();
-
-  const [errorState, setErrorState] = useState(false);
-  const inputRefState = useRef();
-
-  const [errorCountry, setErrorCountry] = useState(false);
-  const inputRefCountry = useRef();
-  */
 
   const [errorImages, setErrorImages] = useState(false);
   const [sizeErrorImage, setSizeErrorImage] = useState(false);
@@ -287,46 +270,9 @@ const PublicarUI = ({goHome}) => {
       setErrorDescription(false);
     }
 
-    /*
-    if (street === '') {
-      setErrorStreet(i18n.t('mandatoryField'));
-      handleFocus(inputRefStreet);
-      return false;
-    } else {
-      setErrorStreet(false);
-    }
-    */
-
     if (addressNumber === '') {
       setaddressNumber(0);
-      return false;
     }
-
-    /*
-    if (neighborhood === '') {
-      setErrorNeighborhood(i18n.t('mandatoryField'));
-      handleFocus(inputRefNeighborhood);
-      return false;
-    } else {
-      setErrorNeighborhood(false);
-    }
-
-    if (state === '') {
-      setErrorState(i18n.t('mandatoryField'));
-      handleFocus(inputRefState);
-      return false;
-    } else {
-      setErrorState(false);
-    }
-
-    if (country === '') {
-      setErrorCountry(i18n.t('mandatoryField'));
-      handleFocus(inputRefCountry);
-      return false;
-    } else {
-      setErrorCountry(false);
-    }
-    */
 
     if (coveredSquareMeters === '') {
       setErrorCoveredSquareMeters(i18n.t('mandatoryField'));
@@ -374,16 +320,6 @@ const PublicarUI = ({goHome}) => {
     } else {
       setErrorImages(false);
     }
-
-    /*
-    if (isNaN(addressNumber)) {
-      setErrorAddressNumber(i18n.t('invalidNumber'));
-      handleFocus(inputRefAdressNumber);
-      return false;
-    } else {
-      setErrorAddressNumber(false);
-    }
-    */
 
     if (isNaN(coveredSquareMeters)) {
       setErrorCoveredSquareMeters(i18n.t('invalidNumber'));

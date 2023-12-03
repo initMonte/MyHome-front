@@ -1,7 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
-import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {View, Text, TextInput, StyleSheet, ScrollView} from 'react-native';
+import {useSelector} from 'react-redux';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {Image} from 'react-native-svg';
 
 import Theme from '../../../../styles/Theme';
@@ -11,13 +12,11 @@ import Button from '../../../components/button';
 import InputText from '../../../components/inputText';
 import ButtonSelect from '../../../components/buttonSelect';
 import PhotoUploader from '../../../components/photoUploader';
+
+import {apiGooglePlaces} from '../../../../config/ApiConfig';
 import {estatesWS} from '../../../../networking/api/endpoints/EstatesEndpoints';
-import {logoutEstate} from '../../../../redux/slices/EstateReducer';
-import {meAction} from '../../../../redux/slices/AuthReducer';
-import {userWS} from '../../../../networking/api/endpoints/UserEndpoints';
 
 const EditarPublicacionXUI = ({goBack, goHome}) => {
-  const dispatch = useDispatch();
   const {
     id,
     title,
@@ -62,6 +61,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
   const [newNeighborhood, setNeighborhood] = useState(neighborhood);
   const [newState, setState] = useState(state);
   const [newCountry, setCountry] = useState(country);
+  const [newLatitude, setLatitude] = useState(latitude);
+  const [newLongitude, setLongitude] = useState(longitude);
   const [newCoveredSquareMeters, setCoveredSquareMeters] =
     useState(coveredSquareMeters);
   const [newSemiUncoveredSquaremeters, setSemiUncoveredSquaremeters] = useState(
@@ -77,9 +78,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
   const [newSelectedImagesUri, setSelectedImagesUri] = useState([]);
   console.log(images);
   const [newUrlVideo, setUrlVideo] = useState(videoUrl);
-
-  const [errorAddressNumber, setErrorAddressNumber] = useState(false);
-  const inputRefAdressNumber = useRef();
 
   const [errorCoveredSquareMeters, setErrorCoveredSquareMeters] =
     useState(false);
@@ -111,23 +109,56 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
   const [errorDescription, setErrorDescription] = useState(false);
   const inputRefDescription = useRef();
 
-  const [errorStreet, setErrorStreet] = useState(false);
-  const inputRefStreet = useRef();
-
-  const [errorNeighborhood, setErrorNeighborhood] = useState(false);
-  const inputRefNeighborhood = useRef();
-
-  const [errorState, setErrorState] = useState(false);
-  const inputRefState = useRef();
-
-  const [errorCountry, setErrorCountry] = useState(false);
-  const inputRefCountry = useRef();
-
   const [errorImages, setErrorImages] = useState(false);
   const [sizeErrorImage, setSizeErrorImage] = useState(false);
 
   const [errorVideo, setErrorVideo] = useState(false);
   const inputRefVideo = useRef();
+
+  const refGoogle = useRef();
+
+  const handleGoogleAddress = details => {
+    console.log('DETAIIIIILS: ' + JSON.stringify(details));
+    setaddressNumber('0');
+    setStreet('');
+    setNeighborhood('');
+    setState('');
+    setCountry('');
+    let varSublocality = '';
+    let varLocality = '';
+    details.address_components.forEach(component => {
+      switch (true) {
+        case component.types.includes('street_number'):
+          setaddressNumber(component.short_name);
+          break;
+        case component.types.includes('route'):
+          setStreet(component.short_name);
+          break;
+        case component.types.includes('sublocality_level_1'):
+          varSublocality = component.short_name;
+          break;
+        case component.types.includes('locality'):
+          varLocality = component.short_name;
+          break;
+        case component.types.includes('administrative_area_level_1'):
+          setState(component.short_name);
+          break;
+        case component.types.includes('country'):
+          setCountry(component.long_name);
+          break;
+        default:
+          break;
+      }
+      setLatitude(details.geometry.location.lat);
+      setLongitude(details.geometry.location.lng);
+      if (varSublocality !== '') {
+        setNeighborhood(varSublocality);
+      } else {
+        setNeighborhood(varLocality);
+      }
+    });
+    refGoogle.current?.setAddressText('');
+  };
 
   const handleFocus = ref => {
     if (ref.current) {
@@ -143,20 +174,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     setDescription(value);
   };
 
-  const handleStreet = value => {
-    setStreet(value);
-  };
-
-  const handleAddressNumber = value => {
-    setaddressNumber(value);
-  };
-
   const handleFloorDpto = value => {
     setFloorDpto(value);
-  };
-
-  const handleNeighborhood = value => {
-    setNeighborhood(value);
   };
 
   const handleCoveredSquareMeters = value => {
@@ -181,14 +200,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
 
   const handleExpenses = value => {
     setExpenses(value);
-  };
-
-  const handleState = value => {
-    setState(value);
-  };
-
-  const handleCountry = value => {
-    setCountry(value);
   };
 
   const handleParking = value => {
@@ -333,9 +344,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     const newBalcony = selectedButtons.includes('balcony');
     const newStorage = selectedButtons.includes('storage');
 
-    const latitude = 'String'; //Hardcodeado hasta entrega final
-    const longitude = 'String'; //Hardcodeado hasta entrega final
-
     if (newTitle === '') {
       setErrorTitle(i18n.t('mandatoryField'));
       handleFocus(inputRefTitle);
@@ -352,44 +360,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
       setErrorDescription(false);
     }
 
-    if (newStreet === '') {
-      setErrorStreet(i18n.t('mandatoryField'));
-      handleFocus(inputRefStreet);
-      return false;
-    } else {
-      setErrorStreet(false);
-    }
-
     if (newAddressNumber === '') {
-      setErrorAddressNumber(i18n.t('mandatoryField'));
-      handleFocus(inputRefAdressNumber);
-      return false;
-    } else {
-      setErrorAddressNumber(false);
-    }
-
-    if (newNeighborhood === '') {
-      setErrorNeighborhood(i18n.t('mandatoryField'));
-      handleFocus(inputRefNeighborhood);
-      return false;
-    } else {
-      setErrorNeighborhood(false);
-    }
-
-    if (newState === '') {
-      setErrorState(i18n.t('mandatoryField'));
-      handleFocus(inputRefState);
-      return false;
-    } else {
-      setErrorState(false);
-    }
-
-    if (newCountry === '') {
-      setErrorCountry(i18n.t('mandatoryField'));
-      handleFocus(inputRefCountry);
-      return false;
-    } else {
-      setErrorCountry(false);
+      setaddressNumber(0);
     }
 
     if (newCoveredSquareMeters === '') {
@@ -437,14 +409,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
       return false;
     } else {
       setErrorImages(false);
-    }
-
-    if (isNaN(newAddressNumber)) {
-      setErrorAddressNumber(i18n.t('invalidNumber'));
-      handleFocus(inputRefAdressNumber);
-      return false;
-    } else {
-      setErrorAddressNumber(false);
     }
 
     if (isNaN(newCoveredSquareMeters)) {
@@ -510,44 +474,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
     } else {
       setErrorVideo(false);
     }
-    /*
-    console.log('---------------------------------');
-    console.log('---------------------------------');
-    console.log('PROBANDO BOTON EDITAR');
-    console.log(newTitle);
-    console.log(newDescription);
-    console.log(selectedButton);
-    console.log(selectedEstado);
-    console.log(selectedTipoPropiedad);
-    console.log(newStreet);
-    console.log(newAddressNumber);
-    console.log(newFloorDpto);
-    console.log(newNeighborhood);
-    console.log(newState);
-    console.log(newCountry);
-    console.log(newCoveredSquareMeters);
-    console.log(newSemiUncoveredSquaremeters);
-    console.log(newUncoveredSquareMeters);
-    console.log(newPrice);
-    console.log(selectedPrecio);
-    console.log(newExpenses);
-    console.log(selectedExpensa);
-    console.log(selectedAmbiente);
-    console.log(selectedDormitorio);
-    console.log(selectedBaño);
-    console.log('TERRAZA, BALCON, BAULERA');
-    console.log(terrace);
-    console.log(balcony);
-    console.log(storage);
-    console.log(selectedAmenities);
-    console.log(newParking);
-    console.log(selectedDisposicion);
-    console.log(newAntiquity);
-    console.log(newSelectedImagesUri);
-    console.log(newUrlVideo);
-    console.log('---------------------------------');
-    console.log('---------------------------------');
-    */
+
     estatesWS
       .editEstate(
         id,
@@ -580,8 +507,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
         +newPrice,
         selectedExpensa,
         newExpenses,
-        latitude,
-        longitude,
+        newLatitude,
+        newLongitude,
         newSelectedImagesUri,
         newUrlVideo,
       )
@@ -611,12 +538,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
   return (
     <ScrollView style={styles.generalContainer}>
       <View style={styles.container1}>
-        <StatusBar
-          animated={true}
-          barStyle={'light-content'}
-          showHideTransition={'fade'}
-          hidden={false}
-        />
         <View style={styles.container2}>
           <Text style={styles.text3}>{i18n.t('stateTitle')}</Text>
           <InputText
@@ -659,11 +580,11 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           <View
             style={{
               flexDirection: 'row',
+              width: '102%',
               justifyContent: 'space-evenly',
               flexWrap: 'wrap',
               marginTop: 10,
               marginHorizontal: 5,
-              marginBottom: -35,
             }}>
             <ButtonSelect
               text={i18n.t('house')}
@@ -752,65 +673,91 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
             />
           </View>
           <Text style={styles.text3}>{i18n.t('address')}</Text>
-          <InputText
-            placeholder={i18n.t('placeholder_street')}
-            ogValue={newStreet}
-            changeValue={handleStreet}
-            error={errorStreet}
-            innerRef={inputRefStreet}
+          <GooglePlacesAutocomplete
+            ref={refGoogle}
+            fetchDetails={true}
+            onPress={(data, details) => {
+              handleGoogleAddress(details);
+            }}
+            onFail={error => console.error(error)}
+            query={{
+              key: apiGooglePlaces,
+              language: 'es',
+              components: 'country:arg',
+            }}
+            disableScroll={true}
+            minLength={6}
+            keepResultsAfterBlur={true}
+            enablePoweredByContainer={false}
+            styles={{
+              textInputContainer: {
+                borderBottomWidth: 1,
+              },
+              textInput: {
+                height: 38,
+                color: Theme.colors.BLACK,
+              },
+              separator: {
+                backgroundColor: Theme.colors.PLACEHOLDER,
+              },
+              description: {
+                color: Theme.colors.BLACK,
+              },
+            }}
           />
+          <View style={styles.dateTurnBox}>
+            <Text style={styles.textBox}>
+              {i18n.t('selected_streetAndAdressNumber')}
+            </Text>
+            <TextInput
+              editable={false}
+              value={
+                newStreet && newAddressNumber !== '0'
+                  ? newStreet + ', ' + newAddressNumber
+                  : newStreet
+              }
+              style={styles.message}
+            />
+          </View>
+          <View style={styles.dateTurnBox}>
+            <Text style={styles.textBox}>
+              {i18n.t('selected_neighborhood')}
+            </Text>
+            <TextInput
+              editable={false}
+              value={newNeighborhood}
+              style={styles.message}
+            />
+          </View>
+          <View style={styles.dateTurnBox}>
+            <Text style={styles.textBox}>{i18n.t('selected_state')}</Text>
+            <TextInput
+              editable={false}
+              value={newState}
+              style={styles.message}
+            />
+          </View>
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-evenly',
+              justifyContent: 'start',
               alignItems: 'center',
               flexWrap: 'wrap',
             }}>
-            <InputText
-              size="XS"
-              keyboard="phone-pad"
-              ogValue={newAddressNumber.toString()}
-              changeValue={handleAddressNumber}
-              placeholder={i18n.t('placeholder_strNumber')}
-              error={errorAddressNumber}
-              innerRef={inputRefAdressNumber}
-            />
+            <Text style={styles.text3}>{i18n.t('floorDpto') + ' '}</Text>
             <InputText
               size="S"
               placeholder={i18n.t('placeholder_floorDpto')}
               changeValue={handleFloorDpto}
               ogValue={newFloorDpto}
             />
-            <Text style={styles.textOptional2}>{i18n.t('optional')}</Text>
+            <Text style={styles.textOptional}>{i18n.t('optional')}</Text>
           </View>
-          <InputText
-            placeholder={i18n.t('placeholder_barrio')}
-            ogValue={newNeighborhood}
-            changeValue={handleNeighborhood}
-            error={errorNeighborhood}
-            innerRef={inputRefNeighborhood}
-          />
-          <InputText
-            placeholder={i18n.t('placeholder_province')}
-            ogValue={newState}
-            changeValue={handleState}
-            error={errorState}
-            innerRef={inputRefState}
-          />
-          <InputText
-            placeholder={i18n.t('placeholder_country')}
-            ogValue={newCountry}
-            changeValue={handleCountry}
-            error={errorCountry}
-            innerRef={inputRefCountry}
-          />
-
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginBottom: -5,
               marginTop: 10,
             }}>
             <Text style={styles.text3}>{i18n.t('surfaceCover')}</Text>
@@ -830,7 +777,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginBottom: -50,
             }}>
             <Text style={styles.text3}>{i18n.t('surfaceSemicover')}</Text>
             <InputText
@@ -849,7 +795,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginBottom: -45,
             }}>
             <Text style={styles.text3}>{i18n.t('surfaceUncover')}</Text>
             <InputText
@@ -940,7 +885,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               justifyContent: 'start',
               flexWrap: 'wrap',
               marginTop: 10,
-              marginBottom: -50,
             }}>
             <ButtonSelect
               text={'1'}
@@ -992,7 +936,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginBottom: -50,
             }}>
             <ButtonSelect
               text={'1'}
@@ -1044,7 +987,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               flexDirection: 'row',
               justifyContent: 'start',
               flexWrap: 'wrap',
-              marginBottom: -40,
             }}>
             <ButtonSelect
               text={'1'}
@@ -1094,11 +1036,11 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           <View
             style={{
               flexDirection: 'row',
+              width: '102%',
               justifyContent: 'space-between',
               flexWrap: 'wrap',
               marginTop: 10,
               marginHorizontal: 5,
-              marginBottom: -40,
             }}>
             <ButtonSelect
               text={i18n.t('terraza')}
@@ -1176,7 +1118,6 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
               justifyContent: 'center',
               flexWrap: 'wrap',
               marginTop: 10,
-              marginBottom: -30,
             }}>
             <ButtonSelect
               text={i18n.t('north')}
@@ -1208,6 +1149,7 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           <View
             style={{
               flexDirection: 'row',
+              width: '102%',
               justifyContent: 'space-evenly',
               flexWrap: 'wrap',
               marginTop: 10,
@@ -1312,10 +1254,10 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
           <View
             style={{
               flexDirection: 'row',
+              width: '102%',
               justifyContent: 'center',
               flexWrap: 'wrap',
               marginTop: 10,
-              marginBottom: -40,
             }}>
             <ButtonSelect
               text={i18n.t('sellingInRent')}
@@ -1340,7 +1282,8 @@ const EditarPublicacionXUI = ({goBack, goHome}) => {
 
         <View
           style={{
-            marginBottom: 30,
+            marginTop: 16,
+            marginBottom: 16,
             flexDirection: 'row',
             justifyContent: 'center',
             flexWrap: 'wrap',
@@ -1374,11 +1317,12 @@ const styles = StyleSheet.create({
   container1: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    paddingBottom: 20,
   },
   container2: {
     marginLeft: 25,
     marginRight: 25,
+    width: '90%',
   },
   text: {
     marginLeft: 20,
@@ -1443,6 +1387,25 @@ const styles = StyleSheet.create({
     borderColor: Theme.colors.PLACEHOLDER,
     borderWidth: 1,
     borderRadius: 10,
+  },
+  dateTurnBox: {
+    marginTop: 20,
+    width: '80%',
+    justifyContent: 'flex-start',
+  },
+  textBox: {
+    color: Theme.colors.SECONDARY,
+    fontSize: Theme.fonts.SM,
+    fontWeight: Theme.fonts.BOLD,
+    marginBottom: 10,
+  },
+  message: {
+    width: '100%',
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: Theme.colors.PLACEHOLDER,
+    color: Theme.colors.BLACK,
   },
 });
 
