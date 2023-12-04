@@ -1,5 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {ScrollView, View, StatusBar, StyleSheet, Text, ToastAndroid} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {
+  ScrollView,
+  View,
+  StatusBar,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import {saveEstateAction} from '../../../../../redux/slices/EstateReducer';
@@ -48,7 +55,7 @@ const VentaUI = ({showPublicacionX}) => {
   const dispatch = useDispatch();
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       userWS
         .getFavorites()
         .then(response => {

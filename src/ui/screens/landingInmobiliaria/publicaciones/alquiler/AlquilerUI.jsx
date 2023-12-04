@@ -1,5 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {ScrollView, View, StatusBar, StyleSheet, Text, ToastAndroid} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {
+  ScrollView,
+  View,
+  StatusBar,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {saveEstateAction} from '../../../../../redux/slices/EstateReducer';
@@ -49,32 +57,34 @@ const AlquilerUI = ({showPublicacionX}) => {
   const id = useSelector(state => state.user.id);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    estatesWS
-      .getEstatesByUserId(id)
-      .then(response => {
-        // Get exitoso
-        //console.log(response.data.estates);
-        setEstates(response.data.estates);
-      })
-      .catch(error => {
-        if (error.response) {
-          // Handle error
-          console.error(
-            'Server responded with an error status:',
-            error.response.status,
-          );
-          console.error('Response data:', error.response.data);
-        } else if (error.request) {
-          // Handle error
-          console.error('No response received:', error.request);
-          showToastWithGravityAndOffset();
-        } else {
-          // Handle error
-          console.error('Error setting up the request:', error.message);
-        }
-      });
-  }, [id]);
+  useFocusEffect(
+    useCallback(() => {
+      estatesWS
+        .getEstatesByUserId(id)
+        .then(response => {
+          // Get exitoso
+          //console.log(response.data.estates);
+          setEstates(response.data.estates);
+        })
+        .catch(error => {
+          if (error.response) {
+            // Handle error
+            console.error(
+              'Server responded with an error status:',
+              error.response.status,
+            );
+            console.error('Response data:', error.response.data);
+          } else if (error.request) {
+            // Handle error
+            console.error('No response received:', error.request);
+            showToastWithGravityAndOffset();
+          } else {
+            // Handle error
+            console.error('Error setting up the request:', error.message);
+          }
+        });
+    }, [id]),
+  );
 
   const handleCardStateClick = estateItem => {
     console.log('--------____________------------');

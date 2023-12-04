@@ -188,8 +188,8 @@ const CardState = ({
     },
   });
 
-  const prettifyCurrency = () => {
-    if (currency === 'peso') {
+  const prettifyCurrency = x => {
+    if (x === 'peso') {
       return 'ARS';
     } else {
       return 'USD';

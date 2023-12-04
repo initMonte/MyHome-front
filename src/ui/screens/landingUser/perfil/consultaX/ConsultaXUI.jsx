@@ -45,6 +45,7 @@ const ConsultaXUI = ({goBack, showPublicacionX}) => {
   };
 
   const handleCurrency = x => {
+    console.log(x);
     if (x === 'dolar') {
       return i18n.t('usd');
     }

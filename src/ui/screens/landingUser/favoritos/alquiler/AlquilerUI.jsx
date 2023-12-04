@@ -1,5 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {ScrollView, View, StatusBar, StyleSheet, Text, ToastAndroid} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {
+  ScrollView,
+  View,
+  StatusBar,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import {saveEstateAction} from '../../../../../redux/slices/EstateReducer';
@@ -8,7 +15,7 @@ import CardState from '../../../../components/cardState';
 import IMAGES from '../../../../../assets/images/images';
 import i18n from '../../../../../assets/strings/I18n';
 import {userWS} from '../../../../../networking/api/endpoints/UserEndpoints';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 const MapEstates = ({x, show}) => (
   <>
@@ -47,32 +54,33 @@ const AlquilerUI = ({showPublicacionX}) => {
   const [estatesFavs, setEstatesFavs] = useState();
   const dispatch = useDispatch();
 
-  useFocusEffect(React.useCallback(() => {
-    userWS
-      .getFavorites()
-      .then(response => {
-        // Get exitoso
-        //console.log(response.data.estates);
-        setEstatesFavs(response.data.estates);
-      })
-      .catch(error => {
-        if (error.response) {
-          // Handle error
-          console.error(
-            'Server responded with an error status:',
-            error.response.status,
-          );
-          console.error('Response data:', error.response.data);
-        } else if (error.request) {
-          // Handle error
-          console.error('No response received:', error.request);
-          showToastWithGravityAndOffset();
-        } else {
-          // Handle error
-          console.error('Error setting up the request:', error.message);
-        }
-      });
-    }, [])
+  useFocusEffect(
+    useCallback(() => {
+      userWS
+        .getFavorites()
+        .then(response => {
+          // Get exitoso
+          //console.log(response.data.estates);
+          setEstatesFavs(response.data.estates);
+        })
+        .catch(error => {
+          if (error.response) {
+            // Handle error
+            console.error(
+              'Server responded with an error status:',
+              error.response.status,
+            );
+            console.error('Response data:', error.response.data);
+          } else if (error.request) {
+            // Handle error
+            console.error('No response received:', error.request);
+            showToastWithGravityAndOffset();
+          } else {
+            // Handle error
+            console.error('Error setting up the request:', error.message);
+          }
+        });
+    }, []),
   );
 
   const handleCardStateClick = estateItem => {
