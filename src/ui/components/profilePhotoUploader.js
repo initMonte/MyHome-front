@@ -10,9 +10,6 @@ import {
 import * as ImagePicker from 'react-native-image-picker';
 import IMAGES from '../../assets/images/images';
 import Theme from '../../styles/Theme';
-import i18n from '../../assets/strings/I18n';
-import Lightbox from 'react-native-lightbox-v2';
-import ImageViewer from './imageViewer';
 
 const ProfilePhotoUploader = ({
   onImageSelected,

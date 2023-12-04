@@ -141,7 +141,7 @@ const PerfilUI = ({
           <IMAGES.SVG.MAIL width={30} height={30} />
           <Text style={styles.textButton}>{i18n.t('questions')}</Text>
           <Text style={styles.textDescription}>
-            {i18n.t('questions_description_realState')}
+            {i18n.t('questions_description_user')}
           </Text>
         </Pressable>
         <Pressable
@@ -150,7 +150,7 @@ const PerfilUI = ({
           <IMAGES.SVG.HOME_HEART width={30} height={30} />
           <Text style={styles.textButton}>{i18n.t('programmedViews')}</Text>
           <Text style={styles.textDescription}>
-            {i18n.t('programmedViews_description_realState')}
+            {i18n.t('programmedViews_description_user')}
           </Text>
         </Pressable>
       </View>

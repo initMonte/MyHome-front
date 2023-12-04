@@ -120,3 +120,5 @@ yarn start
 - Agregado Toast cuando no hay internet
 - Actualizacion dinamica de ventanas Reservas y Publicaciones
 - Corregido bug de peso/dolar
+- Arreglado texto en Perfil user
+- Agregado chequedo de elegir foto de perfil

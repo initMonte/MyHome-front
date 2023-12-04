@@ -45,6 +45,8 @@ const MisDatosUI = ({goBack}) => {
   const [errorTelephone2Value, setErrorTelephone2Value] = useState(false);
   const inputRefTelephone2Value = useRef();
 
+  const [photoError, setPhotoError] = useState(false);
+
   const handleFocus = ref => {
     if (ref.current) {
       ref.current.focus();
@@ -113,13 +115,25 @@ const MisDatosUI = ({goBack}) => {
       }
       setErrorTelephone2Value(false);
     }
-    console.log(email);
-    console.log(email2Value);
-    console.log(nameValue);
-    console.log(surnameValue);
-    console.log(telephoneValue);
-    console.log(telephone2Value);
-    console.log(selectedImageUri);
+
+    if (!selectedImageUri) {
+      setPhotoError(true);
+      return false;
+    } else {
+      setPhotoError(false);
+    }
+
+    if (!email2Value) {
+      setEmail2Value(email);
+    }
+
+    console.log(typeof email);
+    console.log(typeof email2Value);
+    console.log(typeof nameValue);
+    console.log(typeof surnameValue);
+    console.log(typeof telephoneValue);
+    console.log(typeof telephone2Value);
+    console.log(typeof selectedImageUri);
 
     userWS
       .update(
@@ -263,6 +277,9 @@ const MisDatosUI = ({goBack}) => {
             imageSource={selectedImageUri}
             onImageSelected={handleImageSelection}
           />
+          {photoError ? (
+            <Text style={styles.errorPhoto}>{i18n.t('mustUploadPhoto')}</Text>
+          ) : null}
 
           <Button
             onPress={() => handleSubmit()}
@@ -391,6 +408,9 @@ const styles = StyleSheet.create({
     width: 77,
     height: 77,
     borderRadius: 45,
+  },
+  errorPhoto: {
+    color: 'red',
   },
 });
 

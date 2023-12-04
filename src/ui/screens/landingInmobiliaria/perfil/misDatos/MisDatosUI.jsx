@@ -34,11 +34,16 @@ const MisDatosUI = ({goBack}) => {
   const [newPasswordValue, setNewPasswordValue] = useState('');
   const [selectedImageUri, setSelectedImageUri] = useState(null);
 
+  const [errorNameeValue, setErrorNameValue] = useState(false);
+  const inputRefNameValue = useRef();
+
   const [errorTelephoneValue, setErrorTelephoneValue] = useState(false);
   const inputRefTelephoneValue = useRef();
 
   const [errorTelephone2Value, setErrorTelephone2Value] = useState(false);
   const inputRefTelephone2Value = useRef();
+
+  const [photoError, setPhotoError] = useState(false);
 
   const handleFocus = ref => {
     if (ref.current) {
@@ -87,8 +92,20 @@ const MisDatosUI = ({goBack}) => {
   };
 
   const handleSubmit = () => {
+    if (!nameValue) {
+      setErrorNameValue(i18n.t('cantBeEmpty'));
+      handleFocus(inputRefNameValue);
+      return false;
+    } else {
+      setErrorNameValue(false);
+    }
+
     if (isNaN(telephoneValue)) {
       setErrorTelephoneValue(i18n.t('invalidNumber'));
+      handleFocus(inputRefTelephoneValue);
+      return false;
+    } else if (!telephoneValue) {
+      setErrorTelephoneValue(i18n.t('cantBeEmpty'));
       handleFocus(inputRefTelephoneValue);
       return false;
     } else {
@@ -101,6 +118,13 @@ const MisDatosUI = ({goBack}) => {
       return false;
     } else {
       setErrorTelephone2Value(false);
+    }
+
+    if (!selectedImageUri) {
+      setPhotoError(true);
+      return false;
+    } else {
+      setPhotoError(false);
     }
 
     userWS
@@ -296,6 +320,8 @@ const MisDatosUI = ({goBack}) => {
               size="L"
               changeValue={handleNameChange}
               ogValue={name}
+              error={errorNameeValue}
+              innerRef={inputRefNameValue}
             />
           </View>
           <View style={styles.littleBox}>
@@ -343,6 +369,9 @@ const MisDatosUI = ({goBack}) => {
             imageSource={selectedImageUri}
             onImageSelected={handleImageSelection}
           />
+          {photoError ? (
+            <Text style={styles.errorPhoto}>{i18n.t('mustUploadPhoto')}</Text>
+          ) : null}
 
           <Button
             onPress={() => handleSubmit()}
@@ -598,6 +627,9 @@ const styles = StyleSheet.create({
     width: 77,
     height: 77,
     borderRadius: 45,
+  },
+  errorPhoto: {
+    color: 'red',
   },
 });
 
