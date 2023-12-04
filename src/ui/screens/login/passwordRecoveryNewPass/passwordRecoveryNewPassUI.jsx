@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StatusBar, StyleSheet, ScrollView, ToastAndroid} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {Image} from 'react-native-svg';
 
@@ -62,6 +62,7 @@ const PasswordRecoveryNewPassUI = ({goBack, showLandingInmobiliaria}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
@@ -89,11 +90,22 @@ const PasswordRecoveryNewPassUI = ({goBack, showLandingInmobiliaria}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
         }
       });
+  };
+
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      i18n.t('errors.connection'),
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER,
+      0,
+      0,
+    );
   };
 
   return (

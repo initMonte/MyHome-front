@@ -130,6 +130,7 @@ const MisDatosUI = ({goBack}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset2();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
@@ -140,6 +141,16 @@ const MisDatosUI = ({goBack}) => {
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
       i18n.t('passwordChanged'),
+      ToastAndroid.SHORT,
+      ToastAndroid.TOP,
+      0,
+      80,
+    );
+  };
+
+  const showToastWithGravityAndOffset2 = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      i18n.t('connection'),
       ToastAndroid.SHORT,
       ToastAndroid.TOP,
       0,

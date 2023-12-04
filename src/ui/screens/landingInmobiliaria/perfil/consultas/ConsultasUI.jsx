@@ -6,6 +6,7 @@ import {
   Pressable,
   StyleSheet,
   Image,
+  ToastAndroid
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -48,6 +49,7 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
@@ -89,6 +91,16 @@ const ConsultasUI = ({goBack, showConsultaX}) => {
       ))}
     </>
   );
+
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      i18n.t('errors.connection'),
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER,
+      0,
+      0,
+    );
+  };
 
   return (
     <View style={styles.generalContainer}>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, View, Text, StyleSheet, Image} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, Image, ToastAndroid} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import Theme from '../../../../../styles/Theme';

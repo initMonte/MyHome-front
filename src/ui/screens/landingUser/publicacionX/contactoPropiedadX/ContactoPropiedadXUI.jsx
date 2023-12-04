@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, View, Text, StatusBar, StyleSheet} from 'react-native';
+import {ScrollView, View, Text, StatusBar, StyleSheet, ToastAndroid} from 'react-native';
 import {useSelector} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from 'react-native-date-picker';
@@ -94,6 +94,7 @@ const ContactoPropiedadXUI = ({goBack}) => {
           } else if (error.request) {
             // Handle error
             console.error('No response received:', error.request);
+            showToastWithGravityAndOffset();
           } else {
             // Handle error
             console.error('Error setting up the request:', error.message);
@@ -126,6 +127,7 @@ const ContactoPropiedadXUI = ({goBack}) => {
           } else if (error.request) {
             // Handle error
             console.error('No response received:', error.request);
+            showToastWithGravityAndOffset();
           } else {
             // Handle error
             console.error('Error setting up the request:', error.message);
@@ -154,6 +156,16 @@ const ContactoPropiedadXUI = ({goBack}) => {
     } else {
       return 'USD';
     }
+  };
+
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      i18n.t('errors.connection'),
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER,
+      0,
+      0,
+    );
   };
 
   return (

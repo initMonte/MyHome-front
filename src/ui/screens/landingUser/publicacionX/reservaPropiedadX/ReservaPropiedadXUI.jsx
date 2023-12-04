@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, ToastAndroid} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -145,6 +145,7 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
@@ -172,6 +173,16 @@ const ReservaPropiedadXUI = ({showCalificarInmobiliaria}) => {
       return desc.slice(0, 50) + '...';
     }
     return desc;
+  };
+  
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      i18n.t('errors.connection'),
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER,
+      0,
+      0,
+    );
   };
 
   return (

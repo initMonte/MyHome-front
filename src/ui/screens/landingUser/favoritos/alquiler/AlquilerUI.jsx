@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, StatusBar, StyleSheet, Text} from 'react-native';
+import {ScrollView, View, StatusBar, StyleSheet, Text, ToastAndroid} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import {saveEstateAction} from '../../../../../redux/slices/EstateReducer';
@@ -66,6 +66,7 @@ const AlquilerUI = ({showPublicacionX}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
@@ -80,6 +81,16 @@ const AlquilerUI = ({showPublicacionX}) => {
     console.log('--------____________------------');
     dispatch(saveEstateAction(estateItem));
     showPublicacionX();
+  };
+
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      i18n.t('errors.connection'),
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER,
+      0,
+      0,
+    );
   };
 
   return (

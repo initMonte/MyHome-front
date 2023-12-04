@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, Text, Pressable, StyleSheet} from 'react-native';
+import {ScrollView, View, Text, Pressable, StyleSheet, ToastAndroid} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import Theme from '../../../../styles/Theme';
@@ -34,6 +34,7 @@ const ReservasUI = ({showPublicacionX}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
@@ -91,6 +92,16 @@ const ReservasUI = ({showPublicacionX}) => {
       return desc.slice(0, 50) + '...';
     }
     return desc;
+  };
+
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      i18n.t('errors.connection'),
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER,
+      0,
+      0,
+    );
   };
 
   return (

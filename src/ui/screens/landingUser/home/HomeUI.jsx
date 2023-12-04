@@ -6,6 +6,7 @@ import {
   Pressable,
   StyleSheet,
   Button,
+  ToastAndroid
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Geolocation from '@react-native-community/geolocation';
@@ -57,6 +58,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
             } else if (error.request) {
               // Handle error
               console.error('No response received:', error.request);
+              showToastWithGravityAndOffset();
             } else {
               // Handle error
               console.error('Error setting up the request:', error.message);
@@ -106,6 +108,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
@@ -197,6 +200,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
@@ -223,6 +227,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
@@ -251,6 +256,7 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
         } else if (error.request) {
           // Handle error
           console.error('No response received:', error.request);
+          showToastWithGravityAndOffset();
         } else {
           // Handle error
           console.error('Error setting up the request:', error.message);
@@ -262,6 +268,16 @@ const HomeUI = ({showFiltrosBusqueda, showPublicacionX}) => {
     dispatch(resetFilterAction());
     await handleLocation();
     handleGetNearStates();
+  };
+
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      i18n.t('errors.connection'),
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER,
+      0,
+      0,
+    );
   };
 
   return (

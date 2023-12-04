@@ -245,5 +245,6 @@ export default {
       'Un usuario con este mail y/o telefono ya se encuentra registrado',
     maxSizePhoto:
       'Una de las imágenes seleccionadas excede el tamaño máximo y no fue agregada',
+    connection: 'No hay conexión a internet.',
   },
 };
