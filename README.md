@@ -2,6 +2,9 @@
 - English at the beggining
 - Español al final
 
+[Figma Look & Feel](https://www.figma.com/file/pkVLb0RA3a1iZoHH9VxJg0/Untitled?type=design&node-id=0%3A1&mode=design&t=W5h1T0TbgxnHeV7h-1)
+
+___
 ## English
 App created with **React Native CLI** as a final work for a course of Mobile development. The original repository is [this one](https://github.com/FranGR30/aplicacionesDistribuidas-frontEnd).
 
