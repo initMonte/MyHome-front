@@ -2,6 +2,9 @@
 - English at the beggining
 - Español al final
 
+![MyHome1](https://github.com/initMonte/MyHome-front/assets/111252440/1470795e-687f-47f1-99e8-a55bd40e6c3d)
+![MyHome2](https://github.com/initMonte/MyHome-front/assets/111252440/06b68f9f-db24-4eb7-8693-4c70051be53a)
+
 [Figma Look & Feel](https://www.figma.com/file/pkVLb0RA3a1iZoHH9VxJg0/Untitled?type=design&node-id=0%3A1&mode=design&t=W5h1T0TbgxnHeV7h-1)
 
 ___
